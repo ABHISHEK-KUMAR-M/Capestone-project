@@ -16,7 +16,6 @@ public class Department
     [MaxLength(255)]
     public string? Description { get; set; }
 
-    /* Navigation */
     public virtual ICollection<Employee> Employees { get; set; } = [];
     public virtual ICollection<TicketType> TicketTypes { get; set; } = [];
 }

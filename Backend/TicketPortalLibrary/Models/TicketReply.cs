@@ -14,8 +14,12 @@ public class TicketReply
     public int TicketId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(Employee))]
-    public int RepliedByEmpId { get; set; }
+    [ForeignKey(nameof(Ticket))]
+    public int RepliedByCreatorEmpId { get; set; }
+
+    [Required]
+    [ForeignKey(nameof(Ticket))]
+    public int RepliedByAssignedEmpId { get; set; }
 
     [Required(ErrorMessage = "Reply message is required.")]
     [MaxLength(2000)]
@@ -25,5 +29,4 @@ public class TicketReply
     public DateTime CreatedAt { get; set; } 
 
     public virtual Ticket Ticket { get; set; } = null!;
-    public virtual Employee Employee { get; set; } = null!;
 }
