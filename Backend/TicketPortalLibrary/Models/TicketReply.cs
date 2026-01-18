@@ -14,11 +14,11 @@ public class TicketReply
     public int TicketId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(Ticket))]
+    [ForeignKey(nameof(Ticket.CreatedByEmpId))]
     public int RepliedByCreatorEmpId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(Ticket))]
+    [ForeignKey(nameof(Ticket.AssignedToEmpId))]
     public int RepliedByAssignedEmpId { get; set; }
 
     [Required(ErrorMessage = "Reply message is required.")]
