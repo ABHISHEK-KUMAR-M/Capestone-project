@@ -1,0 +1,15 @@
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\bin\Debug\net10.0\TicketPortalLibrary.deps.json
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\bin\Debug\net10.0\TicketPortalLibrary.dll
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\bin\Debug\net10.0\TicketPortalLibrary.pdb
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.csproj.AssemblyReference.cache
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.AssemblyInfoInputs.cache
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.AssemblyInfo.cs
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.csproj.CoreCompileInputs.cache
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.sourcelink.json
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.dll
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\refint\TicketPortalLibrary.dll
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\TicketPortalLibrary.pdb
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\TicketPortalLibrary\obj\Debug\net10.0\ref\TicketPortalLibrary.dll
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\ticketportallibrary\bin\Debug\net10.0\TicketPortalLibrary.runtimeconfig.json
+C:\Users\BF249MB\OneDrive - EY\Documents\.netFull stack training\Capestone project\Backend\ticketportallibrary\obj\Debug\net10.0\TicketPortalLibrary.genruntimeconfig.cache

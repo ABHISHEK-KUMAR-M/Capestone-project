@@ -6,21 +6,20 @@ public class TicketRepository : ITicketRepository
 {
     private readonly TicketPortalDbContext _context = new();
 
-    public async Task<Ticket> CreateTicketAsync(Ticket ticket)
+    public async Task CreateTicketAsync(Ticket ticket)
     {
         try
         {
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
-            return ticket;
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while creating ticket. " + ex.Message);
+            throw new TicketException("Unexpected error while creating ticket. " + ex.Message,499);
         }
     }
 
-    public async Task<Ticket> UpdateTicketAsync(Ticket ticket)
+    public async Task UpdateTicketAsync(Ticket ticket)
     {
         Ticket existing =await GetTicketByIdAsync(ticket.TicketId);
         try
@@ -34,11 +33,10 @@ public class TicketRepository : ITicketRepository
             existing.DueAt = ticket.DueAt;
 
             await _context.SaveChangesAsync();
-            return existing;
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while updating ticket. " + ex.Message);
+            throw new TicketException("Unexpected error while updating ticket. " + ex.Message,499);
         }
     }
 
@@ -49,11 +47,11 @@ public class TicketRepository : ITicketRepository
                                 .FirstOrDefaultAsync(t => t.TicketId == ticketId);
         if (ticket == null)
         {
-            throw new TicketException("Ticket not found.");
+            throw new TicketException("Ticket not found.",404);
         }
         else if (ticket.TicketReplies.Count > 0)
         {
-            throw new TicketException("Ticket is being used.Delete All the Ticket logs Before Deleting");
+            throw new TicketException("Ticket is being used.Delete All the Ticket logs Before Deleting",499);
         }
         _context.Tickets.Remove(ticket);
         await _context.SaveChangesAsync();
@@ -64,7 +62,7 @@ public class TicketRepository : ITicketRepository
         var ticketbyId=await _context.Tickets.FirstOrDefaultAsync(t => t.TicketId == ticketId);
         if (ticketbyId == null)
         {
-            throw new Exception("Ticket Not found");
+            throw new TicketException("Ticket Not found",404);
         }
         return ticketbyId;
     }

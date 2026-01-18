@@ -17,7 +17,7 @@ public class SlaRepository : ISlaRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while creating SLA. " + ex.Message);
+            throw new TicketException("Unexpected error while creating SLA. " + ex.Message,499);
         }
     }
 
@@ -35,7 +35,7 @@ public class SlaRepository : ISlaRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while updating SLA. " + ex.Message);
+            throw new TicketException("Unexpected error while updating SLA. " + ex.Message,499);
         }
     }
 
@@ -47,11 +47,11 @@ public class SlaRepository : ISlaRepository
 
         if (sla == null)
         {
-            throw new TicketException("SLA not found.");
+            throw new TicketException("SLA not found.",404);
         }
         else if (sla.TicketTypes.Count > 0)
         {
-            throw new TicketException("SLA is associated with Ticket Types. Remove them before deleting SLA.");
+            throw new TicketException("SLA is associated with Ticket Types. Remove them before deleting SLA.",499);
         }
 
         _context.SLAs.Remove(sla);
@@ -63,7 +63,7 @@ public class SlaRepository : ISlaRepository
         var sla = await _context.SLAs.FirstOrDefaultAsync(s => s.SlaId == slaId);
         if (sla == null)
         {
-            throw new TicketException("SLA not found.");
+            throw new TicketException("SLA not found.",404);
         }
         return sla;
     }
@@ -81,7 +81,7 @@ public class SlaRepository : ISlaRepository
 
         if (ticketType == null)
         {
-            throw new TicketException("Ticket Type not found.");
+            throw new TicketException("Ticket Type not found.",404);
         }
 
         return ticketType.SLA;

@@ -3,8 +3,8 @@ using TicketPortalLibrary.Models;
 namespace TicketPortalLibrary.Repos;
 public interface ITicketRepository
 {
-    Task<Ticket> CreateTicketAsync(Ticket ticket);
-    Task<Ticket> UpdateTicketAsync(Ticket ticket);
+    Task CreateTicketAsync(Ticket ticket);
+    Task UpdateTicketAsync(Ticket ticket);
     
     Task DeleteTicketAsync(int ticketId);
     Task<Ticket> GetTicketByIdAsync(int ticketId);

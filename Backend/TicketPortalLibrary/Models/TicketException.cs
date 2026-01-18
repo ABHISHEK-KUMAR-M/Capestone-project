@@ -4,9 +4,10 @@ namespace TicketPortalLibrary.Models;
 
 public class TicketException :Exception
 {
-    public TicketException(string msg):base(msg)
+    public int ErrorNumber;
+    public TicketException(string msg,int errNo):base(msg)
     {
-        
+        this.ErrorNumber=errNo;
     }
 
 }
