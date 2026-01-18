@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj": {}
+    "C:\\Users\\HT828YZ\\OneDrive - EY\\Documents\\dotnet trainning\\Capstone Project\\Capestone-project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj": {
+    "C:\\Users\\HT828YZ\\OneDrive - EY\\Documents\\dotnet trainning\\Capstone Project\\Capestone-project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\HT828YZ\\OneDrive - EY\\Documents\\dotnet trainning\\Capstone Project\\Capestone-project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj",
         "projectName": "TicketPortalLibrary",
-        "projectPath": "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj",
-        "packagesPath": "C:\\Users\\BF249MB\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalLibrary\\obj\\",
+        "projectPath": "C:\\Users\\HT828YZ\\OneDrive - EY\\Documents\\dotnet trainning\\Capstone Project\\Capestone-project\\Backend\\TicketPortalLibrary\\TicketPortalLibrary.csproj",
+        "packagesPath": "C:\\Users\\HT828YZ\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HT828YZ\\OneDrive - EY\\Documents\\dotnet trainning\\Capstone Project\\Capestone-project\\Backend\\TicketPortalLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\BF249MB\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HT828YZ\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
