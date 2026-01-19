@@ -24,7 +24,7 @@ public class TicketPortalDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "Server=tcp:capestone-team2.database.windows.net,1433;Initial Catalog=TicketPortal;Persist Security Info=False;User ID=Abhishek;Password=Aryansh@1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+            "data source=localhost\\SQLEXPRESS;database=EYTicketPortal; user id=sa; password=User%2025; Trust Server Certificate=true"
         );
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
