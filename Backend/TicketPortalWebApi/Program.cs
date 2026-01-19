@@ -2,15 +2,17 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using TicketPortalLibrary.Models;
 using TicketPortalLibrary.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<TicketPortalDbContext>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITicketRepository,TicketRepository>();
 builder.Services.AddScoped<ISlaRepository,SlaRepository>();
+builder.Services.AddScoped<ITicketReplyRepository, TicketReplyRepository>();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>
 {
