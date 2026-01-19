@@ -17,7 +17,7 @@ public class SlaRepository : ISlaRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while creating SLA. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while updating SLA. {ex.Message}",499);
         }
     }
 
@@ -35,7 +35,7 @@ public class SlaRepository : ISlaRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while updating SLA. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while updating SLA. {ex.Message}",499);
         }
     }
 

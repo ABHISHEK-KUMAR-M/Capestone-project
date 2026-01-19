@@ -17,7 +17,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while creating department. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while creating department. {ex.Message}" ,499);
         }
     }
 
@@ -35,7 +35,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while updating department. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while updating department. {ex.Message}" ,499);
         }
     }
 

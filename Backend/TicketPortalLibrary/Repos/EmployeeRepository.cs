@@ -17,7 +17,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while creating employee. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while updating employee. {ex.Message}" ,499);
         }
     }
 
@@ -38,7 +38,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while updating employee. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while updating employee. {ex.Message}" ,499);
         }
     }
 

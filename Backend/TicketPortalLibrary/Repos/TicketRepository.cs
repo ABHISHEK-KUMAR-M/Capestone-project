@@ -15,7 +15,7 @@ public class TicketRepository : ITicketRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while creating ticket. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while creating ticket. {ex.Message}",499);
         }
     }
 
@@ -36,7 +36,7 @@ public class TicketRepository : ITicketRepository
         }
         catch (Exception ex)
         {
-            throw new TicketException("Unexpected error while updating ticket. " + ex.Message,499);
+            throw new TicketException($"Unexpected error while creating ticket. {ex.Message}",499);
         }
     }
 
