@@ -17,7 +17,7 @@ namespace TicketPortalWebApi.Controllers
             _slaRepository = slaRepository;
         }
 
-        // GET: api/sla
+
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll()
@@ -26,7 +26,7 @@ namespace TicketPortalWebApi.Controllers
             return Ok(slas);
         }
 
-        // GET: api/sla/5
+
         [HttpGet("{slaId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -43,7 +43,7 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // GET: api/sla/bytickettype/3
+
         [HttpGet("bytickettype/{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -60,7 +60,7 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // POST: api/sla
+  
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -77,7 +77,7 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // PUT: api/sla
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -99,7 +99,7 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        // DELETE: api/sla/5
+       
         [HttpDelete("{slaId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
