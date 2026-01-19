@@ -60,5 +60,15 @@
     "C:\\Users\\BF249MB\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\BF249MB\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalWebApi\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalWebApi\\TicketPortalWebApi.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\BF249MB\\OneDrive - EY\\Documents\\.netFull stack training\\Capestone project\\Backend\\TicketPortalWebApi\\TicketPortalWebApi.csproj",
+      "targetGraphs": []
+    }
+  ]
 }
