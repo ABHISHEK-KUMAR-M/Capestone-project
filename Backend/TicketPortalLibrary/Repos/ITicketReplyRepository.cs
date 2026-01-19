@@ -4,11 +4,11 @@ namespace TicketPortalLibrary.Repos;
 
 public interface ITicketReplyRepository
 {
-    Task<TicketReply> CreateTicketReplyAsync(TicketReply reply);
-    Task<TicketReply> UpdateTicketReplyAsync(TicketReply reply);
+    Task CreateTicketReplyAsync(TicketReply reply);
+    Task UpdateTicketReplyAsync(TicketReply reply);
     Task DeleteTicketReplyAsync(int replyId);
     Task<TicketReply?> GetTicketReplyByIdAsync(int replyId);
     Task<IEnumerable<TicketReply>> GetAllTicketRepliesAsync();
     Task<IEnumerable<TicketReply>> GetByTicketIdAsync(int ticketId);
-    Task<IEnumerable<TicketReply>> GetByEmployeeIdAsync(int empId);
+    Task<IEnumerable<TicketReply>> GetByEmployeeIdAsync(string empId);
 }

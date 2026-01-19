@@ -28,7 +28,7 @@ namespace TicketPortalWebApi.Controllers
         [HttpGet("{departmentId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int departmentId)
+        public async Task<ActionResult> GetById(string departmentId)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int departmentId)
+        public async Task<ActionResult> Delete(string departmentId)
         {
             try
             {

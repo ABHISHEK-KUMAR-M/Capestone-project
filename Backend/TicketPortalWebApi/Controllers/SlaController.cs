@@ -30,7 +30,7 @@ namespace TicketPortalWebApi.Controllers
         [HttpGet("{slaId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int slaId)
+        public async Task<ActionResult> GetById(string slaId)
         {
             try
             {
@@ -43,22 +43,6 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-
-        [HttpGet("bytickettype/{ticketTypeId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult> GetByTicketType(int ticketTypeId)
-        {
-            try
-            {
-                var sla = await _slaRepository.GetByTicketTypeIdAsync(ticketTypeId);
-                return Ok(sla);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
 
   
         [HttpPost]
@@ -104,7 +88,7 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int slaId)
+        public async Task<ActionResult> Delete(string slaId)
         {
             try
             {

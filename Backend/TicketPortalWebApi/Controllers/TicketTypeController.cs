@@ -23,7 +23,7 @@ namespace TicketPortalWebApi.Controllers
         [HttpGet("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int ticketTypeId){
+        public async Task<ActionResult> GetById(string ticketTypeId){
             try{
                 var ticketType = await _ticketTypeRepository.GetTicketTypeByIdAsync(ticketTypeId);
                 return Ok(ticketType);
@@ -34,13 +34,13 @@ namespace TicketPortalWebApi.Controllers
         }
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByDepartment(int departmentId){
+        public async Task<ActionResult> GetByDepartment(string departmentId){
             var ticketTypes = await _ticketTypeRepository.GetByDepartmentIdAsync(departmentId);
             return Ok(ticketTypes);
         }
         [HttpGet("sla/{slaId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetBySla(int slaId){
+        public async Task<ActionResult> GetBySla(string slaId){
             var ticketTypes = await _ticketTypeRepository.GetBySlaIdAsync(slaId);
             return Ok(ticketTypes);
         }
@@ -76,7 +76,7 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int ticketTypeId){
+        public async Task<ActionResult> Delete(string ticketTypeId){
             try{
                 await _ticketTypeRepository.DeleteTicketTypeAsync(ticketTypeId);
                 return Ok("Ticket type deleted successfully");

@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TicketPortalLibrary.Models;
 
@@ -7,13 +8,16 @@ public class SlaRepository : ISlaRepository
 {
     private readonly TicketPortalDbContext _context = new();
 
-    public async Task<SLA> CreateSlaAsync(SLA sla)
+    public async Task CreateSlaAsync(SLA sla)
     {
         try
         {
             await _context.SLAs.AddAsync(sla);
             await _context.SaveChangesAsync();
-            return sla;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -21,7 +25,7 @@ public class SlaRepository : ISlaRepository
         }
     }
 
-    public async Task<SLA> UpdateSlaAsync(SLA sla)
+    public async Task UpdateSlaAsync(SLA sla)
     {
         var existing = await GetSlaByIdAsync(sla.SlaId);
         try
@@ -31,7 +35,10 @@ public class SlaRepository : ISlaRepository
             existing.Description = sla.Description;
 
             await _context.SaveChangesAsync();
-            return existing;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -39,7 +46,7 @@ public class SlaRepository : ISlaRepository
         }
     }
 
-    public async Task DeleteSlaAsync(int slaId)
+    public async Task DeleteSlaAsync(string slaId)
     {
         var sla = await _context.SLAs
             .Include(s => s.TicketTypes)
@@ -58,7 +65,7 @@ public class SlaRepository : ISlaRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<SLA?> GetSlaByIdAsync(int slaId)
+    public async Task<SLA?> GetSlaByIdAsync(string slaId)
     {
         var sla = await _context.SLAs.FirstOrDefaultAsync(s => s.SlaId == slaId);
         if (sla == null)
@@ -73,17 +80,4 @@ public class SlaRepository : ISlaRepository
         return await _context.SLAs.ToListAsync();
     }
 
-    public async Task<SLA?> GetByTicketTypeIdAsync(int ticketTypeId)
-    {
-        var ticketType = await _context.TicketTypes
-            .Include(tt => tt.SLA)
-            .FirstOrDefaultAsync(tt => tt.TicketTypeId == ticketTypeId);
-
-        if (ticketType == null)
-        {
-            throw new TicketException("Ticket Type not found.",404);
-        }
-
-        return ticketType.SLA;
-    }
 }
