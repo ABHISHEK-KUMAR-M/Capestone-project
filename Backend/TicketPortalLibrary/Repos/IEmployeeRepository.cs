@@ -11,5 +11,3 @@ public interface IEmployeeRepository
     Task<IEnumerable<Employee>> GetAllEmployeesAsync();
     Task<IEnumerable<Employee>> GetByDepartmentIdAsync(int departmentId);
 }
-
-
