@@ -17,7 +17,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while creating employee. " + ex.Message);
+            throw new TicketException("Unexpected error while creating employee. " + ex.Message,499);
         }
     }
 
@@ -38,7 +38,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while updating employee. " + ex.Message);
+            throw new TicketException("Unexpected error while updating employee. " + ex.Message,499);
         }
     }
 
@@ -46,13 +46,18 @@ public class EmployeeRepository : IEmployeeRepository
     {
         var employee = await _context.Employees
             .Include(e => e.Department)
+            .Include(e => e.AssignedTickets)
+            .Include(e=>e.CreatedTickets)
             .FirstOrDefaultAsync(e => e.EmpId == empId);
 
         if (employee == null)
         {
-            throw new Exception("Employee not found.");
+            throw new TicketException("Employee not found.",404);
         }
-
+        else if(employee.AssignedTickets.Count >0 || employee.CreatedTickets.Count > 0)
+        {
+            throw new TicketException("Employee is in use. Delete all the Employee Dependencies before deleting.",499);
+        }
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
     }
@@ -65,7 +70,7 @@ public class EmployeeRepository : IEmployeeRepository
 
         if (employee == null)
         {
-            throw new Exception("Employee not found.");
+            throw new TicketException("Employee not found.",404);
         }
 
         return employee;

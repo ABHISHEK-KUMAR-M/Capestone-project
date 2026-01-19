@@ -17,7 +17,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while creating department. " + ex.Message);
+            throw new TicketException("Unexpected error while creating department. " + ex.Message,499);
         }
     }
 
@@ -35,7 +35,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Unexpected error while updating department. " + ex.Message);
+            throw new TicketException("Unexpected error while updating department. " + ex.Message,499);
         }
     }
 
@@ -48,11 +48,11 @@ public class DepartmentRepository : IDepartmentRepository
 
         if (department == null)
         {
-            throw new Exception("Department not found.");
+            throw new TicketException("Department not found.",404);
         }
         else if (department.Employees.Any() || department.TicketTypes.Any())
         {
-            throw new Exception("Department is in use. Remove related records before deleting.");
+            throw new TicketException("Department is in use. Remove related records before deleting.",499);
         }
 
         _context.Departments.Remove(department);
@@ -68,7 +68,7 @@ public class DepartmentRepository : IDepartmentRepository
 
         if (department == null)
         {
-            throw new Exception("Department not found.");
+            throw new TicketException("Department not found.",404);
         }
 
         return department;
