@@ -7,7 +7,6 @@ namespace TicketPortalWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -18,6 +17,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll()
         {
@@ -26,6 +26,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("{empId}")]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetById(int empId)
@@ -42,6 +43,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("department/{departmentId}")]
+        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetByDepartment(int departmentId)
         {
@@ -50,6 +52,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult> Create(Employee employee)
@@ -66,6 +69,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -87,6 +91,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpDelete("{empId}")]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -104,6 +109,23 @@ namespace TicketPortalWebApi.Controllers
                     return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Login(string email, string password)
+        {
+            try
+            {
+                var employee = await _employeeRepository.LoginEmployee(email, password);
+                return Ok(employee);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
     }

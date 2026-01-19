@@ -78,16 +78,31 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
     {
-        return await _context.Employees
+        var Employee=await _context.Employees
             .Include(e => e.Department)
             .ToListAsync();
+
+        return Employee;
     }
 
     public async Task<IEnumerable<Employee>> GetByDepartmentIdAsync(int departmentId)
     {
-        return await _context.Employees
+        var Employee=await _context.Employees
             .Where(e => e.DepartmentId == departmentId)
             .Include(e => e.Department)
             .ToListAsync();
+
+        return Employee;
+    }
+
+    public async Task<Employee> LoginEmployee(string email, string password)
+    {
+        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
+        if (Employee == null)
+        {
+            throw new TicketException("Employee not found.",404);
+        }
+        return Employee;
     }
 }
+

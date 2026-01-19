@@ -76,9 +76,12 @@ public class DepartmentRepository : IDepartmentRepository
 
     public async Task<IEnumerable<Department>> GetAllDepartmentsAsync()
     {
-        return await _context.Departments
+        var department = await _context.Departments
             .Include(d => d.Employees)
             .Include(d => d.TicketTypes)
             .ToListAsync();
+
+        return department;
+
     }
 }
