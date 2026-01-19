@@ -1,5 +1,6 @@
 using TicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace TicketPortalLibrary.Repos;
 
@@ -7,21 +8,23 @@ public class DepartmentRepository : IDepartmentRepository
 {
     private readonly TicketPortalDbContext _context = new();
 
-    public async Task<Department> CreateDepartmentAsync(Department department)
+    public async Task CreateDepartmentAsync(Department department)
     {
         try
         {
             await _context.Departments.AddAsync(department);
             await _context.SaveChangesAsync();
-            return department;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
             throw new TicketException($"Unexpected error while creating department. {ex.Message}" ,499);
         }
     }
-
-    public async Task<Department> UpdateDepartmentAsync(Department department)
+    public async Task UpdateDepartmentAsync(Department department)
     {
         var existing = await GetDepartmentByIdAsync(department.DepartmentId);
 
@@ -31,7 +34,10 @@ public class DepartmentRepository : IDepartmentRepository
             existing.Description = department.Description;
 
             await _context.SaveChangesAsync();
-            return existing;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -39,7 +45,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
     }
 
-    public async Task DeleteDepartmentAsync(int departmentId)
+    public async Task DeleteDepartmentAsync(string departmentId)
     {
         var department = await _context.Departments
             .Include(d => d.Employees)
@@ -55,11 +61,17 @@ public class DepartmentRepository : IDepartmentRepository
             throw new TicketException("Department is in use. Remove related records before deleting.",499);
         }
 
-        _context.Departments.Remove(department);
-        await _context.SaveChangesAsync();
+        try{    
+            _context.Departments.Remove(department);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
     }
 
-    public async Task<Department?> GetDepartmentByIdAsync(int departmentId)
+    public async Task<Department?> GetDepartmentByIdAsync(string departmentId)
     {
         var department = await _context.Departments
             .Include(d => d.Employees)

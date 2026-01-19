@@ -15,8 +15,7 @@ namespace TicketPortalLibrary.Migrations
                 name: "Departments",
                 columns: table => new
                 {
-                    DepartmentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DepartmentName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
@@ -29,8 +28,7 @@ namespace TicketPortalLibrary.Migrations
                 name: "SLAs",
                 columns: table => new
                 {
-                    SlaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SlaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ResponseTime = table.Column<int>(type: "int", nullable: false),
                     ResolutionHours = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
@@ -44,13 +42,12 @@ namespace TicketPortalLibrary.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    EmpId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmpId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Role = table.Column<string>(type: "varchar(20)", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true)
+                    DepartmentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,12 +63,11 @@ namespace TicketPortalLibrary.Migrations
                 name: "TicketType",
                 columns: table => new
                 {
-                    TicketTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TicketTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TypeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    SlaId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SlaId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,9 +94,9 @@ namespace TicketPortalLibrary.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    TicketTypeId = table.Column<int>(type: "int", nullable: false),
-                    CreatedByEmpId = table.Column<int>(type: "int", nullable: false),
-                    AssignedToEmpId = table.Column<int>(type: "int", nullable: true),
+                    TicketTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedByEmpId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssignedToEmpId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DueAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -136,8 +132,8 @@ namespace TicketPortalLibrary.Migrations
                     ReplyId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TicketId = table.Column<int>(type: "int", nullable: false),
-                    RepliedByCreatorEmpId = table.Column<int>(type: "int", nullable: false),
-                    RepliedByAssignedEmpId = table.Column<int>(type: "int", nullable: false),
+                    RepliedByCreatorEmpId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RepliedByAssignedEmpId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

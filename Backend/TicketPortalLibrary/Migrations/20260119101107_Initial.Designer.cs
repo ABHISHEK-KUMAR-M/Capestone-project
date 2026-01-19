@@ -12,7 +12,7 @@ using TicketPortalLibrary.Models;
 namespace TicketPortalLibrary.Migrations
 {
     [DbContext(typeof(TicketPortalDbContext))]
-    [Migration("20260118164411_Initial")]
+    [Migration("20260119101107_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,11 +27,8 @@ namespace TicketPortalLibrary.Migrations
 
             modelBuilder.Entity("TicketPortalLibrary.Models.Department", b =>
                 {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DepartmentName")
                         .IsRequired()
@@ -49,14 +46,11 @@ namespace TicketPortalLibrary.Migrations
 
             modelBuilder.Entity("TicketPortalLibrary.Models.Employee", b =>
                 {
-                    b.Property<int>("EmpId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("EmpId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpId"));
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -86,11 +80,8 @@ namespace TicketPortalLibrary.Migrations
 
             modelBuilder.Entity("TicketPortalLibrary.Models.SLA", b =>
                 {
-                    b.Property<int>("SlaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SlaId"));
+                    b.Property<string>("SlaId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
@@ -115,14 +106,15 @@ namespace TicketPortalLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
 
-                    b.Property<int?>("AssignedToEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("AssignedToEmpId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatedByEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedByEmpId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -139,8 +131,9 @@ namespace TicketPortalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("TicketTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("TicketTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -174,11 +167,13 @@ namespace TicketPortalLibrary.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<int>("RepliedByAssignedEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("RepliedByAssignedEmpId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RepliedByCreatorEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("RepliedByCreatorEmpId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
@@ -192,21 +187,20 @@ namespace TicketPortalLibrary.Migrations
 
             modelBuilder.Entity("TicketPortalLibrary.Models.TicketType", b =>
                 {
-                    b.Property<int>("TicketTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("TicketTypeId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketTypeId"));
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("SlaId")
-                        .HasColumnType("int");
+                    b.Property<string>("SlaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TypeName")
                         .IsRequired()

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TicketPortalLibrary.Models;
 
@@ -7,7 +8,8 @@ namespace TicketPortalLibrary.Models;
 public class Employee
 {
     [Key]
-    public int EmpId { get; set; }
+    [RegularExpression(@"^[A-Z]\d{4}$",ErrorMessage = "Invalid format. Example: B0001,J0001")]
+    public string EmpId { get; set; }
 
     [Required(ErrorMessage = "Employee name is required.")]
     [MaxLength(100)]
@@ -29,9 +31,11 @@ public class Employee
     public string Role { get; set; } = null!;
 
     [ForeignKey(nameof(Department))]
-    public int? DepartmentId { get; set; }
+    public string? DepartmentId { get; set; }
 
     public virtual Department? Department { get; set; }
-    public virtual ICollection<Ticket> CreatedTickets {get; set;}=[];
-    public virtual ICollection<Ticket> AssignedTickets {get; set;}=[];
+    [JsonIgnore]
+    public virtual ICollection<Ticket>? CreatedTickets {get; set;}=[];
+    [JsonIgnore]
+    public virtual ICollection<Ticket>? AssignedTickets {get; set;}=[];
 }

@@ -1,13 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Text.Json.Serialization;
 namespace TicketPortalLibrary.Models;
 
 [Table("SLAs")]
 public class SLA
 {
     [Key]
-    public int SlaId { get; set; }
+    [RegularExpression(@"^[A-Z]\d{4}$",ErrorMessage = "Invalid format. Example: B0001,J0001")]
+    public string SlaId { get; set; }
 
     [Required(ErrorMessage = "Response time is required.")]
     [Range(1, 168)]
@@ -19,5 +20,6 @@ public class SLA
 
     [MaxLength(255)]
     public string? Description { get; set; }
-    public virtual ICollection<TicketType> TicketTypes { get; set; } = [];
+    [JsonIgnore]
+    public virtual ICollection<TicketType>? TicketTypes { get; set; } = [];
 }

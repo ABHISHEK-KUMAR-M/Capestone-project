@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TicketPortalLibrary.Models;
 
@@ -18,14 +19,14 @@ public class Ticket
 
     [Required]
     [ForeignKey(nameof(TicketType))]
-    public int TicketTypeId { get; set; }
+    public string TicketTypeId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(CreatedByEmployee))]
-    public int CreatedByEmpId { get; set; }
+    // [ForeignKey(nameof(CreatedByEmployee))]
+    public string CreatedByEmpId { get; set; }
 
-    [ForeignKey(nameof(AssignedEmployee))]
-    public int? AssignedToEmpId { get; set; }
+    // [ForeignKey(nameof(AssignedEmployee))]
+    public string? AssignedToEmpId { get; set; }
 
     [Required]
     [RegularExpression("Open|InProgress|Resolved|Closed")]
@@ -39,8 +40,11 @@ public class Ticket
     public DateTime DueAt { get; set; }
 
     public DateTime? ResolvedAt { get; set; }
-    public virtual TicketType TicketType { get; set; } = null!;
-    public virtual Employee CreatedByEmployee { get; set; } = null!;
+    public virtual TicketType? TicketType { get; set; } = null!;
+    // [ForeignKey(nameof(CreatedByEmployee))]
+    public virtual Employee? CreatedByEmployee { get; set; } = null!;
+    // [ForeignKey(nameof(AssignedEmployee))]
     public virtual Employee? AssignedEmployee { get; set; }
-    public virtual ICollection<TicketReply> TicketReplies { get; set; } = [];
+    [JsonIgnore]
+    public virtual ICollection<TicketReply>? TicketReplies { get; set; } = [];
 }
