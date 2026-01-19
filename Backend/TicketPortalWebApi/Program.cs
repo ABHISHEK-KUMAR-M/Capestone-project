@@ -10,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITicketRepository,TicketRepository>();
+builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+builder.Services.AddScoped<ITicketTypeRepository,TicketTypeRepository>();
+builder.Services.AddScoped<ITicketReplyRepository,TicketReplyRepository>();
 builder.Services.AddScoped<ISlaRepository,SlaRepository>();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>

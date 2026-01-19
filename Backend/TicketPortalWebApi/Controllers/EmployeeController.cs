@@ -28,7 +28,7 @@ namespace TicketPortalWebApi.Controllers
         [HttpGet("{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int empId)
+        public async Task<ActionResult> GetById(string empId)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByDepartment(int departmentId)
+        public async Task<ActionResult> GetByDepartment(string departmentId)
         {
             var employees = await _employeeRepository.GetByDepartmentIdAsync(departmentId);
             return Ok(employees);
@@ -90,7 +90,7 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int empId)
+        public async Task<ActionResult> Delete(string empId)
         {
             try
             {
@@ -104,6 +104,22 @@ namespace TicketPortalWebApi.Controllers
                     return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("login")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Login(string email, string password)
+        {
+            try
+            {
+                var employee = await _employeeRepository.LoginEmployee(email, password);
+                return Ok(employee);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
     }

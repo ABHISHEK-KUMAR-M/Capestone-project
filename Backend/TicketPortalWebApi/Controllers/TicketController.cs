@@ -43,14 +43,14 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("createdby/{empId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByCreatedBy(int empId)
+        public async Task<ActionResult> GetByCreatedBy(string empId)
         {
             var tickets = await _ticketRepository.GetByCreatedByEmpIdAsync(empId);
             return Ok(tickets);
         }
 
         [HttpGet("assignedto/{empId}")]
-        public async Task<ActionResult> GetByAssignedTo(int empId)
+        public async Task<ActionResult> GetByAssignedTo(string empId)
         {
             var tickets = await _ticketRepository.GetByAssignedToEmpIdAsync(empId);
             return Ok(tickets);
@@ -64,14 +64,14 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("department/{departmentId}")]
-        public async Task<ActionResult> GetByDepartment(int departmentId)
+        public async Task<ActionResult> GetByDepartment(string departmentId)
         {
             var tickets = await _ticketRepository.GetByDepartmentIdAsync(departmentId);
             return Ok(tickets);
         }
 
         [HttpGet("departmentwithstatus/{departmentId}/{status}")]
-        public async Task<ActionResult> GetByDepartmentAndStatus(int departmentId, string status)
+        public async Task<ActionResult> GetByDepartmentAndStatus(string departmentId, string status)
         {
             var tickets = await _ticketRepository
                 .GetByDepartmentAndStatusAsync(departmentId, status);
@@ -79,7 +79,7 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("type/{ticketTypeId}")]
-        public async Task<ActionResult> GetByTicketType(int ticketTypeId)
+        public async Task<ActionResult> GetByTicketType(string ticketTypeId)
         {
             var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);
             return Ok(tickets);
