@@ -1,0 +1,58 @@
+<h2>Department Management</h2>
+
+<p style="color:red" *ngIf="errMsg">
+  {{ errMsg }}
+</p>
+
+<h3>Department Form</h3>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="department.departmentId">
+  <button (click)="getDepartment()">Show</button>
+</div>
+
+<br>
+
+<div>
+  <label>Department Name:</label>
+  <input type="text" [(ngModel)]="department.departmentName">
+</div>
+
+<br>
+
+<div>
+  <label>Description:</label>
+  <input type="text" [(ngModel)]="department.description">
+</div>
+
+<br>
+
+<button (click)="addDepartment()">Save</button>
+<button (click)="updateDepartment()">Update</button>
+<button (click)="deleteDepartment()">Delete</button>
+<button (click)="newDepartment()">Clear</button>
+
+<hr>
+
+<h3>List of Departments</h3>
+
+<button (click)="loadDepartments()">Show All</button>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Department ID</th>
+    <th>Department Name</th>
+    <th>Description</th>
+  </tr>
+
+  <tr *ngFor="let d of departments">
+    <td>{{ d.departmentId }}</td>
+    <td>{{ d.departmentName }}</td>
+    <td>{{ d.description }}</td>
+  </tr>
+
+  <tr *ngIf="departments.length === 0">
+    <td colspan="3">No departments found</td>
+  </tr>
+</table>
