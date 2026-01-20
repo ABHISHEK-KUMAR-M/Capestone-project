@@ -1,1 +1,48 @@
-<p>ticketreply-component works!</p>
+<h2>Ticket Reply (Chat)</h2>
+
+<p style="color:red" *ngIf="errMsg">
+  {{ errMsg }}
+</p>
+
+<h3>Ticket Conversation</h3>
+
+<div>
+  <label>Ticket ID:</label>
+  <input type="number" [(ngModel)]="reply.ticketId">
+  <button (click)="loadRepliesByTicket()">Load Chat</button>
+</div>
+
+<hr>
+
+<div style="border:1px solid #ccc; padding:10px; max-height:300px; overflow-y:auto;">
+  <div *ngFor="let r of replies"
+       [style.text-align]="r.repliedByCreatorEmpId ? 'right' : 'left'"
+       style="margin-bottom:10px;">
+    
+    <b>
+      {{ r.repliedByCreatorEmpId ? 'Creator' : 'Assigned' }}
+    </b>
+    <br>
+    <span>{{ r.message }}</span>
+    <br>
+    <small>{{ r.createdAt | date:'short' }}</small>
+  </div>
+
+  <p *ngIf="replies.length === 0">
+    No replies found
+  </p>
+</div>
+
+<hr>
+
+<h3>Send Reply</h3>
+
+<div>
+  <label>Message:</label><br>
+  <textarea rows="3" cols="40" [(ngModel)]="reply.message"></textarea>
+</div>
+
+<br>
+
+<button (click)="sendReply()">Send</button>
+<button (click)="newReply()">Clear</button>
