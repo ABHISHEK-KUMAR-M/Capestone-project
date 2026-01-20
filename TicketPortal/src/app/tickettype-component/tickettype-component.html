@@ -1,0 +1,74 @@
+<h2>Ticket Type Management</h2>
+
+<p style="color:red" *ngIf="errMsg">
+  {{ errMsg }}
+</p>
+
+<h3>Ticket Type Form</h3>
+
+<div>
+  <label>Ticket Type ID:</label>
+  <input type="text" [(ngModel)]="ticketType.ticketTypeId">
+  <button (click)="getTicketType()">Show</button>
+</div>
+
+<br>
+
+<div>
+  <label>Type Name:</label>
+  <input type="text" [(ngModel)]="ticketType.typeName">
+</div>
+
+<br>
+
+<div>
+  <label>Description:</label>
+  <input type="text" [(ngModel)]="ticketType.description">
+</div>
+
+<br>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="ticketType.departmentId">
+</div>
+
+<br>
+
+<div>
+  <label>SLA ID:</label>
+  <input type="text" [(ngModel)]="ticketType.slaId">
+</div>
+
+<br>
+
+<button (click)="addTicketType()">Save</button>
+<button (click)="updateTicketType()">Update</button>
+<button (click)="deleteTicketType()">Delete</button>
+<button (click)="newTicketType()">Clear</button>
+
+<hr>
+
+<h3>List of Ticket Types</h3>
+
+<button (click)="loadTicketTypes()">Show All</button>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>SLA</th>
+  </tr>
+
+  <tr *ngFor="let t of ticketTypes">
+    <td>{{ t.ticketTypeId }}</td>
+    <td>{{ t.typeName }}</td>
+    <td>{{ t.departmentId }}</td>
+    <td>{{ t.slaId }}</td>
+  </tr>
+
+  <tr *ngIf="ticketTypes.length === 0">
+    <td colspan="4">No ticket types found</td>
+  </tr>
+</table>
