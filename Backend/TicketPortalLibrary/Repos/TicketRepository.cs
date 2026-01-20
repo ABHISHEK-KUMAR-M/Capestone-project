@@ -23,9 +23,9 @@ public class TicketRepository : ITicketRepository
         }
     }
 
-    public async Task UpdateTicketAsync(Ticket ticket)
+    public async Task UpdateTicketAsync(int ticketId,Ticket ticket)
     {
-        Ticket existing =await GetTicketByIdAsync(ticket.TicketId);
+        Ticket existing =await GetTicketByIdAsync(ticketId);
         try
         {
 
@@ -93,12 +93,12 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByCreatedByEmpIdAsync(string empId)
+    public async Task<IEnumerable<Ticket>> GetByEmpIdAsync(string empId)
     {
         var ticketbyCreatedEmpId=await _context.Tickets
                                 .Include(t => t.TicketType)
                                 .ThenInclude(tt => tt.SLA)
-                                .Where(t => t.CreatedByEmpId == empId)
+                                .Where(t => t.CreatedByEmpId == empId || t.AssignedToEmpId==empId )
                                 .OrderBy(t => t.Status == "Open" ? 1 :
                                             t.Status == "InProgress" ? 2 :
                                             t.Status == "Resolved" ? 3 : 4)
@@ -110,25 +110,6 @@ public class TicketRepository : ITicketRepository
             throw new TicketException("No Ticket were found from this Employee.",404);
         }
         return ticketbyCreatedEmpId;
-    }
-
-    public async Task<IEnumerable<Ticket>> GetByAssignedToEmpIdAsync(string empId)
-    {
-        var ticketbyAssignedEmpId=await _context.Tickets
-                             .Include(t => t.TicketType)
-                             .ThenInclude(tt => tt.SLA)
-                             .Where(t => t.AssignedToEmpId == empId)
-                                .OrderBy(t => t.Status == "Open" ? 1 :
-                                            t.Status == "InProgress" ? 2 :
-                                            t.Status == "Resolved" ? 3 : 4)
-                                .ThenBy(t => t.TicketType!.SLA!.ResponseTime)
-                                .ThenBy(t => t.DueAt)
-                             .ToListAsync();
-        if (ticketbyAssignedEmpId.Count==0)
-        {
-            throw new TicketException("No Ticket were found for this Employee.",404);
-        }                            
-        return ticketbyAssignedEmpId;                     
     }
 
     public async Task<IEnumerable<Ticket>> GetByStatusAsync(string status)

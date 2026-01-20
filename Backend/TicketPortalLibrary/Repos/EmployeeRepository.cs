@@ -25,9 +25,9 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public async Task UpdateEmployeeAsync(Employee employee)
+    public async Task UpdateEmployeeAsync(string empId,Employee employee)
     {
-        var existing = await GetEmployeeByIdAsync(employee.EmpId);
+        var existing = await GetEmployeeByIdAsync(empId);
 
         try
         {
@@ -111,9 +111,9 @@ public class EmployeeRepository : IEmployeeRepository
         return Employee;
     }
 
-    public async Task<Employee> LoginEmployee(string email, string password)
+    public async Task<Employee> LoginEmployee(string empId, string password)
     {
-        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
+        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.EmpId==empId && e.Password==password);
         if (Employee == null)
         {
             throw new TicketException("Employee not found.",404);

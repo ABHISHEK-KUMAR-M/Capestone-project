@@ -87,15 +87,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{ticketReplyId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(TicketReply reply)
+        public async Task<ActionResult> Update(int ticketReplyId,TicketReply reply)
         {
             try
             {
-                await _ticketReplyRepository.UpdateTicketReplyAsync(reply);
+                await _ticketReplyRepository.UpdateTicketReplyAsync(ticketReplyId,reply);
                 return Ok(reply);
             }
             catch (TicketException ex)

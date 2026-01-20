@@ -17,6 +17,7 @@ builder.Services.AddScoped<ITicketTypeRepository,TicketTypeRepository>();
 builder.Services.AddScoped<ITicketReplyRepository,TicketReplyRepository>();
 builder.Services.AddScoped<ISlaRepository,SlaRepository>();
 builder.Services.AddScoped<ITicketReplyRepository, TicketReplyRepository>();
+builder.Services.AddCors(options=>options.AddPolicy("MyPolicy",policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -71,7 +72,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
-
+app.UseCors("MyPolicy");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -41,9 +41,7 @@ public class Ticket
 
     public DateTime? ResolvedAt { get; set; }
     public virtual TicketType? TicketType { get; set; } = null!;
-    // [ForeignKey(nameof(CreatedByEmployee))]
     public virtual Employee? CreatedByEmployee { get; set; } = null!;
-    // [ForeignKey(nameof(AssignedEmployee))]
     public virtual Employee? AssignedEmployee { get; set; }
     [JsonIgnore]
     public virtual ICollection<TicketReply>? TicketReplies { get; set; } = [];
