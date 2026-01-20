@@ -104,19 +104,13 @@ public class EmployeeRepository : IEmployeeRepository
             .Where(e => e.DepartmentId == departmentId)
             .Include(e => e.Department)
             .ToListAsync();
-
-        return Employee;
-    }
-
-    public async Task<Employee> LoginEmployee(string email, string password)
-    {
-        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
-        if (Employee == null)
+        if (Employee.Count == 0)
         {
             throw new TicketException("Employee not found.",404);
         }
         return Employee;
     }
+
     public async Task<Employee> LoginEmployee(string email, string password)
     {
         var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
