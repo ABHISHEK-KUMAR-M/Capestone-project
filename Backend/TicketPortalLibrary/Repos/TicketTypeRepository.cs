@@ -68,10 +68,18 @@ public class TicketTypeRepository : ITicketTypeRepository{
     }
     public async Task<IEnumerable<TicketType>> GetByDepartmentIdAsync(string departmentId){
         var ticketTypesByDepartment = await context.TicketTypes.Where(tt => tt.DepartmentId == departmentId).Include(tt => tt.Department).Include(tt => tt.SLA).ToListAsync();
+        if (ticketTypesByDepartment == null)
+        {
+            throw new TicketException("No TicketType were found for this Department.",404);
+        } 
         return ticketTypesByDepartment;
     }
     public async Task<IEnumerable<TicketType>> GetBySlaIdAsync(string slaId){
         var ticketTypesBySla = await context.TicketTypes.Where(tt =>tt.SlaId==slaId).Include(tt => tt.Department).Include(tt => tt.SLA).ToListAsync();
+        if (ticketTypesBySla == null)
+        {
+            throw new TicketException("No TicketType were found for this SLA.",404);
+        } 
         return ticketTypesBySla;
     }
 }

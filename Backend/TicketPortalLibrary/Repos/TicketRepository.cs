@@ -94,6 +94,10 @@ public class TicketRepository : ITicketRepository
         var ticketbyCreatedEmpId=await _context.Tickets
                              .Where(t => t.CreatedByEmpId == empId)
                              .ToListAsync();
+        if (ticketbyCreatedEmpId == null)
+        {
+            throw new TicketException("No Ticket were found from this Employee.",404);
+        }
         return ticketbyCreatedEmpId;
     }
 
@@ -102,6 +106,10 @@ public class TicketRepository : ITicketRepository
         var ticketbyAssignedEmpId=await _context.Tickets
                              .Where(t => t.AssignedToEmpId == empId)
                              .ToListAsync();
+        if (ticketbyAssignedEmpId == null)
+        {
+            throw new TicketException("No Ticket were found for this Employee.",404);
+        }                            
         return ticketbyAssignedEmpId;                     
     }
 
@@ -110,6 +118,11 @@ public class TicketRepository : ITicketRepository
         var ticketbyStatus=await _context.Tickets
                              .Where(t => t.Status == status)
                              .ToListAsync();
+
+        if (ticketbyStatus == null)
+        {
+            throw new TicketException("No Ticket were found for this Employee.",404);
+        }   
         return ticketbyStatus;
     }
 
@@ -119,6 +132,10 @@ public class TicketRepository : ITicketRepository
                              .Include(t => t.TicketType)
                              .Where(t => t.TicketType.DepartmentId == departmentId)
                              .ToListAsync();
+        if (ticketbyDepartmentId == null)
+        {
+            throw new TicketException("No Ticket were found for this Department.",404);
+        } 
         return ticketbyDepartmentId;
     }
 
@@ -127,18 +144,30 @@ public class TicketRepository : ITicketRepository
         var ticketByDepartmentAndStatus=await _context.Tickets.Include(t => t.TicketType)
                                     .Where(t => t.TicketType.DepartmentId == departmentId && t.Status == status)
                                     .ToListAsync();
+        if (ticketByDepartmentAndStatus == null)
+        {
+            throw new TicketException("No Ticket were found for this Department along with this status code.",404);
+        } 
         return ticketByDepartmentAndStatus;
     }
 
     public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(string ticketTypeId)
     {
         var ticketsByTypeId=await _context.Tickets.Where(t => t.TicketTypeId == ticketTypeId).ToListAsync();
+        if (ticketsByTypeId == null)
+        {
+            throw new TicketException("No Ticket were found for this TicketType.",404);
+        } 
         return ticketsByTypeId;
     }
 
     public async Task<IEnumerable<Ticket>> GetOverdueTicketsAsync()
     {
         var overdueTickets=await _context.Tickets.Where(t => t.ResolvedAt == null && DateTime.UtcNow > t.DueAt).ToListAsync();
+        if (overdueTickets == null)
+        {
+            throw new TicketException("No Ticket were found for this TicketType.",404);
+        } 
         return overdueTickets;
     }
 }

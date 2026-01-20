@@ -51,11 +51,7 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("employee/{empId}")]
         [ProducesResponseType(200)]
-<<<<<<< HEAD
-        public async Task<ActionResult> GetByEmployee(int empId)
-=======
         public async Task<ActionResult> GetByEmployee(string empId)
->>>>>>> abe0cf733e02927bdb6b3c880ec989a7c56fc265
         {
             var replies = await _ticketReplyRepository.GetByEmployeeIdAsync(empId);
             return Ok(replies);
@@ -119,8 +115,4 @@ namespace TicketPortalWebApi.Controllers
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> abe0cf733e02927bdb6b3c880ec989a7c56fc265

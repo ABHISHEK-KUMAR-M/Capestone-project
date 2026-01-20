@@ -17,7 +17,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll()
         {
@@ -26,7 +25,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("{empId}")]
-        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetById(string empId)
@@ -43,7 +41,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpGet("department/{departmentId}")]
-        [Authorize]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetByDepartment(string departmentId)
         {
@@ -52,7 +49,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult> Create(Employee employee)
@@ -69,7 +65,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpPut]
-        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -91,7 +86,6 @@ namespace TicketPortalWebApi.Controllers
         }
 
         [HttpDelete("{empId}")]
-        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -111,12 +105,7 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> abe0cf733e02927bdb6b3c880ec989a7c56fc265
         [HttpPost("login")]
-        [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Login(string email, string password)

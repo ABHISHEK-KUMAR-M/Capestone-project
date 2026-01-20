@@ -78,7 +78,7 @@ namespace TicketPortalWebApi.Controllers
             return Ok(tickets);
         }
 
-        [HttpGet("type/{ticketTypeId}")]
+        [HttpGet("byTickettype/{ticketTypeId}")]
         public async Task<ActionResult> GetByTicketType(string ticketTypeId)
         {
             var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);

@@ -117,14 +117,5 @@ public class EmployeeRepository : IEmployeeRepository
         }
         return Employee;
     }
-    public async Task<Employee> LoginEmployee(string email, string password)
-    {
-        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
-        if (Employee == null)
-        {
-            throw new TicketException("Employee not found.",404);
-        }
-        return Employee;
-    }
 }
 
