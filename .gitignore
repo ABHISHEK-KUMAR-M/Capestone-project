@@ -4,8 +4,11 @@ obj/
 
 ## Visual Studio
 .vs/
-.vscode/
+
+## Rider
+.idea/
 
 ## User-specific files
 *.user
 *.suo
+*.cache

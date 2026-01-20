@@ -1,5 +1,6 @@
 using TicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 namespace TicketPortalLibrary.Repos;
 
 public class TicketRepository : ITicketRepository
@@ -12,6 +13,10 @@ public class TicketRepository : ITicketRepository
         {
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -34,6 +39,10 @@ public class TicketRepository : ITicketRepository
 
             await _context.SaveChangesAsync();
         }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
         catch (Exception ex)
         {
             throw new TicketException($"Unexpected error while creating ticket. {ex.Message}",499);
@@ -53,8 +62,14 @@ public class TicketRepository : ITicketRepository
         {
             throw new TicketException("Ticket is being used.Delete All the Ticket logs Before Deleting",499);
         }
-        _context.Tickets.Remove(ticket);
-        await _context.SaveChangesAsync();
+        try{    
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
     }
 
     public async Task<Ticket> GetTicketByIdAsync(int ticketId)
@@ -74,7 +89,7 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByCreatedByEmpIdAsync(int empId)
+    public async Task<IEnumerable<Ticket>> GetByCreatedByEmpIdAsync(string empId)
     {
         var ticketbyCreatedEmpId=await _context.Tickets
                              .Where(t => t.CreatedByEmpId == empId)
@@ -82,7 +97,7 @@ public class TicketRepository : ITicketRepository
         return ticketbyCreatedEmpId;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByAssignedToEmpIdAsync(int empId)
+    public async Task<IEnumerable<Ticket>> GetByAssignedToEmpIdAsync(string empId)
     {
         var ticketbyAssignedEmpId=await _context.Tickets
                              .Where(t => t.AssignedToEmpId == empId)
@@ -98,7 +113,7 @@ public class TicketRepository : ITicketRepository
         return ticketbyStatus;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(int departmentId)
+    public async Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(string departmentId)
     {
         var ticketbyDepartmentId=await _context.Tickets
                              .Include(t => t.TicketType)
@@ -107,7 +122,7 @@ public class TicketRepository : ITicketRepository
         return ticketbyDepartmentId;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(int departmentId, string status)
+    public async Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(string departmentId, string status)
     {
         var ticketByDepartmentAndStatus=await _context.Tickets.Include(t => t.TicketType)
                                     .Where(t => t.TicketType.DepartmentId == departmentId && t.Status == status)
@@ -115,7 +130,7 @@ public class TicketRepository : ITicketRepository
         return ticketByDepartmentAndStatus;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(int ticketTypeId)
+    public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(string ticketTypeId)
     {
         var ticketsByTypeId=await _context.Tickets.Where(t => t.TicketTypeId == ticketTypeId).ToListAsync();
         return ticketsByTypeId;

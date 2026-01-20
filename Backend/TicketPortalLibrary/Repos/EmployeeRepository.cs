@@ -1,5 +1,6 @@
 using TicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace TicketPortalLibrary.Repos;
 
@@ -7,13 +8,16 @@ public class EmployeeRepository : IEmployeeRepository
 {
     private readonly TicketPortalDbContext _context = new();
 
-    public async Task<Employee> CreateEmployeeAsync(Employee employee)
+    public async Task CreateEmployeeAsync(Employee employee)
     {
         try
         {
             await _context.Employees.AddAsync(employee);
             await _context.SaveChangesAsync();
-            return employee;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -21,7 +25,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public async Task<Employee> UpdateEmployeeAsync(Employee employee)
+    public async Task UpdateEmployeeAsync(Employee employee)
     {
         var existing = await GetEmployeeByIdAsync(employee.EmpId);
 
@@ -34,7 +38,10 @@ public class EmployeeRepository : IEmployeeRepository
             existing.DepartmentId = employee.DepartmentId;
 
             await _context.SaveChangesAsync();
-            return existing;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -42,7 +49,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public async Task DeleteEmployeeAsync(int empId)
+    public async Task DeleteEmployeeAsync(string empId)
     {
         var employee = await _context.Employees
             .Include(e => e.Department)
@@ -58,11 +65,17 @@ public class EmployeeRepository : IEmployeeRepository
         {
             throw new TicketException("Employee is in use. Delete all the Employee Dependencies before deleting.",499);
         }
-        _context.Employees.Remove(employee);
-        await _context.SaveChangesAsync();
+        try{    
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
     }
 
-    public async Task<Employee?> GetEmployeeByIdAsync(int empId)
+    public async Task<Employee?> GetEmployeeByIdAsync(string empId)
     {
         var employee = await _context.Employees
             .Include(e => e.Department)
@@ -78,16 +91,40 @@ public class EmployeeRepository : IEmployeeRepository
 
     public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
     {
-        return await _context.Employees
+        var Employee=await _context.Employees
             .Include(e => e.Department)
             .ToListAsync();
+
+        return Employee;
     }
 
-    public async Task<IEnumerable<Employee>> GetByDepartmentIdAsync(int departmentId)
+    public async Task<IEnumerable<Employee>> GetByDepartmentIdAsync(string departmentId)
     {
-        return await _context.Employees
+        var Employee=await _context.Employees
             .Where(e => e.DepartmentId == departmentId)
             .Include(e => e.Department)
             .ToListAsync();
+
+        return Employee;
+    }
+
+    public async Task<Employee> LoginEmployee(string email, string password)
+    {
+        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
+        if (Employee == null)
+        {
+            throw new TicketException("Employee not found.",404);
+        }
+        return Employee;
+    }
+    public async Task<Employee> LoginEmployee(string email, string password)
+    {
+        var Employee=await _context.Employees.FirstOrDefaultAsync(e=>e.Email==email && e.Password==password);
+        if (Employee == null)
+        {
+            throw new TicketException("Employee not found.",404);
+        }
+        return Employee;
     }
 }
+
