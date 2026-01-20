@@ -25,9 +25,9 @@ public class SlaRepository : ISlaRepository
         }
     }
 
-    public async Task UpdateSlaAsync(SLA sla)
+    public async Task UpdateSlaAsync(string slaId,SLA sla)
     {
-        var existing = await GetSlaByIdAsync(sla.SlaId);
+        var existing = await GetSlaByIdAsync(slaId);
         try
         {
             existing.ResponseTime = sla.ResponseTime;

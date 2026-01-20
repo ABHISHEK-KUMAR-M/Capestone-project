@@ -18,8 +18,8 @@ public class TicketTypeRepository : ITicketTypeRepository{
             throw new TicketException("Unexpected error while creating ticket type. " + ex.Message, 499);
         }
     }
-    public async Task UpdateTicketTypeAsync(TicketType ticketType){
-        TicketType? existing = await GetTicketTypeByIdAsync(ticketType.TicketTypeId);
+    public async Task UpdateTicketTypeAsync(string ticketTypeId,TicketType ticketType){
+        TicketType? existing = await GetTicketTypeByIdAsync(ticketTypeId);
         try{
             if (existing == null){
                 throw new TicketException("Ticket type not found.", 404);

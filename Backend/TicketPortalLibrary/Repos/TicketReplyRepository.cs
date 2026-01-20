@@ -29,7 +29,7 @@ public class TicketReplyRepository : ITicketReplyRepository
         }
     }
 
-    public async Task UpdateTicketReplyAsync(TicketReply reply)
+    public async Task UpdateTicketReplyAsync(int ticketReplyId,TicketReply reply)
     {
         TicketReply existing = await GetTicketReplyByIdAsync(reply.ReplyId);
 

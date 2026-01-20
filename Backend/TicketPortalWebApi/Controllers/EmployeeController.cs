@@ -71,15 +71,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{employeeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(Employee employee)
+        public async Task<ActionResult> Update(string employeeId,Employee employee)
         {
             try
             {
-                await _employeeRepository.UpdateEmployeeAsync(employee);
+                await _employeeRepository.UpdateEmployeeAsync(employeeId,employee);
                 return Ok(employee);
             }
             catch (TicketException ex)
@@ -112,14 +112,15 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("login")]
+
+        [HttpGet("login/{empId}/{password}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Login(string email, string password)
+        public async Task<ActionResult> Login(string empId, string password)
         {
             try
             {
-                var employee = await _employeeRepository.LoginEmployee(email, password);
+                var employee = await _employeeRepository.LoginEmployee(empId, password);
                 return Ok(employee);
             }
             catch (TicketException ex)

@@ -5,7 +5,7 @@ namespace TicketPortalLibrary.Repos;
 public interface ITicketReplyRepository
 {
     Task CreateTicketReplyAsync(TicketReply reply);
-    Task UpdateTicketReplyAsync(TicketReply reply);
+    Task UpdateTicketReplyAsync(int ticketReplyId,TicketReply reply);
     Task DeleteTicketReplyAsync(int replyId);
     Task<TicketReply?> GetTicketReplyByIdAsync(int replyId);
     Task<IEnumerable<TicketReply>> GetAllTicketRepliesAsync();

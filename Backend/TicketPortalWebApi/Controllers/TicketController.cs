@@ -41,28 +41,13 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpGet("createdby/{empId}")]
+        [HttpGet("empId/{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetByCreatedBy(string empId)
+        public async Task<ActionResult> GetByEmpId(string empId)
         {
             try{    
-                var tickets = await _ticketRepository.GetByCreatedByEmpIdAsync(empId);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        [HttpGet("assignedto/{empId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult> GetByAssignedTo(string empId)
-        {
-            try{    
-                var tickets = await _ticketRepository.GetByAssignedToEmpIdAsync(empId);
+                var tickets = await _ticketRepository.GetByEmpIdAsync(empId);
                 return Ok(tickets);
             }
             catch (TicketException ex)
@@ -163,15 +148,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(Ticket ticket)
+        public async Task<ActionResult> Update(int ticketId,Ticket ticket)
         {
             try
             {
-                await _ticketRepository.UpdateTicketAsync(ticket);
+                await _ticketRepository.UpdateTicketAsync(ticketId,ticket);
                 return Ok(ticket);
             }
             catch (TicketException ex)

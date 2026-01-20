@@ -24,9 +24,9 @@ public class DepartmentRepository : IDepartmentRepository
             throw new TicketException($"Unexpected error while creating department. {ex.Message}" ,499);
         }
     }
-    public async Task UpdateDepartmentAsync(Department department)
+    public async Task UpdateDepartmentAsync(string departmentId,Department department)
     {
-        var existing = await GetDepartmentByIdAsync(department.DepartmentId);
+        var existing = await GetDepartmentByIdAsync(departmentId);
 
         try
         {

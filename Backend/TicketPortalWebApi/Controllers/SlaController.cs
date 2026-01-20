@@ -62,15 +62,15 @@ namespace TicketPortalWebApi.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{slaId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(SLA sla)
+        public async Task<ActionResult> Update(string slaId,SLA sla)
         {
             try
             {
-                await _slaRepository.UpdateSlaAsync(sla);
+                await _slaRepository.UpdateSlaAsync(slaId,sla);
                 return Ok(sla);
             }
             catch (TicketException ex)

@@ -5,7 +5,7 @@ namespace TicketPortalLibrary.Repos;
 public interface ITicketTypeRepository
 {
     Task CreateTicketTypeAsync(TicketType ticketType);
-    Task UpdateTicketTypeAsync(TicketType ticketType);
+    Task UpdateTicketTypeAsync(string ticketTypeId,TicketType ticketType);
     Task DeleteTicketTypeAsync(string ticketTypeId);
     Task<TicketType?> GetTicketTypeByIdAsync(string ticketTypeId);
     Task<IEnumerable<TicketType>> GetAllTicketTypesAsync();

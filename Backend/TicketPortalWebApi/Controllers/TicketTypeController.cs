@@ -14,12 +14,14 @@ namespace TicketPortalWebApi.Controllers
         public TicketTypeController(ITicketTypeRepository ticketTypeRepository){
             _ticketTypeRepository = ticketTypeRepository;
         }
+
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll(){
             var ticketTypes = await _ticketTypeRepository.GetAllTicketTypesAsync();
             return Ok(ticketTypes);
         }
+
         [HttpGet("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -32,6 +34,7 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -44,6 +47,7 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         [HttpGet("sla/{slaId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -56,6 +60,7 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -68,13 +73,14 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
+
+        [HttpPut("{ticketType}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(TicketType ticketType){
+        public async Task<ActionResult> Update(string ticketTypeId,TicketType ticketType){
             try{
-                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketType);
+                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketTypeId,ticketType);
                 return Ok(ticketType);
             }
             catch (TicketException ex){
@@ -84,6 +90,7 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
