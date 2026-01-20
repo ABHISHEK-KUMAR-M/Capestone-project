@@ -41,5 +41,17 @@ public class TicketPortalDbContext : DbContext
             .WithMany(e => e.AssignedTickets)
             .HasForeignKey(t => t.AssignedToEmpId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<TicketReply>()
+            .HasOne(t => t.ReplyByCreatedEmp)
+            .WithMany(e=> e.ReplyToCreatedTickets)
+            .HasForeignKey(t => t.RepliedByCreatorEmpId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<TicketReply>()
+            .HasOne(t => t.ReplyByAssignedEmp)
+            .WithMany(e => e.ReplyToAssignedTickets)
+            .HasForeignKey(t => t.RepliedByAssignedEmpId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
