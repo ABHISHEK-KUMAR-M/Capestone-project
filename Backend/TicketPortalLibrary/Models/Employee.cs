@@ -50,5 +50,5 @@ public class Employee
 
     [JsonIgnore]
     public virtual ICollection<TicketReply>? ReplyToAssignedTickets { get; set; }
-    
+
 }

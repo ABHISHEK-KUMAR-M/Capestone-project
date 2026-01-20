@@ -14,9 +14,11 @@ public class TicketReply
 
     [Required(ErrorMessage = "Reply author (creator) is required")]
     [Column(TypeName = "varchar(5)")]
+    [ForeignKey(nameof(ReplyByCreatedEmp))]
     public string RepliedByCreatorEmpId { get; set; } = null!;
 
     [Column(TypeName = "varchar(5)")]
+    [ForeignKey(nameof(ReplyByAssignedEmp))]
     public string? RepliedByAssignedEmpId { get; set; }
 
     [Required(ErrorMessage = "Reply message is required")]
@@ -28,4 +30,7 @@ public class TicketReply
     [Column(TypeName = "datetime")]
     public DateTime CreatedAt { get; set; }
     public virtual Ticket? Ticket { get; set; }
+    public virtual Employee? ReplyByCreatedEmp { get; set; }
+    public virtual Employee? ReplyByAssignedEmp { get; set; }
+
 }
