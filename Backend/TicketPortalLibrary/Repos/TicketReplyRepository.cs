@@ -98,7 +98,7 @@ public class TicketReplyRepository : ITicketReplyRepository
                                               .Where(r => r.TicketId == ticketId)
                                               .OrderBy(r => r.CreatedAt)
                                               .ToListAsync();
-        if (repliesByTicketId == null)
+        if (repliesByTicketId.Count==0)
         {
             throw new TicketException("Ticket Reply not found for this ticket ID.",404);
         }
@@ -113,7 +113,7 @@ public class TicketReplyRepository : ITicketReplyRepository
                 r.RepliedByAssignedEmpId == empId)
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
-        if (repliesByEmployee == null)
+        if (repliesByEmployee.Count==0)
         {
             throw new TicketException("Ticket Reply not found for this Employee.",404);
         }

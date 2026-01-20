@@ -104,7 +104,10 @@ public class EmployeeRepository : IEmployeeRepository
             .Where(e => e.DepartmentId == departmentId)
             .Include(e => e.Department)
             .ToListAsync();
-
+        if (Employee.Count == 0)
+        {
+            throw new TicketException("Employee not found.",404);
+        }
         return Employee;
     }
 

@@ -42,10 +42,17 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByDepartment(string departmentId)
         {
-            var employees = await _employeeRepository.GetByDepartmentIdAsync(departmentId);
-            return Ok(employees);
+            try{    
+                var employees = await _employeeRepository.GetByDepartmentIdAsync(departmentId);
+                return Ok(employees);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]

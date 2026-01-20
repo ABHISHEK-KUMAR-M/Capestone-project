@@ -34,15 +34,27 @@ namespace TicketPortalWebApi.Controllers
         }
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByDepartment(string departmentId){
-            var ticketTypes = await _ticketTypeRepository.GetByDepartmentIdAsync(departmentId);
-            return Ok(ticketTypes);
+            try{    
+                var ticketTypes = await _ticketTypeRepository.GetByDepartmentIdAsync(departmentId);
+                return Ok(ticketTypes);
+            }
+            catch (TicketException ex){
+                return NotFound(ex.Message);
+            }
         }
         [HttpGet("sla/{slaId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetBySla(string slaId){
-            var ticketTypes = await _ticketTypeRepository.GetBySlaIdAsync(slaId);
-            return Ok(ticketTypes);
+            try{    
+                var ticketTypes = await _ticketTypeRepository.GetBySlaIdAsync(slaId);
+                return Ok(ticketTypes);
+            }
+            catch (TicketException ex){
+                return NotFound(ex.Message);
+            }
         }
         [HttpPost]
         [ProducesResponseType(201)]

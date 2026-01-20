@@ -43,18 +43,32 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("ticket/{ticketId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicket(int ticketId)
         {
-            var replies = await _ticketReplyRepository.GetByTicketIdAsync(ticketId);
-            return Ok(replies);
+            try{    
+                var replies = await _ticketReplyRepository.GetByTicketIdAsync(ticketId);
+                return Ok(replies);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("employee/{empId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByEmployee(string empId)
         {
-            var replies = await _ticketReplyRepository.GetByEmployeeIdAsync(empId);
-            return Ok(replies);
+            try{    
+                var replies = await _ticketReplyRepository.GetByEmployeeIdAsync(empId);
+                return Ok(replies);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]

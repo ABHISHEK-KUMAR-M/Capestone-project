@@ -77,7 +77,8 @@ public class SlaRepository : ISlaRepository
 
     public async Task<IEnumerable<SLA>> GetAllSlasAsync()
     {
-        return await _context.SLAs.ToListAsync();
+        var Sla=await _context.SLAs.ToListAsync();
+        return Sla;
     }
 
 }
