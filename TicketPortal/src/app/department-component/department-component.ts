@@ -5,7 +5,7 @@ import { Department } from '../../Models/department';
 import { DepartmentService } from '../department-service';
 
 @Component({
-  selector: 'app-department-component',
+  selector: 'app-department',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './department-component.html',
@@ -60,7 +60,7 @@ export class DepartmentComponent {
   }
 
   updateDepartment() {
-    this.deptSvc.updateDepartment(this.department).subscribe({
+    this.deptSvc.updateDepartment(this.department.departmentId, this.department).subscribe({
       next: () => {
         alert('Department Updated');
         this.loadDepartments();
