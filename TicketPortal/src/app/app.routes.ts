@@ -1,8 +1,4 @@
 import { Routes } from '@angular/router';
-<<<<<<< Updated upstream
-
-export const routes: Routes = [];
-=======
 import { HomeComponent } from './home-component/home-component';
 import { TicketComponent } from './ticket-component/ticket-component';
 import { LoginComponent } from './login-component/login-component';
@@ -17,4 +13,3 @@ export const routes: Routes = [
     {path:'login',component:LoginComponent},
     {path:'logout',component:LogoutComponent}
 ];
->>>>>>> Stashed changes

@@ -1,5 +1,6 @@
 using TicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace TicketPortalLibrary.Repos;
 
@@ -7,14 +8,17 @@ public class TicketReplyRepository : ITicketReplyRepository
 {
     private readonly TicketPortalDbContext _context = new();
 
-    public async Task<TicketReply> CreateTicketReplyAsync(TicketReply reply)
+    public async Task CreateTicketReplyAsync(TicketReply reply)
     {
         try
         {
             reply.CreatedAt = DateTime.UtcNow;
             await _context.TicketReplies.AddAsync(reply);
             await _context.SaveChangesAsync();
-            return reply;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -25,7 +29,7 @@ public class TicketReplyRepository : ITicketReplyRepository
         }
     }
 
-    public async Task<TicketReply> UpdateTicketReplyAsync(TicketReply reply)
+    public async Task UpdateTicketReplyAsync(int ticketReplyId,TicketReply reply)
     {
         TicketReply existing = await GetTicketReplyByIdAsync(reply.ReplyId);
 
@@ -33,7 +37,10 @@ public class TicketReplyRepository : ITicketReplyRepository
         {
             existing.Message = reply.Message;
             await _context.SaveChangesAsync();
-            return existing;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -54,8 +61,14 @@ public class TicketReplyRepository : ITicketReplyRepository
             throw new TicketException("Ticket reply not found.", 404);
         }
 
-        _context.TicketReplies.Remove(reply);
-        await _context.SaveChangesAsync();
+        try{   
+            _context.TicketReplies.Remove(reply);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
     }
 
     public async Task<TicketReply?> GetTicketReplyByIdAsync(int replyId)
@@ -85,10 +98,14 @@ public class TicketReplyRepository : ITicketReplyRepository
                                               .Where(r => r.TicketId == ticketId)
                                               .OrderBy(r => r.CreatedAt)
                                               .ToListAsync();
+        if (repliesByTicketId.Count==0)
+        {
+            throw new TicketException("Ticket Reply not found for this ticket ID.",404);
+        }
         return repliesByTicketId;
     }
 
-    public async Task<IEnumerable<TicketReply>> GetByEmployeeIdAsync(int empId)
+    public async Task<IEnumerable<TicketReply>> GetByEmployeeIdAsync(string empId)
     {
         var repliesByEmployee = await _context.TicketReplies
             .Where(r =>
@@ -96,6 +113,10 @@ public class TicketReplyRepository : ITicketReplyRepository
                 r.RepliedByAssignedEmpId == empId)
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
+        if (repliesByEmployee.Count==0)
+        {
+            throw new TicketException("Ticket Reply not found for this Employee.",404);
+        }
 
         return repliesByEmployee;
     }

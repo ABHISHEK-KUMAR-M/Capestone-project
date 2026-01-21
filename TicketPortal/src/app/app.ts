@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-=======
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet,RouterLink,RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,14 +10,19 @@ import { TicketComponent } from "./ticket-component/ticket-component";
 import { TicketTypeComponent } from "./tickettype-component/tickettype-component";
 import { HomeComponent } from './home-component/home-component';
 import { AuthService } from './auth-service';
->>>>>>> Stashed changes
+import { HomeComponent } from './home-component/home-component';
+import { AuthService } from './auth-service';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive,CommonModule,FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('TicketPortal');
+  auth=inject(AuthService);
+  empName=signal(sessionStorage.getItem('empName'));
 }
+

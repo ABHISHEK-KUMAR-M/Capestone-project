@@ -1,0 +1,65 @@
+<h2>SLA Management</h2>
+<p>---------</p>
+<p>---------</p>
+ 
+<p style="color:red" *ngIf="errMsg">{{ errMsg }}</p>
+ 
+<h3>SLA Form</h3>
+ 
+<div>
+  <label>SLA ID:</label>
+  <input type="text" [(ngModel)]="sla.slaId">
+  <button (click)="getSla()">Show</button>
+</div>
+ 
+<br>
+ 
+<div>
+  <label>Response Time:</label>
+  <input type="number" [(ngModel)]="sla.responseTime">
+</div>
+ 
+<br>
+ 
+<div>
+  <label>Resolution Hours:</label>
+  <input type="number" [(ngModel)]="sla.resolutionHours">
+</div>
+ 
+<br>
+ 
+<div>
+  <label>Description:</label>
+  <input type="text" [(ngModel)]="sla.description">
+</div>
+ 
+<br>
+ 
+<button (click)="addSla()">Save</button>
+<button (click)="updateSla()">Update</button>
+<button (click)="deleteSla()">Delete</button>
+<button (click)="newSla()">Clear</button>
+ 
+
+ 
+<h3>List of SLAs</h3>
+ 
+<button (click)="loadSlas()">Show All</button>
+ 
+<table border="1">
+  <tr>
+    <th>SLA ID</th>
+    <th>Response Time</th>
+    <th>Resolution Hours</th>
+    <th>Description</th>
+  </tr>
+ 
+  <tr *ngFor="let s of slas">
+    <td>{{ s.slaId }}</td>
+    <td>{{ s.responseTime }}</td>
+    <td>{{ s.resolutionHours }}</td>
+    <td>{{ s.description }}</td>
+  </tr>
+</table>
+ 
+ 

@@ -1,162 +1,57 @@
-
 <h2>Ticket Type Management</h2>
 
-@if (errMsg) {
-  <p style="color:red">
-    {{ errMsg }}
-  </p>
-}
+<p style="color:red" *ngIf="errMsg">
+  {{ errMsg }}
+</p>
 
 <h3>Ticket Type Form</h3>
 
-<!-- Ticket Type ID -->
 <div>
   <label>Ticket Type ID:</label>
-  <input
-    type="text"
-    [(ngModel)]="ticketType.ticketTypeId"
-    name="ticketTypeId"
-  />
-  <button type="button" (click)="getTicketType()">Show</button>
+  <input type="text" [(ngModel)]="ticketType.ticketTypeId">
+  <button (click)="getTicketType()">Show</button>
 </div>
 
-<br />
+<br>
 
-<!-- Type Name -->
 <div>
   <label>Type Name:</label>
-  <input
-    type="text"
-    [(ngModel)]="ticketType.typeName"
-    name="typeName"
-  />
+  <input type="text" [(ngModel)]="ticketType.typeName">
 </div>
 
-<br />
+<br>
 
-<!-- Description -->
 <div>
   <label>Description:</label>
-  <input
-    type="text"
-    [(ngModel)]="ticketType.description"
-    name="description"
-  />
+  <input type="text" [(ngModel)]="ticketType.description">
 </div>
 
-<br />
-
-<!-- Department Dropdown -->
-<div>
-  <label>Department ID:</label>
-  <select
-    [(ngModel)]="ticketType.departmentId"
-    name="formDepartmentId"
-  >
-    <option value="">-- Select Department --</option>
-
-    @for (d of departments; track d.departmentId) {
-      <option [value]="d.departmentId">
-        {{ d.departmentId }}
-      </option>
-    }
-  </select>
-</div>
-
-<br />
-
-<!-- SLA Dropdown -->
-<div>
-  <label>SLA ID:</label>
-  <select
-    [(ngModel)]="ticketType.slaId"
-    name="formSlaId"
-  >
-    <option value="">-- Select SLA --</option>
-
-    @for (s of slas; track s.slaId) {
-      <option [value]="s.slaId">
-        {{ s.slaId }}
-      </option>
-    }
-  </select>
-</div>
-
-<br />
-
-<!-- Action Buttons -->
-<button type="button" (click)="addTicketType()">Save</button>
-<button type="button" (click)="updateTicketType()">Update</button>
-<button type="button" (click)="deleteTicketType()">Delete</button>
-<button type="button" (click)="newTicketType()">Clear</button>
-
-<hr />
-
-<h3>Search / Filters</h3>
+<br>
 
 <div>
   <label>Department ID:</label>
-  <select
-    [(ngModel)]="ticketType.departmentId"
-    name="formDepartmentId"
-  >
-    <option value="">-- Select Department --</option>
-
-    @for (d of departments; track d.departmentId) {
-      <option [value]="d.departmentId">
-        {{ d.departmentId }}
-      </option>
-    }
-  </select>
-  <button type="button" (click)="GetByDepartmentId()">
-    By Department
-  </button>
+  <input type="text" [(ngModel)]="ticketType.departmentId">
 </div>
 
-<br />
+<br>
 
 <div>
   <label>SLA ID:</label>
-  <select
-    [(ngModel)]="ticketType.slaId"
-    name="formSlaId"
-  >
-    <option value="">-- Select SLA --</option>
-
-    @for (s of slas; track s.slaId) {
-      <option [value]="s.slaId">
-        {{ s.slaId }}
-      </option>
-    }
-  </select>
-  <button type="button" (click)="GetBySlaId()">
-    By SLA
-  </button>
+  <input type="text" [(ngModel)]="ticketType.slaId">
 </div>
 
-<br />
+<br>
 
-<button
-  type="button"
-  (click)="loadTicketTypes(); departmentId=''; slaId='';"
->
-  Reset Filters / Show All
-</button>
+<button (click)="addTicketType()">Save</button>
+<button (click)="updateTicketType()">Update</button>
+<button (click)="deleteTicketType()">Delete</button>
+<button (click)="newTicketType()">Clear</button>
 
-<hr />
-
-<!-- Filter Status Banner -->
-@if (departmentId || slaId) {
-  <p style="color: green;">
-    <b>Showing filtered results</b>
-  </p>
-} @else {
-  <p>
-    <b>Showing all ticket types</b>
-  </p>
-}
+<hr>
 
 <h3>List of Ticket Types</h3>
+
+<button (click)="loadTicketTypes()">Show All</button>
 
 <table border="1" cellpadding="5">
   <tr>
@@ -166,18 +61,14 @@
     <th>SLA</th>
   </tr>
 
-  @for (t of ticketTypes; track t.ticketTypeId) {
-    <tr>
-      <td>{{ t.ticketTypeId }}</td>
-      <td>{{ t.typeName }}</td>
-      <td>{{ t.departmentId }}</td>
-      <td>{{ t.slaId }}</td>
-    </tr>
-  }
+  <tr *ngFor="let t of ticketTypes">
+    <td>{{ t.ticketTypeId }}</td>
+    <td>{{ t.typeName }}</td>
+    <td>{{ t.departmentId }}</td>
+    <td>{{ t.slaId }}</td>
+  </tr>
 
-  @if (!ticketTypes || ticketTypes.length === 0) {
-    <tr>
-      <td colspan="4">No ticket types found</td>
-    </tr>
-  }
+  <tr *ngIf="ticketTypes.length === 0">
+    <td colspan="4">No ticket types found</td>
+  </tr>
 </table>

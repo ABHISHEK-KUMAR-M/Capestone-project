@@ -13,7 +13,6 @@ public class TicketPortalDbContext : DbContext
     {
     }
 
-    /* DbSets */
     public virtual DbSet<Department> Departments { get; set; }
     public virtual DbSet<Employee> Employees { get; set; }
     public virtual DbSet<SLA> SLAs { get; set; }
@@ -24,7 +23,7 @@ public class TicketPortalDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "data source=localhost\\SQLEXPRESS;database=EYTicketPortal; user id=sa; password=User%2025; Trust Server Certificate=true"
+            "Server=tcp:capestone-team2.database.windows.net,1433;Initial Catalog=TicketPortal;Persist Security Info=False;User ID=Abhishek;Password=Aryansh@1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
         );
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,6 +40,18 @@ public class TicketPortalDbContext : DbContext
             .HasOne(t => t.AssignedEmployee)
             .WithMany(e => e.AssignedTickets)
             .HasForeignKey(t => t.AssignedToEmpId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<TicketReply>()
+            .HasOne(t => t.ReplyByCreatedEmp)
+            .WithMany(e=> e.ReplyToCreatedTickets)
+            .HasForeignKey(t => t.RepliedByCreatorEmpId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<TicketReply>()
+            .HasOne(t => t.ReplyByAssignedEmp)
+            .WithMany(e => e.ReplyToAssignedTickets)
+            .HasForeignKey(t => t.RepliedByAssignedEmpId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

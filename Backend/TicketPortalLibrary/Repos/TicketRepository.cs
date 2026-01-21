@@ -1,11 +1,11 @@
 using TicketPortalLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 namespace TicketPortalLibrary.Repos;
 
 public class TicketRepository : ITicketRepository
 {
     private readonly TicketPortalDbContext _context = new();
-
     public async Task CreateTicketAsync(Ticket ticket)
     {
         try
@@ -13,15 +13,19 @@ public class TicketRepository : ITicketRepository
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
         }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
         catch (Exception ex)
         {
             throw new TicketException($"Unexpected error while creating ticket. {ex.Message}",499);
         }
     }
 
-    public async Task UpdateTicketAsync(Ticket ticket)
+    public async Task UpdateTicketAsync(int ticketId,Ticket ticket)
     {
-        Ticket existing =await GetTicketByIdAsync(ticket.TicketId);
+        Ticket existing =await GetTicketByIdAsync(ticketId);
         try
         {
 
@@ -33,6 +37,10 @@ public class TicketRepository : ITicketRepository
             existing.DueAt = ticket.DueAt;
 
             await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
         }
         catch (Exception ex)
         {
@@ -53,8 +61,14 @@ public class TicketRepository : ITicketRepository
         {
             throw new TicketException("Ticket is being used.Delete All the Ticket logs Before Deleting",499);
         }
-        _context.Tickets.Remove(ticket);
-        await _context.SaveChangesAsync();
+        try{    
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+        {
+            throw SqlExceptionMapper.Map(sqlEx);
+        }
     }
 
     public async Task<Ticket> GetTicketByIdAsync(int ticketId)
@@ -70,60 +84,122 @@ public class TicketRepository : ITicketRepository
     public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
     {
         var tickets=await _context.Tickets
-                             .ToListAsync();
+                            .OrderBy(t => t.Status == "Open" ? 1 :
+                                t.Status == "InProgress" ? 2 :
+                                t.Status == "Resolved" ? 3 : 4)
+                            .ThenBy(t => t.TicketType!.SLA!.ResponseTime)
+                            .ThenBy(t => t.DueAt)
+                            .ToListAsync();
         return tickets;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByCreatedByEmpIdAsync(int empId)
+    public async Task<IEnumerable<Ticket>> GetByEmpIdAsync(string empId)
     {
         var ticketbyCreatedEmpId=await _context.Tickets
-                             .Where(t => t.CreatedByEmpId == empId)
-                             .ToListAsync();
+                                .Include(t => t.TicketType)
+                                .ThenInclude(tt => tt.SLA)
+                                .Where(t => t.CreatedByEmpId == empId || t.AssignedToEmpId==empId )
+                                .OrderBy(t => t.Status == "Open" ? 1 :
+                                            t.Status == "InProgress" ? 2 :
+                                            t.Status == "Resolved" ? 3 : 4)
+                                .ThenBy(t => t.TicketType!.SLA!.ResponseTime)
+                                .ThenBy(t => t.DueAt)
+                                .ToListAsync();
+        if (ticketbyCreatedEmpId.Count==0)
+        {
+            throw new TicketException("No Ticket were found from this Employee.",404);
+        }
         return ticketbyCreatedEmpId;
-    }
-
-    public async Task<IEnumerable<Ticket>> GetByAssignedToEmpIdAsync(int empId)
-    {
-        var ticketbyAssignedEmpId=await _context.Tickets
-                             .Where(t => t.AssignedToEmpId == empId)
-                             .ToListAsync();
-        return ticketbyAssignedEmpId;                     
     }
 
     public async Task<IEnumerable<Ticket>> GetByStatusAsync(string status)
     {
         var ticketbyStatus=await _context.Tickets
-                             .Where(t => t.Status == status)
-                             .ToListAsync();
+                                .Include(t => t.TicketType)
+                                    .ThenInclude(tt => tt.SLA)
+                                .Where(t => t.Status == status)
+                                .OrderBy(t => t.TicketType!.SLA!.ResponseTime)
+                                .ThenBy(t => t.DueAt)
+                                .ToListAsync();
+
+        if (ticketbyStatus.Count==0)
+        {
+            throw new TicketException("No Ticket were found for this Employee.",404);
+        }   
         return ticketbyStatus;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(int departmentId)
+    public async Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(string departmentId)
     {
         var ticketbyDepartmentId=await _context.Tickets
-                             .Include(t => t.TicketType)
-                             .Where(t => t.TicketType.DepartmentId == departmentId)
-                             .ToListAsync();
+                                     .Include(t => t.TicketType)
+                            .ThenInclude(tt => tt.SLA)
+                            .Where(t => t.TicketType!.DepartmentId == departmentId)
+                            .OrderBy(t => t.Status == "Open" ? 1 :
+                                        t.Status == "InProgress" ? 2 :
+                                        t.Status == "Resolved" ? 3 : 4)
+                            .ThenBy(t => t.TicketType!.SLA!.ResponseTime)
+                            .ThenBy(t => t.DueAt)
+                            .ToListAsync();
+        if (ticketbyDepartmentId.Count==0)
+        {
+            throw new TicketException("No Ticket were found for this Department.",404);
+        } 
         return ticketbyDepartmentId;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(int departmentId, string status)
+    public async Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(string departmentId, string status)
     {
-        var ticketByDepartmentAndStatus=await _context.Tickets.Include(t => t.TicketType)
-                                    .Where(t => t.TicketType.DepartmentId == departmentId && t.Status == status)
-                                    .ToListAsync();
-        return ticketByDepartmentAndStatus;
+        var tickets = await _context.Tickets
+            .Include(t => t.TicketType)
+                .ThenInclude(tt => tt.SLA)
+            .Where(t => t.TicketType!.DepartmentId == departmentId && t.Status == status)
+            .OrderBy(t => t.TicketType!.SLA!.ResponseTime)
+            .ThenBy(t => t.DueAt)
+            .ToListAsync();
+
+        if (!tickets.Any())
+            throw new TicketException(
+                "No Ticket were found for this Department along with this status code.", 404);
+
+        return tickets;
     }
 
-    public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(int ticketTypeId)
+
+    public async Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(string ticketTypeId)
     {
-        var ticketsByTypeId=await _context.Tickets.Where(t => t.TicketTypeId == ticketTypeId).ToListAsync();
-        return ticketsByTypeId;
+        var tickets = await _context.Tickets
+            .Include(t => t.TicketType)
+                .ThenInclude(tt => tt.SLA)
+            .Where(t => t.TicketTypeId == ticketTypeId)
+            .OrderBy(t => t.Status == "Open" ? 1 :
+                        t.Status == "InProgress" ? 2 :
+                        t.Status == "Resolved" ? 3 : 4)
+            .ThenBy(t => t.TicketType!.SLA!.ResponseTime)
+            .ThenBy(t => t.DueAt)
+            .ToListAsync();
+
+        if (!tickets.Any())
+            throw new TicketException("No Ticket were found for this TicketType.", 404);
+
+        return tickets;
     }
+
 
     public async Task<IEnumerable<Ticket>> GetOverdueTicketsAsync()
     {
-        var overdueTickets=await _context.Tickets.Where(t => t.ResolvedAt == null && DateTime.UtcNow > t.DueAt).ToListAsync();
-        return overdueTickets;
+        var tickets = await _context.Tickets
+            .Include(t => t.TicketType)
+                .ThenInclude(tt => tt.SLA)
+            .Where(t => t.ResolvedAt == null && DateTime.UtcNow > t.DueAt)
+            .OrderBy(t => t.TicketType!.SLA!.ResponseTime)
+            .ThenBy(t => t.DueAt)
+            .ToListAsync();
+
+        if (!tickets.Any())
+            throw new TicketException("No overdue tickets found.", 404);
+
+        return tickets;
     }
+
 }
