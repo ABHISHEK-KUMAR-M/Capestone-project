@@ -3,10 +3,11 @@
 <!-- <app-home-component></app-home-component>
 <app-ticket-component></app-ticket-component> -->
 @if(auth.empNameSignal()){
-    <a routerLink="" routerLinkActive="active">Home</a>
-    <a routerLink="/ticket" routerLinkActive="active">Ticket</a>
-    <a routerLink="/department" routerLinkActive="active">Department</a>
-    <a routerLink="/sla" routerLinkActive="active">Sla</a>
+    <a routerLink="" routerLinkActive="active">Home</a>&nbsp;&nbsp;
+    <a routerLink="/ticket" routerLinkActive="active">Ticket</a>&nbsp;&nbsp;
+    <a routerLink="/department" routerLinkActive="active">Department</a>&nbsp;&nbsp;
+    <a routerLink="/sla" routerLinkActive="active">Sla</a>&nbsp;&nbsp;
+    <a routerLink="/tickettype" routerLinkActive="active">Ticket Type</a> &nbsp;&nbsp;
     <a routerLink="/logout" routerLinkActive="active">Logout</a>
 }
 @else {
@@ -14,3 +15,4 @@
     <a routerLink="/register" routerLinkActive="active">Register</a>&nbsp;
     <a routerLink="/login" routerLinkActive="active">Login</a>&nbsp;
 }
+<router-outlet></router-outlet>
