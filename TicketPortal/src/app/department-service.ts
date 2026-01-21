@@ -6,6 +6,7 @@ import { Department } from '../Models/department';
 @Injectable({
   providedIn: 'root',
 })
+
 export class DepartmentService {
   http: HttpClient = inject(HttpClient);
   token;
@@ -33,8 +34,8 @@ export class DepartmentService {
     return this.http.post(this.baseUrl, department, this.httpOptions);
   }
 
-  updateDepartment(department: Department): Observable<any> {
-    return this.http.put(this.baseUrl, department, this.httpOptions);
+  updateDepartment(departmentId: string, department: Department): Observable<any> {
+    return this.http.put(this.baseUrl + departmentId, department, this.httpOptions);
   }
 
   deleteDepartment(departmentId: string): Observable<any> {
