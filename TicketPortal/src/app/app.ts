@@ -10,8 +10,6 @@ import { TicketComponent } from "./ticket-component/ticket-component";
 import { TicketTypeComponent } from "./tickettype-component/tickettype-component";
 import { HomeComponent } from './home-component/home-component';
 import { AuthService } from './auth-service';
-import { HomeComponent } from './home-component/home-component';
-import { AuthService } from './auth-service';
 
 
 @Component({
