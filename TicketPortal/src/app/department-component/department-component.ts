@@ -60,7 +60,7 @@ export class DepartmentComponent {
   }
 
   updateDepartment() {
-    this.deptSvc.updateDepartment(this.department).subscribe({
+    this.deptSvc.updateDepartment(this.department.departmentId, this.department).subscribe({
       next: () => {
         alert('Department Updated');
         this.loadDepartments();

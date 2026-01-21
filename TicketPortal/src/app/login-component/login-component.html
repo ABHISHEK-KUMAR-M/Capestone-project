@@ -1,0 +1,7 @@
+<h2>Login Form</h2>
+<form #registerForm="ngForm">
+    EmpId:<input type="text" [(ngModel)]="EmpId" name="EmpId">
+    Password:<input type="text" [(ngModel)]="EmpPassword" name="EmpPassword"><br>
+    <input type="button" value="Login" (click)="login()">
+</form>
+<div style="color:red">{{errMsg}}</div>

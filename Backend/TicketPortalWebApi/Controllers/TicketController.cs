@@ -41,55 +41,95 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpGet("createdby/{empId}")]
+        [HttpGet("empId/{empId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByCreatedBy(int empId)
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByEmpId(string empId)
         {
-            var tickets = await _ticketRepository.GetByCreatedByEmpIdAsync(empId);
-            return Ok(tickets);
-        }
-
-        [HttpGet("assignedto/{empId}")]
-        public async Task<ActionResult> GetByAssignedTo(int empId)
-        {
-            var tickets = await _ticketRepository.GetByAssignedToEmpIdAsync(empId);
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository.GetByEmpIdAsync(empId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("status/{status}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByStatus(string status)
         {
-            var tickets = await _ticketRepository.GetByStatusAsync(status);
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository.GetByStatusAsync(status);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("department/{departmentId}")]
-        public async Task<ActionResult> GetByDepartment(int departmentId)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByDepartment(string departmentId)
         {
-            var tickets = await _ticketRepository.GetByDepartmentIdAsync(departmentId);
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository.GetByDepartmentIdAsync(departmentId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("departmentwithstatus/{departmentId}/{status}")]
-        public async Task<ActionResult> GetByDepartmentAndStatus(int departmentId, string status)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByDepartmentAndStatus(string departmentId, string status)
         {
-            var tickets = await _ticketRepository
-                .GetByDepartmentAndStatusAsync(departmentId, status);
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository
+                    .GetByDepartmentAndStatusAsync(departmentId, status);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }   
         }
 
-        [HttpGet("type/{ticketTypeId}")]
-        public async Task<ActionResult> GetByTicketType(int ticketTypeId)
+        [HttpGet("byTickettype/{ticketTypeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByTicketType(string ticketTypeId)
         {
-            var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository.GetByTicketTypeIdAsync(ticketTypeId);
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("overdue")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetOverdue()
         {
-            var tickets = await _ticketRepository.GetOverdueTicketsAsync();
-            return Ok(tickets);
+            try{    
+                var tickets = await _ticketRepository.GetOverdueTicketsAsync();
+                return Ok(tickets);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -108,15 +148,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(Ticket ticket)
+        public async Task<ActionResult> Update(int ticketId,Ticket ticket)
         {
             try
             {
-                await _ticketRepository.UpdateTicketAsync(ticket);
+                await _ticketRepository.UpdateTicketAsync(ticketId,ticket);
                 return Ok(ticket);
             }
             catch (TicketException ex)

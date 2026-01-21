@@ -5,10 +5,11 @@ import { Ticket } from '../../Models/ticket';
 import { TicketService } from '../ticket-service';
 
 @Component({
-  selector: 'app-ticket',
+  selector: 'app-ticket-component',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './ticket-component.html',
+  styleUrl: './ticket-component.css',
 })
 export class TicketComponent {
   ticketSvc: TicketService = inject(TicketService);
@@ -17,18 +18,24 @@ export class TicketComponent {
   tickets: Ticket[];
   errMsg: string;
 
+  empId: string = '';
+  departmentId: string = '';
+  ticketTypeId: string = '';
+  status: string = '';
+
   constructor() {
     this.ticket = new Ticket();
     this.tickets = [];
     this.errMsg = '';
-    this.loadTickets();
+    this.loadAllTickets();
   }
+
 
   newTicket() {
     this.ticket = new Ticket();
   }
 
-  loadTickets() {
+  loadAllTickets() {
     this.ticketSvc.getAllTickets().subscribe({
       next: (res) => {
         this.tickets = res;
@@ -38,7 +45,7 @@ export class TicketComponent {
     });
   }
 
-  getTicket() {
+  getTicketById() {
     this.ticketSvc.getTicketById(this.ticket.ticketId).subscribe({
       next: (res) => {
         this.ticket = res;
@@ -51,8 +58,8 @@ export class TicketComponent {
   addTicket() {
     this.ticketSvc.addTicket(this.ticket).subscribe({
       next: () => {
-        alert('Ticket Created');
-        this.loadTickets();
+        alert('Ticket Created Successfully');
+        this.loadAllTickets();
         this.newTicket();
       },
       error: (err) => (this.errMsg = err.error),
@@ -62,8 +69,8 @@ export class TicketComponent {
   updateTicket() {
     this.ticketSvc.updateTicket(this.ticket).subscribe({
       next: () => {
-        alert('Ticket Updated');
-        this.loadTickets();
+        alert('Ticket Updated Successfully');
+        this.loadAllTickets();
         this.newTicket();
       },
       error: (err) => (this.errMsg = err.error),
@@ -73,9 +80,72 @@ export class TicketComponent {
   deleteTicket() {
     this.ticketSvc.deleteTicket(this.ticket.ticketId).subscribe({
       next: () => {
-        alert('Ticket Deleted');
-        this.loadTickets();
+        alert('Ticket Deleted Successfully');
+        this.loadAllTickets();
         this.newTicket();
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+
+  getTicketsByEmployee() {
+    this.ticketSvc.getTicketsByEmpId(this.empId).subscribe({
+      next: (res) => {
+        this.tickets = res;
+        this.errMsg = '';
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+  getTicketsByStatus() {
+    this.ticketSvc.getTicketsByStatus(this.status).subscribe({
+      next: (res) => {
+        this.tickets = res;
+        this.errMsg = '';
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+  getTicketsByDepartment() {
+    this.ticketSvc.getTicketsByDepartmentId(this.departmentId).subscribe({
+      next: (res) => {
+        this.tickets = res;
+        this.errMsg = '';
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+  getTicketsByDepartmentAndStatus() {
+    this.ticketSvc
+      .getTicketsByDepartmentAndStatus(this.departmentId, this.status)
+      .subscribe({
+        next: (res) => {
+          this.tickets = res;
+          this.errMsg = '';
+        },
+        error: (err) => (this.errMsg = err.error),
+      });
+  }
+
+  getTicketsByTicketType() {
+    this.ticketSvc.getTicketsByTicketTypeId(this.ticketTypeId).subscribe({
+      next: (res) => {
+        this.tickets = res;
+        this.errMsg = '';
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+  getOverdueTickets() {
+    this.ticketSvc.getOverdueTickets().subscribe({
+      next: (res) => {
+        this.tickets = res;
+        this.errMsg = '';
       },
       error: (err) => (this.errMsg = err.error),
     });

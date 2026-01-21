@@ -6,10 +6,11 @@ import { Department } from '../Models/department';
 @Injectable({
   providedIn: 'root',
 })
+
 export class DepartmentService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5181/api/Department/';
+  baseUrl: string = 'http://localhost:5082/api/Department/';
   httpOptions;
 
   constructor() {
@@ -33,8 +34,8 @@ export class DepartmentService {
     return this.http.post(this.baseUrl, department, this.httpOptions);
   }
 
-  updateDepartment(department: Department): Observable<any> {
-    return this.http.put(this.baseUrl, department, this.httpOptions);
+  updateDepartment(departmentId: string, department: Department): Observable<any> {
+    return this.http.put(this.baseUrl + departmentId, department, this.httpOptions);
   }
 
   deleteDepartment(departmentId: string): Observable<any> {

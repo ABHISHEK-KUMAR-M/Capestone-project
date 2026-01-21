@@ -28,7 +28,7 @@ namespace TicketPortalWebApi.Controllers
         [HttpGet("{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int empId)
+        public async Task<ActionResult> GetById(string empId)
         {
             try
             {
@@ -43,10 +43,17 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByDepartment(int departmentId)
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByDepartment(string departmentId)
         {
-            var employees = await _employeeRepository.GetByDepartmentIdAsync(departmentId);
-            return Ok(employees);
+            try{    
+                var employees = await _employeeRepository.GetByDepartmentIdAsync(departmentId);
+                return Ok(employees);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -65,15 +72,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{employeeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(Employee employee)
+        public async Task<ActionResult> Update(string employeeId,Employee employee)
         {
             try
             {
-                await _employeeRepository.UpdateEmployeeAsync(employee);
+                await _employeeRepository.UpdateEmployeeAsync(employeeId,employee);
                 return Ok(employee);
             }
             catch (TicketException ex)
@@ -90,7 +97,7 @@ namespace TicketPortalWebApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int empId)
+        public async Task<ActionResult> Delete(string empId)
         {
             try
             {
@@ -104,6 +111,22 @@ namespace TicketPortalWebApi.Controllers
                     return NotFound(ex.Message);
                 }
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("login/{empId}/{password}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Login(string empId, string password)
+        {
+            try
+            {
+                var employee = await _employeeRepository.LoginEmployee(empId, password);
+                return Ok(employee);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
     }

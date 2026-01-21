@@ -7,37 +7,78 @@ import { Ticket } from '../Models/ticket';
   providedIn: 'root',
 })
 export class TicketService {
-  http: HttpClient = inject(HttpClient);
-  token;
-  baseUrl: string = 'http://localhost:5181/api/Ticket/';
-  httpOptions;
+  private http = inject(HttpClient);
 
-  constructor() {
-    this.token = sessionStorage.getItem('token');
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.token,
-      }),
-    };
-  }
+  private baseUrl = 'http://localhost:5082/api/Ticket/';
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    }),
+  };
 
   getAllTickets(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(this.baseUrl, this.httpOptions);
   }
 
   getTicketById(ticketId: number): Observable<Ticket> {
-    return this.http.get<Ticket>(this.baseUrl + ticketId, this.httpOptions);
+    return this.http.get<Ticket>(
+      `${this.baseUrl}/${ticketId}`,
+      this.httpOptions
+    );
   }
 
   addTicket(ticket: Ticket): Observable<any> {
-    return this.http.post(this.baseUrl, ticket, this.httpOptions);
+    return this.http.post<void>(this.baseUrl,ticket,this.httpOptions);
   }
 
   updateTicket(ticket: Ticket): Observable<any> {
-    return this.http.put(this.baseUrl, ticket, this.httpOptions);
+    return this.http.put<void>(this.baseUrl,ticket,this.httpOptions);
   }
 
-  deleteTicket(ticketId: number): Observable<any> {
-    return this.http.delete(this.baseUrl + ticketId, this.httpOptions);
+  deleteTicket(ticketId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${ticketId}`,this.httpOptions);
+  }
+
+  getTicketsByEmpId(empId: string): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(
+      `${this.baseUrl}/empId/${empId}`,
+      this.httpOptions
+    );
+  }
+
+  getTicketsByStatus(status: string): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(
+      `${this.baseUrl}/status/${status}`,
+      this.httpOptions
+    );
+  }
+
+  getTicketsByDepartmentId(departmentId: string): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(
+      `${this.baseUrl}/department/${departmentId}`,
+      this.httpOptions
+    );
+  }
+
+  getTicketsByDepartmentAndStatus(
+    departmentId: string,
+    status: string
+  ): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(`${this.baseUrl}/departmentwithstatus/${departmentId}/${status}`,this.httpOptions);
+  }
+
+  getTicketsByTicketTypeId(ticketTypeId: string): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(
+      `${this.baseUrl}/type/${ticketTypeId}`,
+      this.httpOptions
+    );
+  }
+
+  getOverdueTickets(): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>(
+      `${this.baseUrl}/overdue`,
+      this.httpOptions
+    );
   }
 }

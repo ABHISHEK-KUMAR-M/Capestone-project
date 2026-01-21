@@ -14,16 +14,18 @@ namespace TicketPortalWebApi.Controllers
         public TicketTypeController(ITicketTypeRepository ticketTypeRepository){
             _ticketTypeRepository = ticketTypeRepository;
         }
+
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll(){
             var ticketTypes = await _ticketTypeRepository.GetAllTicketTypesAsync();
             return Ok(ticketTypes);
         }
+
         [HttpGet("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetById(int ticketTypeId){
+        public async Task<ActionResult> GetById(string ticketTypeId){
             try{
                 var ticketType = await _ticketTypeRepository.GetTicketTypeByIdAsync(ticketTypeId);
                 return Ok(ticketType);
@@ -32,18 +34,33 @@ namespace TicketPortalWebApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         [HttpGet("department/{departmentId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByDepartment(int departmentId){
-            var ticketTypes = await _ticketTypeRepository.GetByDepartmentIdAsync(departmentId);
-            return Ok(ticketTypes);
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByDepartment(string departmentId){
+            try{    
+                var ticketTypes = await _ticketTypeRepository.GetByDepartmentIdAsync(departmentId);
+                return Ok(ticketTypes);
+            }
+            catch (TicketException ex){
+                return NotFound(ex.Message);
+            }
         }
+
         [HttpGet("sla/{slaId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetBySla(int slaId){
-            var ticketTypes = await _ticketTypeRepository.GetBySlaIdAsync(slaId);
-            return Ok(ticketTypes);
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetBySla(string slaId){
+            try{    
+                var ticketTypes = await _ticketTypeRepository.GetBySlaIdAsync(slaId);
+                return Ok(ticketTypes);
+            }
+            catch (TicketException ex){
+                return NotFound(ex.Message);
+            }
         }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -56,13 +73,14 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
+
+        [HttpPut("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(TicketType ticketType){
+        public async Task<ActionResult> Update(string ticketTypeId,TicketType ticketType){
             try{
-                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketType);
+                await _ticketTypeRepository.UpdateTicketTypeAsync(ticketTypeId,ticketType);
                 return Ok(ticketType);
             }
             catch (TicketException ex){
@@ -72,11 +90,12 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Delete(int ticketTypeId){
+        public async Task<ActionResult> Delete(string ticketTypeId){
             try{
                 await _ticketTypeRepository.DeleteTicketTypeAsync(ticketTypeId);
                 return Ok("Ticket type deleted successfully");

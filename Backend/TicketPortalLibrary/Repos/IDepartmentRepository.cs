@@ -4,9 +4,9 @@ namespace TicketPortalLibrary.Repos;
 
 public interface IDepartmentRepository
 {
-    Task<Department> CreateDepartmentAsync(Department department);
-    Task<Department> UpdateDepartmentAsync(Department department);
-    Task DeleteDepartmentAsync(int departmentId);
-    Task<Department?> GetDepartmentByIdAsync(int departmentId);
+    Task CreateDepartmentAsync(Department department);
+    Task UpdateDepartmentAsync(string departmentId,Department department);
+    Task DeleteDepartmentAsync(string departmentId);
+    Task<Department?> GetDepartmentByIdAsync(string departmentId);
     Task<IEnumerable<Department>> GetAllDepartmentsAsync();
 }

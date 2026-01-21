@@ -1,0 +1,15 @@
+
+<h2>Register Form</h2>
+<form #registerForm="ngForm">
+    EmpId:<input type="text" [(ngModel)]="emp.empId" name="empId">
+    Name:<input type="text" [(ngModel)]="emp.name" name="name">
+    Email:<input type="email" [(ngModel)]="emp.email" name="email">
+    Password:<input type="text" [(ngModel)]="emp.password" name="password"><br>
+    DepartmentId:<select [(ngModel)]="emp.departmentId" name="departmentId">
+        @for(dept of Departments;track dept){
+            <option [value]="dept.departmentId">{{dept.departmentName}}</option>
+        }
+    </select>
+
+    <input type="button" value="Save" (click)="register()">
+</form>

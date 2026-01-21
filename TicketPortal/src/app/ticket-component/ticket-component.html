@@ -1,15 +1,17 @@
 <h2>Ticket Management</h2>
 
-<p style="color:red" *ngIf="errMsg">
-  {{ errMsg }}
-</p>
+@if (errMsg) {
+  <p style="color:red">
+    {{ errMsg }}
+  </p>
+}
 
 <h3>Ticket Form</h3>
 
 <div>
   <label>Ticket ID:</label>
   <input type="number" [(ngModel)]="ticket.ticketId">
-  <button (click)="getTicket()">Show</button>
+  <button (click)="getTicketById()">Show</button>
 </div>
 
 <br>
@@ -23,7 +25,7 @@
 
 <div>
   <label>Description:</label>
-  <input type="text" [(ngModel)]="ticket.description">
+  <textarea [(ngModel)]="ticket.description"></textarea>
 </div>
 
 <br>
@@ -51,7 +53,12 @@
 
 <div>
   <label>Status:</label>
-  <input type="text" [(ngModel)]="ticket.status">
+  <select [(ngModel)]="ticket.status">
+    <option value="Open">Open</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+    <option value="Closed">Closed</option>
+  </select>
 </div>
 
 <br>
@@ -63,28 +70,87 @@
 
 <hr>
 
-<h3>List of Tickets</h3>
 
-<button (click)="loadTickets()">Show All</button>
+<h3>Search / Filters</h3>
 
-<table border="1" cellpadding="5">
+<div>
+  <label>Employee ID:</label>
+  <input type="text" [(ngModel)]="empId">
+  <button (click)="getTicketsByEmployee()">By Employee</button>
+</div>
+
+<br>
+
+<div>
+  <label>Status:</label>
+  <select [(ngModel)]="status">
+    <option value="">--Select--</option>
+    <option value="Open">Open</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+    <option value="Closed">Closed</option>
+  </select>
+  <button (click)="getTicketsByStatus()">By Status</button>
+</div>
+
+<br>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="departmentId">
+  <button (click)="getTicketsByDepartment()">By Department</button>
+</div>
+
+<br>
+
+<div>
+  <label>Ticket Type ID:</label>
+  <input type="text" [(ngModel)]="ticketTypeId">
+  <button (click)="getTicketsByTicketType()">By Ticket Type</button>
+</div>
+
+<br>
+
+<div>
+  <button (click)="getOverdueTickets()">Show Overdue Tickets</button>
+</div>
+
+<hr>
+
+<!-- ================= TICKET LIST ================= -->
+
+<h3>Ticket List</h3>
+
+<button (click)="loadAllTickets()">Show All Tickets</button>
+
+<br><br>
+
+<table border="1" cellpadding="6" cellspacing="0">
   <tr>
     <th>ID</th>
     <th>Title</th>
     <th>Status</th>
     <th>Created By</th>
     <th>Assigned To</th>
+    <th>Ticket Type</th>
+    <th>Due At</th>
   </tr>
 
-  <tr *ngFor="let t of tickets">
-    <td>{{ t.ticketId }}</td>
-    <td>{{ t.title }}</td>
-    <td>{{ t.status }}</td>
-    <td>{{ t.createdByEmpId }}</td>
-    <td>{{ t.assignedToEmpId }}</td>
-  </tr>
-
-  <tr *ngIf="tickets.length === 0">
-    <td colspan="5">No tickets found</td>
-  </tr>
+  @if (tickets.length > 0) {
+    @for (t of tickets; track t.ticketId) {
+      <tr>
+        <td>{{ t.ticketId }}</td>
+        <td>{{ t.title }}</td>
+        <td>{{ t.status }}</td>
+        <td>{{ t.createdByEmpId }}</td>
+        <td>{{ t.assignedToEmpId || '-' }}</td>
+        <td>{{ t.ticketTypeId }}</td>
+        <td>{{ t.dueAt | date:'short' }}</td>
+      </tr>
+    }
+  } @else {
+    <tr>
+      <td colspan="7">No tickets found</td>
+    </tr>
+  }
 </table>
