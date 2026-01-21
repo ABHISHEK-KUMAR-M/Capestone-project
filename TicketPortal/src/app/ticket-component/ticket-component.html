@@ -1,0 +1,156 @@
+<h2>Ticket Management</h2>
+
+@if (errMsg) {
+  <p style="color:red">
+    {{ errMsg }}
+  </p>
+}
+
+<h3>Ticket Form</h3>
+
+<div>
+  <label>Ticket ID:</label>
+  <input type="number" [(ngModel)]="ticket.ticketId">
+  <button (click)="getTicketById()">Show</button>
+</div>
+
+<br>
+
+<div>
+  <label>Title:</label>
+  <input type="text" [(ngModel)]="ticket.title">
+</div>
+
+<br>
+
+<div>
+  <label>Description:</label>
+  <textarea [(ngModel)]="ticket.description"></textarea>
+</div>
+
+<br>
+
+<div>
+  <label>Ticket Type ID:</label>
+  <input type="text" [(ngModel)]="ticket.ticketTypeId">
+</div>
+
+<br>
+
+<div>
+  <label>Created By Emp ID:</label>
+  <input type="text" [(ngModel)]="ticket.createdByEmpId">
+</div>
+
+<br>
+
+<div>
+  <label>Assigned To Emp ID:</label>
+  <input type="text" [(ngModel)]="ticket.assignedToEmpId">
+</div>
+
+<br>
+
+<div>
+  <label>Status:</label>
+  <select [(ngModel)]="ticket.status">
+    <option value="Open">Open</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+    <option value="Closed">Closed</option>
+  </select>
+</div>
+
+<br>
+
+<button (click)="addTicket()">Save</button>
+<button (click)="updateTicket()">Update</button>
+<button (click)="deleteTicket()">Delete</button>
+<button (click)="newTicket()">Clear</button>
+
+<hr>
+
+
+<h3>Search / Filters</h3>
+
+<div>
+  <label>Employee ID:</label>
+  <input type="text" [(ngModel)]="empId">
+  <button (click)="getTicketsByEmployee()">By Employee</button>
+</div>
+
+<br>
+
+<div>
+  <label>Status:</label>
+  <select [(ngModel)]="status">
+    <option value="">--Select--</option>
+    <option value="Open">Open</option>
+    <option value="InProgress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+    <option value="Closed">Closed</option>
+  </select>
+  <button (click)="getTicketsByStatus()">By Status</button>
+</div>
+
+<br>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="departmentId">
+  <button (click)="getTicketsByDepartment()">By Department</button>
+</div>
+
+<br>
+
+<div>
+  <label>Ticket Type ID:</label>
+  <input type="text" [(ngModel)]="ticketTypeId">
+  <button (click)="getTicketsByTicketType()">By Ticket Type</button>
+</div>
+
+<br>
+
+<div>
+  <button (click)="getOverdueTickets()">Show Overdue Tickets</button>
+</div>
+
+<hr>
+
+<!-- ================= TICKET LIST ================= -->
+
+<h3>Ticket List</h3>
+
+<button (click)="loadAllTickets()">Show All Tickets</button>
+
+<br><br>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Created By</th>
+    <th>Assigned To</th>
+    <th>Ticket Type</th>
+    <th>Due At</th>
+  </tr>
+
+  @if (tickets.length > 0) {
+    @for (t of tickets; track t.ticketId) {
+      <tr>
+        <td>{{ t.ticketId }}</td>
+        <td>{{ t.title }}</td>
+        <td>{{ t.status }}</td>
+        <td>{{ t.createdByEmpId }}</td>
+        <td>{{ t.assignedToEmpId || '-' }}</td>
+        <td>{{ t.ticketTypeId }}</td>
+        <td>{{ t.dueAt | date:'short' }}</td>
+      </tr>
+    }
+  } @else {
+    <tr>
+      <td colspan="7">No tickets found</td>
+    </tr>
+  }
+</table>

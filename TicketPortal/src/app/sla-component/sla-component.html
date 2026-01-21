@@ -1,0 +1,73 @@
+<p>sla-component works!</p>
+<h2>SLA Management</h2>
+
+<!-- Error Message -->
+<p style="color:red" *ngIf="errMsg">
+  {{ errMsg }}
+</p>
+
+<!-- SLA Form -->
+<div>
+  <h3>SLA Form</h3>
+
+  <div>
+    <label>SLA ID:</label>
+    <input type="text" [(ngModel)]="sla.slaId" name="slaId">
+    <button (click)="getSla()">Show</button>
+  </div>
+
+  <br>
+
+  <div>
+    <label>Response Time (hrs):</label>
+    <input type="number" [(ngModel)]="sla.responseTime" name="responseTime">
+  </div>
+
+  <br>
+
+  <div>
+    <label>Resolution Hours:</label>
+    <input type="number" [(ngModel)]="sla.resolutionHours" name="resolutionHours">
+  </div>
+
+  <br>
+
+  <div>
+    <label>Description:</label>
+    <input type="text" [(ngModel)]="sla.description" name="description">
+  </div>
+
+  <br>
+
+  <button (click)="addSla()">Save</button>
+  <button (click)="updateSla()">Update</button>
+  <button (click)="deleteSla(sla.slaId)">Delete</button>
+  <button (click)="newSla()">Clear</button>
+</div>
+
+<hr>
+
+<!-- SLA List -->
+<h3>List of SLAs</h3>
+
+<button (click)="loadSlas()">Show All</button>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>SLA ID</th>
+    <th>Response Time</th>
+    <th>Resolution Hours</th>
+    <th>Description</th>
+  </tr>
+
+  <tr *ngFor="let s of slas">
+    <td>{{ s.slaId }}</td>
+    <td>{{ s.responseTime }}</td>
+    <td>{{ s.resolutionHours }}</td>
+    <td>{{ s.description }}</td>
+  </tr>
+
+  <tr *ngIf="slas.length === 0">
+    <td colspan="4">No SLAs found</td>
+  </tr>
+</table>
