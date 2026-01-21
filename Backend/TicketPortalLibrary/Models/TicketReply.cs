@@ -15,7 +15,7 @@ public class TicketReply
     // [Required(ErrorMessage = "Reply author (creator) is required")]
     [Column(TypeName = "varchar(5)")]
     [ForeignKey(nameof(ReplyByCreatedEmp))]
-    public string? RepliedByCreatorEmpId { get; set; } = null!;
+    public string? RepliedByCreatorEmpId { get; set; }
 
     [Column(TypeName = "varchar(5)")]
     [ForeignKey(nameof(ReplyByAssignedEmp))]

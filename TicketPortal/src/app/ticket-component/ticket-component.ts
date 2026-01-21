@@ -3,6 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Ticket } from '../../Models/ticket';
 import { TicketService } from '../ticket-service';
+import { TicketTypeService } from '../tickettype-service';
+import { TicketType } from '../../Models/tickettype';
+import { EmployeeService } from '../employee-service';
+import { DepartmentService } from '../department-service';
+import { Department } from '../../Models/department';
 
 @Component({
   selector: 'app-ticket-component',
@@ -13,7 +18,9 @@ import { TicketService } from '../ticket-service';
 })
 export class TicketComponent {
   ticketSvc: TicketService = inject(TicketService);
-
+  ticketTypeSvc:TicketTypeService=inject (TicketTypeService)
+  empSvc:EmployeeService=inject(EmployeeService)
+  deptSvc:DepartmentService=inject(DepartmentService)
   ticket: Ticket;
   tickets: Ticket[];
   errMsg: string;
@@ -23,13 +30,37 @@ export class TicketComponent {
   ticketTypeId: string = '';
   status: string = '';
 
+  ticketTypes:TicketType[];
+  departments:Department[];
   constructor() {
+    this.ticketTypes=[];
     this.ticket = new Ticket();
     this.tickets = [];
+    this.departments=[];
     this.errMsg = '';
     this.loadAllTickets();
+    this.loadAllTicketTypes();
+    this.loadAllDepartments();
   }
-
+  loadAllTicketTypes(){
+    this.ticketTypeSvc.getAllTicketTypes().subscribe({
+      next:(res)=>{
+        this.ticketTypes=res;
+        this.errMsg="";
+      },
+      error:(err)=>(this.errMsg=err.error)
+    })
+  }
+  loadAllDepartments(){
+    this.deptSvc.getAllDepartments().subscribe({
+      next:(res)=>{
+        this.departments=res;
+        this.errMsg="";
+        this.loadAllDepartments();
+      },
+      error:(err)=>(this.errMsg=err.error)
+    })
+  }
 
   newTicket() {
     this.ticket = new Ticket();
@@ -40,6 +71,9 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
+        
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -50,6 +84,8 @@ export class TicketComponent {
       next: (res) => {
         this.ticket = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -61,17 +97,21 @@ export class TicketComponent {
         alert('Ticket Created Successfully');
         this.loadAllTickets();
         this.newTicket();
+        this.loadAllDepartments();
+        this.loadAllTicketTypes();
       },
       error: (err) => (this.errMsg = err.error),
     });
   }
 
   updateTicket() {
-    this.ticketSvc.updateTicket(this.ticket).subscribe({
+    this.ticketSvc.updateTicket(this.ticket.ticketId,this.ticket).subscribe({
       next: () => {
         alert('Ticket Updated Successfully');
         this.loadAllTickets();
         this.newTicket();
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -83,6 +123,8 @@ export class TicketComponent {
         alert('Ticket Deleted Successfully');
         this.loadAllTickets();
         this.newTicket();
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -94,6 +136,8 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllDepartments();
+        this.loadAllTicketTypes();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -104,6 +148,8 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -114,6 +160,8 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -126,6 +174,8 @@ export class TicketComponent {
         next: (res) => {
           this.tickets = res;
           this.errMsg = '';
+          this.loadAllTicketTypes();
+          this.loadAllDepartments();
         },
         error: (err) => (this.errMsg = err.error),
       });
@@ -136,6 +186,8 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });
@@ -146,6 +198,8 @@ export class TicketComponent {
       next: (res) => {
         this.tickets = res;
         this.errMsg = '';
+        this.loadAllTicketTypes();
+        this.loadAllDepartments();
       },
       error: (err) => (this.errMsg = err.error),
     });

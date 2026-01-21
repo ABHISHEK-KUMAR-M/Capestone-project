@@ -10,7 +10,7 @@
 
 <div>
   <label>Ticket ID:</label>
-  <input type="number" [(ngModel)]="ticket.ticketId">
+  <input type="number" [(ngModel)]="ticket.ticketId" name="ticketId">
   <button (click)="getTicketById()">Show</button>
 </div>
 
@@ -18,21 +18,27 @@
 
 <div>
   <label>Title:</label>
-  <input type="text" [(ngModel)]="ticket.title">
+  <input type="text" [(ngModel)]="ticket.title" name="title">
 </div>
 
 <br>
 
 <div>
   <label>Description:</label>
-  <textarea [(ngModel)]="ticket.description"></textarea>
+  <textarea [(ngModel)]="ticket.description" name="description"></textarea>
 </div>
 
 <br>
 
 <div>
   <label>Ticket Type ID:</label>
-  <input type="text" [(ngModel)]="ticket.ticketTypeId">
+  <select  [(ngModel)]="ticket.ticketTypeId" name="ticketTypeId">
+    @for(ttype of ticketTypes;track ttype){
+      <option [value]="ttype.ticketTypeId">
+        {{ttype.ticketTypeId}}
+      </option>
+    }
+  </select>
 </div>
 
 <br>
@@ -116,8 +122,6 @@
 </div>
 
 <hr>
-
-<!-- ================= TICKET LIST ================= -->
 
 <h3>Ticket List</h3>
 

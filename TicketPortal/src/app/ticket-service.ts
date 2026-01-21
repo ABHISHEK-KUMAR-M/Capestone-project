@@ -23,7 +23,7 @@ export class TicketService {
 
   getTicketById(ticketId: number): Observable<Ticket> {
     return this.http.get<Ticket>(
-      `${this.baseUrl}/${ticketId}`,
+      `${this.baseUrl}+${ticketId}`,
       this.httpOptions
     );
   }
@@ -32,8 +32,8 @@ export class TicketService {
     return this.http.post<void>(this.baseUrl,ticket,this.httpOptions);
   }
 
-  updateTicket(ticket: Ticket): Observable<any> {
-    return this.http.put<void>(this.baseUrl,ticket,this.httpOptions);
+  updateTicket(ticketId:number,ticket: Ticket): Observable<any> {
+    return this.http.put<void>(this.baseUrl + ticketId,ticket,this.httpOptions);
   }
 
   deleteTicket(ticketId: number): Observable<void> {
@@ -42,21 +42,21 @@ export class TicketService {
 
   getTicketsByEmpId(empId: string): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}/empId/${empId}`,
+      `${this.baseUrl}empId/${empId}`,
       this.httpOptions
     );
   }
 
   getTicketsByStatus(status: string): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}/status/${status}`,
+      `${this.baseUrl}status/${status}`,
       this.httpOptions
     );
   }
 
   getTicketsByDepartmentId(departmentId: string): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}/department/${departmentId}`,
+      `${this.baseUrl}department/${departmentId}`,
       this.httpOptions
     );
   }
@@ -65,19 +65,19 @@ export class TicketService {
     departmentId: string,
     status: string
   ): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(`${this.baseUrl}/departmentwithstatus/${departmentId}/${status}`,this.httpOptions);
+    return this.http.get<Ticket[]>(`${this.baseUrl}departmentwithstatus/${departmentId}/${status}`,this.httpOptions);
   }
 
   getTicketsByTicketTypeId(ticketTypeId: string): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}/type/${ticketTypeId}`,
+      `${this.baseUrl}type/${ticketTypeId}`,
       this.httpOptions
     );
   }
 
   getOverdueTickets(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}/overdue`,
+      `${this.baseUrl}overdue`,
       this.httpOptions
     );
   }
