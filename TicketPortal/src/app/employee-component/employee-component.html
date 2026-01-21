@@ -1,1 +1,113 @@
-<p>employee-component works!</p>
+<h2>Employee Management</h2>
+
+@if (errMsg) {
+  <p style="color:red">
+    {{ errMsg }}
+  </p>
+}
+
+<h3>Employee Form</h3>
+
+<div>
+  <label>Employee ID:</label>
+  <input type="text" [(ngModel)]="employee.empId" name="empId">
+  <button (click)="getEmployeeById()">Show</button>
+</div>
+
+<br>
+
+<div>
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="employee.name" name="name">
+</div>
+
+<br>
+
+<div>
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="employee.email" name="email">
+</div>
+
+<br>
+
+<div>
+  <label>Password:</label>
+  <input type="password" [(ngModel)]="employee.password" name="password">
+</div>
+
+<br>
+
+<div>
+  <label>Role:</label>
+  <select [(ngModel)]="employee.role" name="role">
+    <option value="">--Select--</option>
+    <option value="Admin">Admin</option>
+    <option value="User">User</option>
+  </select>
+</div>
+
+<br>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="employee.departmentId" name="departmentId">
+</div>
+
+<br>
+
+<button (click)="addEmployee()">Save</button>
+<button (click)="updateEmployee()">Update</button>
+<button (click)="deleteEmployee()">Delete</button>
+<button (click)="newEmployee()">Clear</button>
+
+<hr>
+
+<h3>Search / Filters</h3>
+
+<div>
+  <label>Employee ID:</label>
+  <input type="text" [(ngModel)]="empId">
+  <button (click)="getEmployeeById()">By ID</button>
+</div>
+
+<br>
+
+<div>
+  <label>Department ID:</label>
+  <input type="text" [(ngModel)]="departmentId">
+  <button (click)="getEmployeesByDepartment()">By Department</button>
+</div>
+
+<hr>
+
+<h3>Employee List</h3>
+
+<button (click)="loadAllEmployees()">Show All Employees</button>
+
+<br><br>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Emp ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Department</th>
+  </tr>
+
+  @if (employees.length > 0) {
+    @for (e of employees; track e.empId) {
+      <tr>
+        <td>{{ e.empId }}</td>
+        <td>{{ e.name }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.role }}</td>
+        <td>{{ e.departmentId || '-' }}</td>
+      </tr>
+    }
+  } @else {
+    <tr>
+      <td colspan="5">No employees found</td>
+    </tr>
+  }
+</table>

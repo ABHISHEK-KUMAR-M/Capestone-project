@@ -11,7 +11,7 @@ export class Ticket {
   resolvedAt?: Date;
 
   constructor(
-    ticketId: number = 0,
+    ticketId: number =0,
     title: string = '',
     description: string = '',
     ticketTypeId: string = '',
