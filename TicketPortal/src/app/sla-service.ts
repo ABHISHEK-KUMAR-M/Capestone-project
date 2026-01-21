@@ -9,7 +9,7 @@ import { SLA } from '../Models/sla';
 export class SlaService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5181/api/Sla/';
+  baseUrl: string = 'http://localhost:5082/api/Sla/';
   httpOptions;
 
   constructor() {

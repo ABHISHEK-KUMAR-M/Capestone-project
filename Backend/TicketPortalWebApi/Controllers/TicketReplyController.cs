@@ -43,18 +43,32 @@ namespace TicketPortalWebApi.Controllers
 
         [HttpGet("ticket/{ticketId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicket(int ticketId)
         {
-            var replies = await _ticketReplyRepository.GetByTicketIdAsync(ticketId);
-            return Ok(replies);
+            try{    
+                var replies = await _ticketReplyRepository.GetByTicketIdAsync(ticketId);
+                return Ok(replies);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("employee/{empId}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetByEmployee(int empId)
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> GetByEmployee(string empId)
         {
-            var replies = await _ticketReplyRepository.GetByEmployeeIdAsync(empId);
-            return Ok(replies);
+            try{    
+                var replies = await _ticketReplyRepository.GetByEmployeeIdAsync(empId);
+                return Ok(replies);
+            }
+            catch (TicketException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -73,15 +87,15 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{ticketReplyId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(TicketReply reply)
+        public async Task<ActionResult> Update(int ticketReplyId,TicketReply reply)
         {
             try
             {
-                await _ticketReplyRepository.UpdateTicketReplyAsync(reply);
+                await _ticketReplyRepository.UpdateTicketReplyAsync(ticketReplyId,reply);
                 return Ok(reply);
             }
             catch (TicketException ex)

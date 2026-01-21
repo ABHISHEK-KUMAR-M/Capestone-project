@@ -5,7 +5,7 @@ import { Department } from '../../Models/department';
 import { DepartmentService } from '../department-service';
 
 @Component({
-  selector: 'app-department',
+  selector: 'app-department-component',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './department-component.html',

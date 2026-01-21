@@ -9,7 +9,7 @@ import { Department } from '../Models/department';
 export class DepartmentService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5181/api/Department/';
+  baseUrl: string = 'http://localhost:5082/api/Department/';
   httpOptions;
 
   constructor() {
