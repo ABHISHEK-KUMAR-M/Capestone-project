@@ -1,1 +1,91 @@
-<p>ticketreply-component works!</p>
+<h2>Ticket Reply Management</h2>
+
+<p style="color:red" *ngIf="errMsg">{{ errMsg }}</p>
+
+<h3>Reply Form</h3>
+
+<div>
+  <label>Reply ID:</label>
+  <input type="number" [(ngModel)]="reply.replyId">
+  <button (click)="getReplyById()">Show</button>
+</div>
+
+<br>
+
+<div>
+  <label>Ticket ID:</label>
+  <input type="number" [(ngModel)]="reply.ticketId">
+  <button (click)="loadRepliesByTicket()">Load Ticket Replies</button>
+</div>
+
+<br>
+
+<div>
+  <label>Employee ID:</label>
+  <input type="text" [(ngModel)]="empId">
+</div>
+
+<br>
+
+<div>
+  <label>Reply By:</label>
+  <input type="radio" name="rb" value="creator" [(ngModel)]="repliedBy"> Creator
+  <input type="radio" name="rb" value="assignee" [(ngModel)]="repliedBy"> Assignee
+</div>
+
+<br>
+
+<div>
+  <label>Message:</label><br>
+  <textarea rows="4" cols="50" [(ngModel)]="reply.message"></textarea>
+</div>
+
+<br>
+
+<button (click)="submitReply()">Save</button>
+<button (click)="updateReply()">Update</button>
+<button (click)="deleteReply()">Delete</button>
+<button (click)="newReply()">Clear</button>
+
+<hr>
+
+<h3>Filters</h3>
+
+<button (click)="loadAllReplies()">Show All</button>
+<button (click)="loadRepliesByEmployee()">By Employee</button>
+<hr>
+
+<h3>Conversation</h3>
+
+<table border="1" cellpadding="6" cellspacing="0" width="100%">
+  <tr>
+    <th>Reply ID</th>
+    <th>Ticket ID</th>
+    <th>Replied By</th>
+    <th>Employee ID</th>
+    <th>Message</th>
+    <th>Created At</th>
+  </tr>
+
+  <tr *ngFor="let r of replies">
+    <td>{{ r.replyId }}</td>
+    <td>{{ r.ticketId }}</td>
+
+    <td>
+      <span *ngIf="r.repliedByCreatorEmpId">Creator</span>
+      <span *ngIf="r.repliedByAssignedEmpId">Assignee</span>
+    </td>
+
+    <td>
+      {{ r.repliedByCreatorEmpId || r.repliedByAssignedEmpId }}
+    </td>
+
+    <td>{{ r.message }}</td>
+    <td>{{ r.createdAt | date:'short' }}</td>
+  </tr>
+
+  <tr *ngIf="replies.length === 0">
+    <td colspan="6" align="center">No replies found</td>
+  </tr>
+</table>
+
