@@ -56,7 +56,12 @@ namespace TicketPortalWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+<<<<<<< Updated upstream
         [HttpPut]
+=======
+
+        [HttpPut("{ticketTypeId}")]
+>>>>>>> Stashed changes
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

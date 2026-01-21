@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -6,6 +7,23 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+=======
+<!-- <a routerLink="" routerLinkActive="active">Home</a>&nbsp;
+<a routerLink="/ticket" routerLinkActive="active">Ticket</a> -->
+<!-- <app-home-component></app-home-component>
+<app-ticket-component></app-ticket-component> -->
+@if(auth.empNameSignal()){
+    <a routerLink="" routerLinkActive="active">Home</a>&nbsp;&nbsp;
+    <a routerLink="/ticket" routerLinkActive="active">Ticket</a>&nbsp;&nbsp;
+    <a routerLink="/tickettype" routerLinkActive="active">TicketType</a>&nbsp;&nbsp;
+    <a routerLink="/logout" routerLinkActive="active">Logout</a>
+}
+@else {
+    <a routerLink="" routerLinkActive="active">Home</a>&nbsp;
+    <a routerLink="/register" routerLinkActive="active">Register</a>&nbsp;
+    <a routerLink="/login" routerLinkActive="active">Login</a>&nbsp;
+}
+>>>>>>> Stashed changes
 
 <style>
   :host {
