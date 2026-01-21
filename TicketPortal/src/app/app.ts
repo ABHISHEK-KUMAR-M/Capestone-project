@@ -7,8 +7,12 @@ import { SlaComponent } from "./sla-component/sla-component";
 import { EmployeeComponent } from "./employee-component/employee-component";
 import { TicketreplyComponent } from "./ticketreply-component/ticketreply-component";
 import { TicketComponent } from "./ticket-component/ticket-component";
+import { TicketTypeComponent } from "./tickettype-component/tickettype-component";
 import { HomeComponent } from './home-component/home-component';
 import { AuthService } from './auth-service';
+import { HomeComponent } from './home-component/home-component';
+import { AuthService } from './auth-service';
+
 
 @Component({
   selector: 'app-root',
