@@ -31,14 +31,7 @@ export class SlaService {
     return this.http.get<SLA>(this.baseUrl + slaId, this.httpOptions);
   }
  
- 
-  getSlaByTicketTypeId(ticketTypeId: string): Observable<SLA> {
-    return this.http.get<SLA>(
-      this.baseUrl + 'bytickettype/' + ticketTypeId,
-      this.httpOptions
-    );
-  }
- 
+
  
   addSla(sla: SLA): Observable<any> {
     return this.http.post(this.baseUrl, sla, this.httpOptions);

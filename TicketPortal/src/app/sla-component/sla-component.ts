@@ -50,17 +50,7 @@ export class SlaComponent {
     });
   }
  
- 
-  getSlaByTicketType() {
-    this.slaSvc.getSlaByTicketTypeId(this.ticketTypeId).subscribe({
-      next: (response) => {
-        this.sla = response;
-        this.errMsg = '';
-      },
-      error: (err) => (this.errMsg = err.error),
-    });
-  }
- 
+  
   addSla() {
     this.slaSvc.addSla(this.sla).subscribe({
       next: () => {
