@@ -34,7 +34,9 @@ export class DepartmentComponent {
         this.departments = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -44,7 +46,9 @@ export class DepartmentComponent {
         this.department = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -55,7 +59,9 @@ export class DepartmentComponent {
         this.loadDepartments();
         this.newDepartment();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -66,7 +72,9 @@ export class DepartmentComponent {
         this.loadDepartments();
         this.newDepartment();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -77,7 +85,9 @@ export class DepartmentComponent {
         this.loadDepartments();
         this.newDepartment();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 }

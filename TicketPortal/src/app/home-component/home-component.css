@@ -1,0 +1,67 @@
+.home-wrapper {
+  animation: fadeIn 0.4s ease-in;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #2f3e46, #354f52);
+  color: #ffffff;
+  padding: 4.5rem 1rem;
+  border-radius: 18px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.feature-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 2.2rem;
+  text-align: center;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  color: #2a9d8f;
+  margin-bottom: 1rem;
+}
+
+.feature-card h5 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

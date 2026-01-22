@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+.btn-soft-accent {
+  background-color: #2a9d8f !important;   
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.btn-soft-accent:hover {
+  background-color: #21867a !important;
+}
+
+/* UPDATE */
+.btn-soft-secondary {
+  background-color: #6c757d !important;   
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.btn-soft-secondary:hover {
+  background-color: #5a6268 !important;
+}
+
+.btn-soft-danger {
+  background-color: #dc3545 !important;   
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.btn-soft-danger:hover {
+  background-color: #bb2d3b !important;
+}
+
+.btn-soft-light {
+  background-color: #adb5bd !important;   
+  color: #212529 !important;
+  border: none !important;
+}
+
+.btn-soft-light:hover {
+  background-color: #9fa6ad !important;
+}
