@@ -1,113 +1,132 @@
-<h2>Employee Management</h2>
+<div class="employee-page">
 
-@if (errMsg) {
-  <p style="color:red">
+  <!-- PAGE HEADER -->
+  <div class="page-header mb-4">
+    <h2>Employee Management</h2>
+    <p class="text-muted">Manage employees with roles, departments, and more.</p>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div class="alert alert-danger" *ngIf="errMsg">
     {{ errMsg }}
-  </p>
-}
+  </div>
 
-<h3>Employee Form</h3>
+  <!-- MAIN LAYOUT -->
+  <div class="row g-4">
 
-<div>
-  <label>Employee ID:</label>
-  <input type="text" [(ngModel)]="employee.empId" name="empId">
-  <button (click)="getEmployeeById()">Show</button>
+    <!-- LEFT : FORM -->
+    <div class="col-lg-5">
+      <div class="card form-card h-100">
+        <div class="card-header">
+          Employee Form
+        </div>
+
+        <div class="card-body">
+          <!-- Employee ID -->
+          <div class="mb-3">
+            <label class="form-label">Employee ID</label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="employee.empId"
+                name="empId"
+              >
+              <button class="btn btn-soft-secondary" (click)="getEmployeeById()">Show</button>
+            </div>
+          </div>
+
+          <!-- Employee Name -->
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" [(ngModel)]="employee.name" name="name">
+          </div>
+
+          <!-- Employee Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="employee.email" name="email">
+          </div>
+
+          <!-- Employee Password -->
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" [(ngModel)]="employee.password" name="password">
+          </div>
+
+          <!-- Employee Role -->
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select [(ngModel)]="employee.role" name="role" class="form-select">
+              <option value="">--Select--</option>
+              <option value="Admin">Admin</option>
+              <option value="User">User</option>
+            </select>
+          </div>
+
+          <!-- Department ID -->
+          <div class="mb-3">
+            <label class="form-label">Department ID</label>
+            <input type="text" class="form-control" [(ngModel)]="employee.departmentId" name="departmentId">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-soft-accent" (click)="addEmployee()">Save</button>
+            <button class="btn btn-soft-secondary" (click)="updateEmployee()">Update</button>
+            <button class="btn btn-soft-danger" (click)="deleteEmployee()">Delete</button>
+            <button class="btn btn-soft-light" (click)="newEmployee()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT : EMPLOYEE TABLE -->
+    <div class="col-lg-7">
+      <div class="card table-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Employee List</span>
+          <button class="btn btn-soft-secondary btn-sm" (click)="loadAllEmployees()">Show All Employees</button>
+        </div>
+
+        <div class="card-body p-0">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>Emp ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Action</th> <!-- Add Action Column for Filter -->
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let e of employees">
+                <td>{{ e.empId }}</td>
+                <td>{{ e.name }}</td>
+                <td>{{ e.email }}</td>
+                <td>{{ e.role }}</td>
+                <td>{{ e.departmentId || '-' }}</td>
+                <td>
+                  <!-- Filter by Department Button -->
+                  <button class="btn btn-sm btn-outline-secondary" (click)="getEmployeesByDepartment(e.departmentId)">
+                    Filter by Department
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="employees.length === 0">
+                <td colspan="6" class="text-center text-muted py-4">
+                  No employees found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
-
-<br>
-
-<div>
-  <label>Name:</label>
-  <input type="text" [(ngModel)]="employee.name" name="name">
-</div>
-
-<br>
-
-<div>
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="employee.email" name="email">
-</div>
-
-<br>
-
-<div>
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="employee.password" name="password">
-</div>
-
-<br>
-
-<div>
-  <label>Role:</label>
-  <select [(ngModel)]="employee.role" name="role">
-    <option value="">--Select--</option>
-    <option value="Admin">Admin</option>
-    <option value="User">User</option>
-  </select>
-</div>
-
-<br>
-
-<div>
-  <label>Department ID:</label>
-  <input type="text" [(ngModel)]="employee.departmentId" name="departmentId">
-</div>
-
-<br>
-
-<button (click)="addEmployee()">Save</button>
-<button (click)="updateEmployee()">Update</button>
-<button (click)="deleteEmployee()">Delete</button>
-<button (click)="newEmployee()">Clear</button>
-
-<hr>
-
-<h3>Search / Filters</h3>
-
-<div>
-  <label>Employee ID:</label>
-  <input type="text" [(ngModel)]="empId">
-  <button (click)="getEmployeeById()">By ID</button>
-</div>
-
-<br>
-
-<div>
-  <label>Department ID:</label>
-  <input type="text" [(ngModel)]="departmentId">
-  <button (click)="getEmployeesByDepartment()">By Department</button>
-</div>
-
-<hr>
-
-<h3>Employee List</h3>
-
-<button (click)="loadAllEmployees()">Show All Employees</button>
-
-<br><br>
-
-<table border="1" cellpadding="6" cellspacing="0">
-  <tr>
-    <th>Emp ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Role</th>
-    <th>Department</th>
-  </tr>
-
-  @if (employees.length > 0) {
-    @for (e of employees; track e.empId) {
-      <tr>
-        <td>{{ e.empId }}</td>
-        <td>{{ e.name }}</td>
-        <td>{{ e.email }}</td>
-        <td>{{ e.role }}</td>
-        <td>{{ e.departmentId || '-' }}</td>
-      </tr>
-    }
-  } @else {
-    <tr>
-      <td colspan="5">No employees found</td>
-    </tr>
-  }
-</table>

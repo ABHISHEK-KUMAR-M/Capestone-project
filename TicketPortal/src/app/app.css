@@ -1,0 +1,60 @@
+/* ===============================
+   APP LEVEL STYLES (SAFE)
+   =============================== */
+ 
+/* NAVBAR */
+.app-navbar {
+  background-color: #2f3e46; /* dark slate */
+}
+ 
+.app-navbar .navbar-brand {
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+ 
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+ 
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+  opacity: 1;
+  color: #ffffff !important;
+}
+ 
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+ 
+/* TOGGLER */
+.navbar-toggler {
+  border: none;
+}
+ 
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+ 
+/* BUTTONS */
+.btn-accent {
+  background-color: #2a9d8f;
+  border: none;
+  color: #ffffff;
+}
+ 
+.btn-accent:hover {
+  background-color: #21867a;
+  color: #ffffff;
+}
+ 
+/* MAIN CONTENT */
+.main-content {
+  min-height: calc(100vh - 64px);
+  background-color: #f4f6f8;
+}
+ 
+ 

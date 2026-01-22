@@ -4,7 +4,7 @@ export class Employee {
   email: string;
   password: string;
   role: string;
-  departmentId?: string;
+  departmentId: string;
 
   constructor(
     empId: string = '',

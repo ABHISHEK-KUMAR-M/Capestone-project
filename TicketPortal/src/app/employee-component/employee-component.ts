@@ -67,8 +67,8 @@ export class EmployeeComponent {
     });
   }
 
-  getEmployeesByDepartment() {
-    this.empSvc.getByDepartmentId(this.departmentId).subscribe({
+  getEmployeesByDepartment(deptId:string) {
+    this.empSvc.getByDepartmentId(deptId).subscribe({
       next: (res) => {
         this.employees = res;
         this.errMsg = '';

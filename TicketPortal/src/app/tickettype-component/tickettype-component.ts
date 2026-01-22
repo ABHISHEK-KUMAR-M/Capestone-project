@@ -45,7 +45,9 @@ export class TicketTypeComponent {
         this.departments = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error)
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
   loadSlas() {
@@ -54,7 +56,9 @@ export class TicketTypeComponent {
         this.slas = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error)
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 newTicketType() {
@@ -66,7 +70,9 @@ newTicketType() {
         this.ticketTypes = response;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
     });
   }
   getTicketType() {
@@ -76,7 +82,9 @@ newTicketType() {
           this.ticketType = response;
           this.errMsg = '';
         },
-        error: (err) => (this.errMsg = err.error),
+          error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
       });
   }
   addTicketType() {
@@ -86,7 +94,9 @@ newTicketType() {
         this.loadTicketTypes();
         this.newTicketType();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
     });
   }
   updateTicketType() {
@@ -96,39 +106,47 @@ newTicketType() {
         this.loadTicketTypes();
         this.newTicketType();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
     });
   }
   deleteTicketType() {
     this.ticketTypeSvc.deleteTicketType(this.ticketType.ticketTypeId).subscribe({
         next: () => {
           alert('Ticket Type Deleted');
-          this.loadTicketTypes();
           this.newTicketType();
+          this.loadTicketTypes();
         },
-        error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
       });
   }
-  GetBySlaId() {
-    this.ticketTypeSvc.GetBySlaId(this.ticketType.slaId).subscribe({
+  GetBySlaId(slaId:string) {
+    this.ticketTypeSvc.GetBySlaId(slaId).subscribe({
       next: (res: TicketType[]) => {
         this.ticketTypes = res;
         this.errMsg = '';
         this.departmentId = '';
         //this.loadTicketTypes();
       },
-      error: (err) => (this.errMsg = err.error)
+      error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-  GetByDepartmentId() {
-    this.ticketTypeSvc.GetByDepartmentId(this.ticketType.departmentId).subscribe({
+  GetByDepartmentId(deptId:string) {
+    this.ticketTypeSvc.GetByDepartmentId(deptId).subscribe({
       next: (res: TicketType[]) => {
         this.ticketTypes = res;
         this.errMsg = '';
         this.slaId = '';
         //this.loadTicketTypes();
       },
-      error: (err) => (this.errMsg = err.error)
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 }
