@@ -76,9 +76,7 @@
     <td>{{ r.repliedByAssignedEmpId || 'null' }}</td>
 
     <td>{{ r.message }}</td>
-    <td>
-  {{ r.createdAt | date:'dd/MM/yyyy hh:mm a':'Asia/Kolkata' }} IST
-</td>
+    <td>{{ r.createdAt | date:'short' }}</td>
 
   </tr>
 
