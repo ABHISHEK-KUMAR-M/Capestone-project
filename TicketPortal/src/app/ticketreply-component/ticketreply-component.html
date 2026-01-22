@@ -13,16 +13,15 @@
 <br>
 
 <div>
-  <label>Ticket ID:</label>
-  <input type="number" [(ngModel)]="reply.ticketId">
+  <label>Ticket:</label>
+  <select [(ngModel)]="reply.ticketId" (change)="onTicketChange()">
+    <option [ngValue]="0">-- Select Ticket --</option>
+    <option *ngFor="let t of filteredTickets" [ngValue]="t.ticketId">
+      {{ t.ticketId }} - {{ t.title }}
+    </option>
+  </select>
+
   <button (click)="loadRepliesByTicket()">Load Ticket Replies</button>
-</div>
-
-<br>
-
-<div>
-  <label>Employee ID:</label>
-  <input type="text" [(ngModel)]="empId">
 </div>
 
 <br>
@@ -52,7 +51,9 @@
 <h3>Filters</h3>
 
 <button (click)="loadAllReplies()">Show All</button>
+
 <button (click)="loadRepliesByEmployee()">By Employee</button>
+
 <hr>
 
 <h3>Conversation</h3>
@@ -61,8 +62,8 @@
   <tr>
     <th>Reply ID</th>
     <th>Ticket ID</th>
-    <th>Replied By</th>
-    <th>Employee ID</th>
+    <th>Replied By Creator Emp Id</th>
+    <th>Replied By Assignee Emp Id</th>
     <th>Message</th>
     <th>Created At</th>
   </tr>
@@ -71,21 +72,15 @@
     <td>{{ r.replyId }}</td>
     <td>{{ r.ticketId }}</td>
 
-    <td>
-      <span *ngIf="r.repliedByCreatorEmpId">Creator</span>
-      <span *ngIf="r.repliedByAssignedEmpId">Assignee</span>
-    </td>
-
-    <td>
-      {{ r.repliedByCreatorEmpId || r.repliedByAssignedEmpId }}
-    </td>
+    <td>{{ r.repliedByCreatorEmpId || 'null' }}</td>
+    <td>{{ r.repliedByAssignedEmpId || 'null' }}</td>
 
     <td>{{ r.message }}</td>
     <td>{{ r.createdAt | date:'short' }}</td>
+
   </tr>
 
   <tr *ngIf="replies.length === 0">
     <td colspan="6" align="center">No replies found</td>
   </tr>
 </table>
-
