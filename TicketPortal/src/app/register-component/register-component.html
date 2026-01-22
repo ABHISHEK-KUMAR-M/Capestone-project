@@ -1,15 +1,55 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Create Account</h2>
+      <p>Register to access the Ticket Portal</p>
+    </div>
 
-<h2>Register Form</h2>
-<form #registerForm="ngForm">
-    EmpId:<input type="text" [(ngModel)]="emp.empId" name="empId">
-    Name:<input type="text" [(ngModel)]="emp.name" name="name">
-    Email:<input type="email" [(ngModel)]="emp.email" name="email">
-    Password:<input type="text" [(ngModel)]="emp.password" name="password"><br>
-    DepartmentId:<select [(ngModel)]="emp.departmentId" name="departmentId">
-        @for(dept of Departments;track dept){
-            <option [value]="dept.departmentId">{{dept.departmentName}}</option>
-        }
-    </select>
+    <form #registerForm="ngForm">
 
-    <input type="button" value="Save" (click)="register()">
-</form>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" placeholder="Employee ID"
+               [(ngModel)]="emp.empId" name="empId">
+        <label>Employee ID</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" placeholder="Name"
+               [(ngModel)]="emp.name" name="name">
+        <label>Name</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" placeholder="Email"
+               [(ngModel)]="emp.email" name="email">
+        <label>Email</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password"
+               [(ngModel)]="emp.password" name="password">
+        <label>Password</label>
+      </div>
+
+      <div class="form-floating mb-4">
+        <select class="form-select"
+                [(ngModel)]="emp.departmentId" name="departmentId">
+          <option value="">Select Department</option>
+          @for (dept of Departments; track dept) {
+            <option [value]="dept.departmentId">
+              {{ dept.departmentName }}
+            </option>
+          }
+        </select>
+        <label>Department</label>
+      </div>
+
+      <button type="button"
+              class="btn btn-soft-accent w-100 auth-btn"
+              (click)="register()">
+        Register
+      </button>
+
+    </form>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import { Department } from '../../Models/department';
 import { DepartmentService } from '../department-service';
 import { SLA } from '../../Models/sla';
 import { SlaService } from '../sla-service';
-
+ 
 @Component({
   selector: 'app-tickettype',
   standalone: true,
@@ -16,7 +16,7 @@ import { SlaService } from '../sla-service';
   styleUrl: './tickettype-component.css'
 })
 export class TicketTypeComponent {
-
+ 
   ticketTypeSvc: TicketTypeService = inject(TicketTypeService);
   departmentSvc: DepartmentService = inject(DepartmentService);
   slaSvc: SlaService = inject(SlaService);
@@ -48,6 +48,9 @@ export class TicketTypeComponent {
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       }
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
   loadSlas() {
@@ -56,6 +59,9 @@ export class TicketTypeComponent {
         this.slas = res;
         this.errMsg = '';
       },
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       }
@@ -73,6 +79,9 @@ newTicketType() {
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       },
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
     });
   }
   getTicketType() {
@@ -82,6 +91,9 @@ newTicketType() {
           this.ticketType = response;
           this.errMsg = '';
         },
+          error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
           error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       },
@@ -97,6 +109,9 @@ newTicketType() {
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       },
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      },
     });
   }
   updateTicketType() {
@@ -105,6 +120,9 @@ newTicketType() {
         alert('Ticket Type Updated.');
         this.loadTicketTypes();
         this.newTicketType();
+      },
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       },
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
@@ -125,6 +143,8 @@ newTicketType() {
   }
   GetBySlaId(slaId:string) {
     this.ticketTypeSvc.GetBySlaId(slaId).subscribe({
+  GetBySlaId(slaId:string) {
+    this.ticketTypeSvc.GetBySlaId(slaId).subscribe({
       next: (res: TicketType[]) => {
         this.ticketTypes = res;
         this.errMsg = '';
@@ -138,6 +158,8 @@ newTicketType() {
   }
   GetByDepartmentId(deptId:string) {
     this.ticketTypeSvc.GetByDepartmentId(deptId).subscribe({
+  GetByDepartmentId(deptId:string) {
+    this.ticketTypeSvc.GetByDepartmentId(deptId).subscribe({
       next: (res: TicketType[]) => {
         this.ticketTypes = res;
         this.errMsg = '';
@@ -147,6 +169,10 @@ newTicketType() {
         error: err => {
        this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
       }
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 }
+ 

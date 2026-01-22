@@ -1,10 +1,15 @@
 <div class="ticket-type-page">
+<<<<<<< HEAD
 
   <!-- PAGE HEADER -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
   <div class="page-header mb-4">
     <h2>Ticket Type Management</h2>
     <p class="text-muted">Manage ticket types associated with SLAs and departments.</p>
   </div>
+<<<<<<< HEAD
 
   <!-- ERROR MESSAGE -->
   <div class="alert alert-danger" *ngIf="errMsg">
@@ -15,14 +20,28 @@
   <div class="row g-4">
 
     <!-- LEFT : FORM -->
+=======
+ 
+  <div class="alert alert-danger" *ngIf="errMsg">
+    {{ errMsg }}
+  </div>
+ 
+  <div class="row g-4">
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
     <div class="col-lg-5">
       <div class="card form-card h-100">
         <div class="card-header">
           Ticket Type Form
         </div>
+<<<<<<< HEAD
 
         <div class="card-body">
           <!-- Ticket Type ID -->
+=======
+ 
+        <div class="card-body">
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="mb-3">
             <label class="form-label">Ticket Type ID</label>
             <div class="input-group">
@@ -35,14 +54,22 @@
               <button type="button" class="btn btn-soft-secondary mt-2" (click)="getTicketType()">Show</button>
             </div>
           </div>
+<<<<<<< HEAD
 
           <!-- Type Name -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="mb-3">
             <label class="form-label">Type Name</label>
             <input type="text" class="form-control" [(ngModel)]="ticketType.typeName" name="typeName" />
           </div>
+<<<<<<< HEAD
 
           <!-- Description -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="mb-3">
             <label class="form-label">Description</label>
             <input
@@ -52,8 +79,12 @@
               name="description"
             />
           </div>
+<<<<<<< HEAD
 
           <!-- Department ID -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="mb-3">
             <label class="form-label">Department</label>
             <select [(ngModel)]="ticketType.departmentId" name="formDepartmentId" class="form-select">
@@ -63,8 +94,12 @@
               </option>
             </select>
           </div>
+<<<<<<< HEAD
 
           <!-- SLA ID -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="mb-3">
             <label class="form-label">SLA</label>
             <select [(ngModel)]="ticketType.slaId" name="formSlaId" class="form-select">
@@ -74,8 +109,12 @@
               </option>
             </select>
           </div>
+<<<<<<< HEAD
 
           <!-- Action Buttons -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
           <div class="d-flex flex-wrap gap-2">
             <button type="button" class="btn btn-soft-accent" (click)="addTicketType()">Save</button>
             <button type="button" class="btn btn-soft-secondary" (click)="updateTicketType()">Update</button>
@@ -85,15 +124,23 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 
     <!-- RIGHT : TICKET TYPE TABLE -->
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
     <div class="col-lg-7">
       <div class="card table-card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <span>Ticket Type List</span>
           <button class="btn btn-soft-secondary btn-sm" (click)="loadTicketTypes()">Show All Ticket Types</button>
         </div>
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
         <div class="card-body p-0">
           <table class="table table-hover mb-0">
             <thead>
@@ -104,10 +151,16 @@
                 <th>SLA</th>
                 <th>Action</th>
                 <th>Action</th>
+<<<<<<< HEAD
                 <!-- Add Action Column for Filter -->
               </tr>
             </thead>
 
+=======
+              </tr>
+            </thead>
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
             <tbody>
               <tr *ngFor="let t of ticketTypes">
                 <td>{{ t.ticketTypeId }}</td>
@@ -115,7 +168,10 @@
                 <td>{{ t.departmentId }}</td>
                 <td>{{ t.slaId }}</td>
                 <td>
+<<<<<<< HEAD
                   <!-- Filter by Department Button -->
+=======
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
                   <button class="btn btn-sm btn-outline-secondary" (click)="GetByDepartmentId(t.departmentId)">
                     FilterByDepartmentId
                   </button>
@@ -126,7 +182,11 @@
                   </button>
                 </td>
               </tr>
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
               <tr *ngIf="ticketTypes.length === 0">
                 <td colspan="5" class="text-center text-muted py-4">
                   No ticket types found
@@ -137,6 +197,14 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 
   </div>
 </div>
+=======
+ 
+  </div>
+</div>
+ 
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541

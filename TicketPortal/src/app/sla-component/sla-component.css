@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ===============================
    SLA COMPONENT STYLES
    (Layout + Structure only)
@@ -8,40 +9,70 @@
 }
 
 /* HEADER */
+=======
+.sla-page {
+  animation: fadeIn 0.4s ease-in;
+}
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 .page-header h2 {
   font-weight: 700;
   margin-bottom: 0.3rem;
 }
+<<<<<<< HEAD
 
 /* CARDS */
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 .form-card,
 .table-card {
   border: none;
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 .card-header {
   background-color: #f8f9fa;
   font-weight: 600;
 }
+<<<<<<< HEAD
 
 /* TABLE */
 .table thead {
   background-color: #e9ecef;
 }
 
+=======
+ 
+.table thead {
+  background-color: #e9ecef;
+}
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 .table th {
   font-weight: 600;
   font-size: 0.9rem;
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 .table td {
   font-size: 0.9rem;
   vertical-align: middle;
 }
+<<<<<<< HEAD
 
 /* ANIMATION */
+=======
+ 
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -51,4 +82,8 @@
     opacity: 1;
     transform: translateY(0);
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541

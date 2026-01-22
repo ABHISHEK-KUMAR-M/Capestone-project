@@ -1,17 +1,17 @@
 /* ===============================
    EMPLOYEE COMPONENT STYLES
    =============================== */
-
+ 
 .employee-page {
   animation: fadeIn 0.4s ease-in;
 }
-
+ 
 /* HEADER */
 .page-header h2 {
   font-weight: 700;
   margin-bottom: 0.3rem;
 }
-
+ 
 /* CARDS */
 .form-card,
 .table-card {
@@ -19,39 +19,39 @@
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
-
+ 
 .card-header {
   background-color: #f8f9fa;
   font-weight: 600;
 }
-
+ 
 /* TABLE */
 .table thead {
   background-color: #e9ecef;
 }
-
+ 
 .table th {
   font-weight: 600;
   font-size: 0.9rem;
 }
-
+ 
 .table td {
   font-size: 0.9rem;
   vertical-align: middle;
 }
-
+ 
 /* RESPONSIVENESS */
 @media (max-width: 768px) {
   .row {
     flex-direction: column;
   }
-
+ 
   .col-lg-5,
   .col-lg-7 {
     width: 100%;
   }
 }
-
+ 
 /* ANIMATION */
 @keyframes fadeIn {
   from {
@@ -63,3 +63,5 @@
     transform: translateY(0);
   }
 }
+ 
+ 

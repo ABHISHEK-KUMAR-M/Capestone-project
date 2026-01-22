@@ -100,11 +100,14 @@ export class TicketreplyComponent {
         this.newReply();
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
   updateReply() {
+<<<<<<< HEAD
     this.replySvc.updateReply(this.reply.replyId, this.reply).subscribe({
       next: () => {
         alert('Reply Updated');
@@ -115,6 +118,20 @@ export class TicketreplyComponent {
         this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
       }
     });
+=======
+    this.replySvc
+      .updateReply(this.reply.replyId, this.reply)
+      .subscribe({
+        next: () => {
+          alert('Reply Updated');
+          this.loadRepliesByTicket();
+          this.newReply();
+        },
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
+      });
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
   }
 
   deleteReply() {
@@ -127,8 +144,13 @@ export class TicketreplyComponent {
         this.newReply();
         this.errMsg = '';
       },
+<<<<<<< HEAD
       error: err => {
         this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
+=======
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+>>>>>>> e6da27fe0146e121133feacbcd0d6bde041ae541
       }
     });
   }
@@ -136,14 +158,18 @@ export class TicketreplyComponent {
   getReplyById() {
     this.replySvc.getReplyById(this.reply.replyId).subscribe({
       next: (res) => (this.reply = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
   loadAllReplies() {
     this.replySvc.getAllReplies().subscribe({
       next: (res) => (this.replies = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -152,7 +178,9 @@ export class TicketreplyComponent {
 
     this.replySvc.getRepliesByTicket(this.reply.ticketId).subscribe({
       next: (res) => (this.replies = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
