@@ -2,13 +2,11 @@
   animation: fadeIn 0.4s ease-in;
 }
 
-/* HEADER */
 .page-header h2 {
   font-weight: 700;
   margin-bottom: 0.3rem;
 }
 
-/* CARDS */
 .form-card,
 .table-card {
   border: none;
@@ -21,7 +19,6 @@
   font-weight: 600;
 }
 
-/* TABLE */
 .table thead {
   background-color: #e9ecef;
 }
@@ -36,7 +33,6 @@
   vertical-align: middle;
 }
 
-/* ANIMATION */
 @keyframes fadeIn {
   from {
     opacity: 0;
