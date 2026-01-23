@@ -71,36 +71,36 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpGet("department/{departmentId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult> GetByDepartment(string departmentId)
-        {
-            try{    
-                var tickets = await _ticketRepository.GetByDepartmentIdAsync(departmentId);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
+        // [HttpGet("department/{departmentId}")]
+        // [ProducesResponseType(200)]
+        // [ProducesResponseType(404)]
+        // public async Task<ActionResult> GetByDepartment(string departmentId)
+        // {
+        //     try{    
+        //         var tickets = await _ticketRepository.GetByDepartmentIdAsync(departmentId);
+        //         return Ok(tickets);
+        //     }
+        //     catch (TicketException ex)
+        //     {
+        //         return NotFound(ex.Message);
+        //     }
+        // }
 
-        [HttpGet("departmentwithstatus/{departmentId}/{status}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult> GetByDepartmentAndStatus(string departmentId, string status)
-        {
-            try{    
-                var tickets = await _ticketRepository
-                    .GetByDepartmentAndStatusAsync(departmentId, status);
-                return Ok(tickets);
-            }
-            catch (TicketException ex)
-            {
-                return NotFound(ex.Message);
-            }   
-        }
+        // [HttpGet("departmentwithstatus/{departmentId}/{status}")]
+        // [ProducesResponseType(200)]
+        // [ProducesResponseType(404)]
+        // public async Task<ActionResult> GetByDepartmentAndStatus(string departmentId, string status)
+        // {
+        //     try{    
+        //         var tickets = await _ticketRepository
+        //             .GetByDepartmentAndStatusAsync(departmentId, status);
+        //         return Ok(tickets);
+        //     }
+        //     catch (TicketException ex)
+        //     {
+        //         return NotFound(ex.Message);
+        //     }   
+        // }
 
         [HttpGet("byTickettype/{ticketTypeId}")]
         [ProducesResponseType(200)]
@@ -145,7 +145,7 @@ namespace TicketPortalWebApi.Controllers
                     Description = ticket.Description,
                     TicketTypeId = ticket.TicketTypeId,
                     CreatedByEmpId = ticket.CreatedByEmpId,
-                    AssignedToEmpId = ticket.AssignedToEmpId,
+                    AssignedToEmpId = null,
                     Status = ticket.Status,
                     CreatedAt = DateTime.UtcNow,
                     DueAt = ticket.DueAt
@@ -168,6 +168,7 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
+                System.Console.WriteLine(ticket);
                 await _ticketRepository.UpdateTicketAsync(ticketId,ticket);
                 return Ok(ticket);
             }
