@@ -5,6 +5,7 @@ import { Employee } from '../../Models/employee';
 import { EmployeeService } from '../employee-service';
 import { DepartmentService } from '../department-service';
 import { Department } from '../../Models/department';
+import { AuthService } from '../auth-service';
 
 @Component({
   selector: 'app-employee-component',
@@ -17,6 +18,7 @@ export class EmployeeComponent {
 
   empSvc: EmployeeService = inject(EmployeeService);
   deptSvc:DepartmentService=inject(DepartmentService);
+  AuthSvc:AuthService=inject(AuthService);
 
   employee: Employee;
   employees: Employee[];

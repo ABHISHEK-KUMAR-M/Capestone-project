@@ -80,7 +80,8 @@
 
 <hr>
 
-<h3>Employee List</h3>
+@if(AuthSvc.empRoleSignal()=='Admin')
+{<h3>Employee List</h3>
 
 <button (click)="loadAllEmployees()">Show All Employees</button>
 
@@ -110,4 +111,4 @@
       <td colspan="5">No employees found</td>
     </tr>
   }
-</table>
+</table>}
