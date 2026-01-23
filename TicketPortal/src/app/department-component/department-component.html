@@ -1,58 +1,103 @@
-<h2>Department Management</h2>
+<div class="department-page">
 
-<p style="color:red" *ngIf="errMsg">
-  {{ errMsg }}
-</p>
+  <div class="page-header mb-4">
+    <h2>Department Management</h2>
+    <p class="text-muted">
+      Manage departments used across the ticketing system
+    </p>
+  </div>
 
-<h3>Department Form</h3>
+  <div class="alert alert-danger" *ngIf="errMsg">
+    {{ errMsg }}
+  </div>
 
-<div>
-  <label>Department ID:</label>
-  <input type="text" [(ngModel)]="department.departmentId">
-  <button (click)="getDepartment()">Show</button>
+  <div class="row g-4">
+
+    <div class="col-lg-5">
+      <div class="card form-card h-100">
+        <div class="card-header">
+          Department Form
+        </div>
+
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Department ID</label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="department.departmentId"
+              >
+              <button class="btn btn-soft-secondary" (click)="getDepartment()">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Department Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="department.departmentName"
+            >
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Description</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="department.description"
+            >
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-soft-accent" (click)="addDepartment()">Save</button>
+            <button class="btn btn-soft-secondary" (click)="updateDepartment()">Update</button>
+            <button class="btn btn-soft-danger" (click)="deleteDepartment()">Delete</button>
+            <button class="btn btn-soft-light" (click)="newDepartment()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="card table-card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Departments</span>
+          <button class="btn btn-soft-secondary btn-sm" (click)="loadDepartments()">
+            Show All
+          </button>
+        </div>
+
+        <div class="card-body p-0">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>Department ID</th>
+                <th>Department Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let d of departments">
+                <td>{{ d.departmentId }}</td>
+                <td>{{ d.departmentName }}</td>
+                <td>{{ d.description }}</td>
+              </tr>
+
+              <tr *ngIf="departments.length === 0">
+                <td colspan="3" class="text-center text-muted py-4">
+                  No departments found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
-
-<br>
-
-<div>
-  <label>Department Name:</label>
-  <input type="text" [(ngModel)]="department.departmentName">
-</div>
-
-<br>
-
-<div>
-  <label>Description:</label>
-  <input type="text" [(ngModel)]="department.description">
-</div>
-
-<br>
-
-<button (click)="addDepartment()">Save</button>
-<button (click)="updateDepartment()">Update</button>
-<button (click)="deleteDepartment()">Delete</button>
-<button (click)="newDepartment()">Clear</button>
-
-<hr>
-
-<h3>List of Departments</h3>
-
-<button (click)="loadDepartments()">Show All</button>
-
-<table border="1" cellpadding="5">
-  <tr>
-    <th>Department ID</th>
-    <th>Department Name</th>
-    <th>Description</th>
-  </tr>
-
-  <tr *ngFor="let d of departments">
-    <td>{{ d.departmentId }}</td>
-    <td>{{ d.departmentName }}</td>
-    <td>{{ d.description }}</td>
-  </tr>
-
-  <tr *ngIf="departments.length === 0">
-    <td colspan="3">No departments found</td>
-  </tr>
-</table>

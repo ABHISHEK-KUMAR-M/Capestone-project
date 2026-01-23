@@ -44,7 +44,9 @@ export class TicketreplyComponent {
         this.loadRepliesByTicket();
         this.newReply();
       },
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -57,7 +59,9 @@ export class TicketreplyComponent {
           this.loadRepliesByTicket();
           this.newReply();
         },
-        error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
       });
   }
 
@@ -68,21 +72,27 @@ export class TicketreplyComponent {
         this.loadRepliesByTicket();
         this.newReply();
       },
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
   getReplyById() {
     this.replySvc.getReplyById(this.reply.replyId).subscribe({
       next: (res) => (this.reply = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
   loadAllReplies() {
     this.replySvc.getAllReplies().subscribe({
       next: (res) => (this.replies = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -91,7 +101,9 @@ export class TicketreplyComponent {
 
     this.replySvc.getRepliesByTicket(this.reply.ticketId).subscribe({
       next: (res) => (this.replies = res),
-      error: (err) => (this.errMsg = err.error),
+       error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 

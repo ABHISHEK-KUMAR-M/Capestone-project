@@ -21,6 +21,5 @@ import { AuthService } from './auth-service';
 export class App {
   protected readonly title = signal('TicketPortal');
   auth=inject(AuthService);
-  empName=signal(sessionStorage.getItem('empName'));
 }
 

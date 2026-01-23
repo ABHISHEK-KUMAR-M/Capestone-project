@@ -1,1 +1,83 @@
-<p>home-component works!</p>
+@if (authSvc.empNameSignal()) {
+
+  <div class="home-wrapper">
+
+    <section class="hero-section text-center">
+      <div class="hero-content">
+        <h1 class="hero-title">Ticket Portal</h1>
+        <p class="hero-subtitle">
+          Centralized system to manage and track support tickets
+        </p>
+      </div>
+    </section>
+
+    <section class="features container mt-5">
+      <div class="row g-4 justify-content-center">
+
+        <div class="col-md-4">
+          <a routerLink="/ticket" class="feature-link">
+            <div class="feature-card">
+              <i class="bi bi-journal-text feature-icon"></i>
+              <h5>Ticket Management</h5>
+              <p>Create, assign, track, and resolve tickets efficiently.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a routerLink="/ticketreply" class="feature-link">
+            <div class="feature-card">
+              <i class="bi bi-reply-all feature-icon"></i>
+              <h5>Ticket Replies</h5>
+              <p>View and manage conversations for support.</p>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+} @else {
+
+  <div class="home-wrapper">
+
+    <section class="hero-section text-center">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to Ticket Portal</h1>
+        <p class="hero-subtitle">
+          Please login or register to access ticket management features
+        </p>
+      </div>
+    </section>
+
+    <section class="features container mt-5">
+      <div class="row g-4 justify-content-center">
+
+        <div class="col-md-4">
+          <a routerLink="/login" class="feature-link">
+            <div class="feature-card">
+              <i class="bi bi-box-arrow-in-right feature-icon"></i>
+              <h5>Login</h5>
+              <p>Access your account and manage tickets.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a routerLink="/register" class="feature-link">
+            <div class="feature-card">
+              <i class="bi bi-person-plus feature-icon"></i>
+              <h5>Register</h5>
+              <p>Create a new account to start using the portal.</p>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+}

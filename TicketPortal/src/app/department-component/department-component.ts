@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Department } from '../../Models/department';
 import { DepartmentService } from '../department-service';
 
+
 @Component({
   selector: 'app-department',
   standalone: true,
@@ -34,7 +35,9 @@ export class DepartmentComponent {
         this.departments = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -44,7 +47,8 @@ export class DepartmentComponent {
         this.department = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: (err) => (this.errMsg = err.error)
+      
     });
   }
 
@@ -55,7 +59,9 @@ export class DepartmentComponent {
         this.loadDepartments();
         this.newDepartment();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
@@ -66,18 +72,38 @@ export class DepartmentComponent {
         this.loadDepartments();
         this.newDepartment();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 
   deleteDepartment() {
-    this.deptSvc.deleteDepartment(this.department.departmentId).subscribe({
-      next: () => {
-        alert('Department Deleted');
-        this.loadDepartments();
-        this.newDepartment();
-      },
-      error: (err) => (this.errMsg = err.error),
-    });
-  }
+  // Displaying the alert before calling the API, to confirm delete operation
+  alert('Attempting to delete department...');
+
+  // Call the service to delete the department
+  this.deptSvc.deleteDepartment(this.department.departmentId).subscribe({
+    next: () => {
+      // This alert should show after the department has been deleted
+      alert('Department Deleted');
+
+      // Reload the departments
+      this.loadDepartments();
+      
+      // Reset the department form
+      this.newDepartment();
+
+      // Optionally, you can log to the console to verify if everything worked
+      console.log('Department deleted successfully');
+    },
+    error: err => {
+      // If there's an error, you can display a custom error message
+      this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
+      alert(`Error: ${this.errMsg}`); // Show error in alert if deletion fails
+    }
+  });
 }
+
+  }
+

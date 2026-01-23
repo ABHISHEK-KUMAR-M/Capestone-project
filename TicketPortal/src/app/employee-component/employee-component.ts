@@ -5,7 +5,7 @@ import { Employee } from '../../Models/employee';
 import { EmployeeService } from '../employee-service';
 import { DepartmentService } from '../department-service';
 import { Department } from '../../Models/department';
-
+ 
 @Component({
   selector: 'app-employee-component',
   standalone: true,
@@ -14,18 +14,18 @@ import { Department } from '../../Models/department';
   styleUrl: './employee-component.css',
 })
 export class EmployeeComponent {
-
+ 
   empSvc: EmployeeService = inject(EmployeeService);
   deptSvc:DepartmentService=inject(DepartmentService);
-
+ 
   employee: Employee;
   employees: Employee[];
   errMsg: string;
-
+ 
   empId: string = '';
   departmentId: string = '';
   departments:Department[];
-
+ 
   constructor() {
     this.employee = new Employee();
     this.employees = [];
@@ -33,7 +33,7 @@ export class EmployeeComponent {
     this.departments=[];
     this.loadAllEmployees();
   }
-
+ 
   newEmployee() {
     this.employee = new Employee();
   }
@@ -53,30 +53,36 @@ export class EmployeeComponent {
         this.employees = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
+ 
   getEmployeeById() {
     this.empSvc.getEmployeeById(this.empId).subscribe({
       next: (res) => {
         this.employee = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
-  getEmployeesByDepartment() {
-    this.empSvc.getByDepartmentId(this.departmentId).subscribe({
+ 
+  getEmployeesByDepartment(deptId:string) {
+    this.empSvc.getByDepartmentId(deptId).subscribe({
       next: (res) => {
         this.employees = res;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
+ 
   addEmployee() {
     this.empSvc.addEmployee(this.employee).subscribe({
       next: () => {
@@ -84,10 +90,12 @@ export class EmployeeComponent {
         this.loadAllEmployees();
         this.newEmployee();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
+ 
   updateEmployee() {
     this.empSvc.updateEmployee(this.employee).subscribe({
       next: () => {
@@ -95,10 +103,12 @@ export class EmployeeComponent {
         this.loadAllEmployees();
         this.newEmployee();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
+ 
   deleteEmployee() {
     this.empSvc.deleteEmployee(this.empId).subscribe({
       next: () => {
@@ -106,10 +116,12 @@ export class EmployeeComponent {
         this.loadAllEmployees();
         this.newEmployee();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
-
+ 
   login() {
     this.empSvc.login(this.empId, this.employee.password).subscribe({
       next: (res) => {
@@ -117,9 +129,13 @@ export class EmployeeComponent {
         sessionStorage.setItem('employee', JSON.stringify(res));
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 }
-
-
+ 
+ 
+ 
+ 
