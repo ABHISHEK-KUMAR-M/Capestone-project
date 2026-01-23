@@ -32,7 +32,9 @@ showAllDepartments(){
       this.Departments=response;
       this.errMsg="";
     },
-    error:(err)=>this.errMsg=err.error
+      error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
   })
 }
  
