@@ -36,7 +36,9 @@ export class SlaComponent {
         this.slas = response;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
  
@@ -46,7 +48,9 @@ export class SlaComponent {
         this.sla = response;
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
  
@@ -58,7 +62,9 @@ export class SlaComponent {
         this.loadSlas();
         this.newSla();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
  
@@ -69,7 +75,9 @@ export class SlaComponent {
         this.loadSlas();
         this.newSla();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
  
@@ -80,7 +88,9 @@ export class SlaComponent {
         this.loadSlas();
         this.newSla();
       },
-      error: (err) => (this.errMsg = err.error),
+        error: err => {
+       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      }
     });
   }
 }
