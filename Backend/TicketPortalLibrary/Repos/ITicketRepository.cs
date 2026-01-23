@@ -11,8 +11,8 @@ public interface ITicketRepository
     Task<IEnumerable<Ticket>> GetAllTicketsAsync();
     Task<IEnumerable<Ticket>> GetByEmpIdAsync(string empId);
     Task<IEnumerable<Ticket>> GetByStatusAsync(string status);
-    Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(string departmentId);
-    Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(string departmentId,string status);
+    // Task<IEnumerable<Ticket>> GetByDepartmentIdAsync(string departmentId);
+    // Task<IEnumerable<Ticket>> GetByDepartmentAndStatusAsync(string departmentId,string status);
     Task<IEnumerable<Ticket>> GetByTicketTypeIdAsync(string ticketTypeId);
     Task<IEnumerable<Ticket>> GetOverdueTicketsAsync();
 }

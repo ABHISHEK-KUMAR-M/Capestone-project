@@ -37,7 +37,7 @@ export class TicketService {
   }
 
   deleteTicket(ticketId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${ticketId}`,this.httpOptions);
+    return this.http.delete<void>(`${this.baseUrl}${ticketId}`,this.httpOptions);
   }
 
   getTicketsByEmpId(empId: string): Observable<Ticket[]> {
@@ -54,23 +54,9 @@ export class TicketService {
     );
   }
 
-  getTicketsByDepartmentId(departmentId: string): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(
-      `${this.baseUrl}department/${departmentId}`,
-      this.httpOptions
-    );
-  }
-
-  getTicketsByDepartmentAndStatus(
-    departmentId: string,
-    status: string
-  ): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(`${this.baseUrl}departmentwithstatus/${departmentId}/${status}`,this.httpOptions);
-  }
-
   getTicketsByTicketTypeId(ticketTypeId: string): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(
-      `${this.baseUrl}type/${ticketTypeId}`,
+      `${this.baseUrl}byTickettype/${ticketTypeId}`,
       this.httpOptions
     );
   }

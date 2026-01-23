@@ -29,7 +29,7 @@ export class LoginComponent {
     this.EmpSvc.login(this.EmpId,this.EmpPassword).subscribe({
       next:(response:any)=>{
         this.Emp=response;
-        this.authSvc.setLogin(this.Emp.name);
+        this.authSvc.setLogin(this.Emp.name,this.Emp.empId,this.Emp.role);
         this.errMsg="";
         this.router.navigate(['']);
       },
