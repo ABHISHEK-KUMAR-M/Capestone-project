@@ -6,6 +6,7 @@ import { Ticket } from '../Models/ticket';
 @Injectable({
   providedIn: 'root',
 })
+
 export class TicketService {
   private http = inject(HttpClient);
 
