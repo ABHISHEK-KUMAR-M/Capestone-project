@@ -1,27 +1,19 @@
-<div class="ticket-reply-page">
+<div class="ticketreply-page">
 
   <!-- PAGE HEADER -->
   <div class="page-header mb-4">
     <h2>Ticket Reply Management</h2>
-    <p class="text-muted">Manage and track ticket conversations between creators and assignees</p>
+    <p class="text-muted">Manage conversations and replies for support tickets</p>
   </div>
 
-  <!-- ERROR MESSAGE -->
-  <div class="alert alert-danger" *ngIf="errMsg">
-    {{ errMsg }}
-  </div>
-
-  <!-- MAIN LAYOUT -->
   <div class="row g-4">
 
-    <!-- LEFT SIDE: FORM -->
+    <!-- Left side: Reply Form -->
     <div class="col-lg-5">
       <div class="card form-card h-100">
-        <div class="card-header">
-          Reply Form
-        </div>
-
+        <div class="card-header">Reply Form</div>
         <div class="card-body">
+          
           <div class="mb-3">
             <label class="form-label">Reply ID</label>
             <div class="input-group">
@@ -31,16 +23,14 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Ticket ID</label>
-            <div class="input-group">
-              <input type="number" class="form-control" [(ngModel)]="reply.ticketId">
-              <button class="btn btn-soft-secondary" (click)="loadRepliesByTicket()">Load</button>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Employee ID</label>
-            <input type="text" class="form-control" [(ngModel)]="empId">
+            <label class="form-label">Ticket</label>
+            <select class="form-select" [(ngModel)]="reply.ticketId" (change)="onTicketChange()">
+              <option [ngValue]="0">-- Select Ticket --</option>
+              <option *ngFor="let t of filteredTickets" [ngValue]="t.ticketId">
+                {{ t.ticketId }} - {{ t.title }}
+              </option>
+            </select>
+            <button class="btn btn-soft-secondary btn-sm mt-2" (click)="loadRepliesByTicket()">Load Ticket Replies</button>
           </div>
 
           <div class="mb-3">
@@ -49,7 +39,6 @@
               <input class="form-check-input" type="radio" name="rb" value="creator" [(ngModel)]="repliedBy">
               <label class="form-check-label">Creator</label>
             </div>
-
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="rb" value="assignee" [(ngModel)]="repliedBy">
               <label class="form-check-label">Assignee</label>
@@ -67,11 +56,13 @@
             <button class="btn btn-soft-danger" (click)="deleteReply()">Delete</button>
             <button class="btn btn-soft-light" (click)="newReply()">Clear</button>
           </div>
+
+          <p class="text-danger mt-2" *ngIf="errMsg">{{ errMsg }}</p>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT SIDE: REPLIES DISPLAY (CHAT VIEW) -->
+    <!-- Right side: Conversation (Chat View) -->
     <div class="col-lg-7">
       <div class="card table-card h-100">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -82,27 +73,27 @@
           </div>
         </div>
 
-        <div class="card-body p-0">
-          <!-- Chat Container for Replies -->
-          <div class="chat-container">
-            <!-- Display Replies as Chat Bubbles -->
-            <div *ngFor="let r of replies" class="chat-bubble-container" [ngClass]="{'creator-reply': r.repliedByCreatorEmpId, 'assignee-reply': r.repliedByAssignedEmpId}">
-              
-              <!-- Label: by Creator or Assignee -->
-              <div class="reply-label">
-                <span *ngIf="r.repliedByCreatorEmpId">by Creator</span>
-                <span *ngIf="r.repliedByAssignedEmpId">by Assignee</span>
-              </div>
-
-              <div class="chat-bubble">
-                <div class="message">{{ r.message }}</div>
-                <div class="timestamp">{{ r.createdAt | date: 'short' }}</div>
-              </div>
+        <div class="card-body p-3 chat-container">
+          <!-- Chat Bubbles -->
+          <div *ngFor="let r of replies" class="chat-bubble-container"
+               [ngClass]="{'creator-reply': r.repliedByCreatorEmpId, 'assignee-reply': r.repliedByAssignedEmpId}">
+            
+            <!-- Label: Who replied -->
+            <div class="reply-label">
+              <span *ngIf="r.repliedByCreatorEmpId">by Creator: {{ r.repliedByCreatorEmpId }}</span>
+              <span *ngIf="r.repliedByAssignedEmpId">by Assignee: {{ r.repliedByAssignedEmpId }}</span>
             </div>
 
-            <div *ngIf="replies.length === 0" class="no-replies-message">
-              No replies found
+            <!-- Chat bubble -->
+            <div class="chat-bubble">
+              <div class="message">{{ r.message }}</div>
+              <div class="timestamp">{{ r.createdAt | date:'short' }}</div>
             </div>
+          </div>
+
+          <!-- No replies -->
+          <div *ngIf="replies.length === 0" class="no-replies-message">
+            No replies found
           </div>
         </div>
       </div>

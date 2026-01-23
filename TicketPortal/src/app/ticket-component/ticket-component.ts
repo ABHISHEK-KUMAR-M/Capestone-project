@@ -9,7 +9,7 @@ import { EmployeeService } from '../employee-service';
 import { Employee } from '../../Models/employee';
 import { AuthService } from '../auth-service';
 import { tick } from '@angular/core/testing';
-
+ 
 @Component({
   selector: 'app-ticket-component',
   standalone: true,
@@ -18,24 +18,24 @@ import { tick } from '@angular/core/testing';
   styleUrl: './ticket-component.css',
 })
 export class TicketComponent {
-
+ 
   ticketSvc = inject(TicketService);
   ticketTypeSvc = inject(TicketTypeService);
   empSvc = inject(EmployeeService);
   authSvc=inject(AuthService);
   emp:Employee;
-
+ 
   tickets: Ticket[] = [];
   ticket: Ticket;
   empId:string;
-
+ 
   employees: Employee[] = [];
   ticketTypes: TicketType[] = [];
   validationErrors: string[] = [];
   selectedTicketId: number | null = null;
   selectedTicket:Ticket|null=null;
   errMsg:string;
-
+ 
   constructor() {
     this.empId="";
     this.errMsg="";
@@ -47,7 +47,7 @@ export class TicketComponent {
   newTicket(){
     this.ticket=new Ticket();
   }
-
+ 
   loadAllTickets() {
     if(this.authSvc.empRoleSignal()=='Admin'){  
         this.ticketSvc.getAllTickets().subscribe({
@@ -67,13 +67,13 @@ export class TicketComponent {
             },
             error: err => {
               this.errMsg = err.error;
-    
-    
+   
+   
             },
           });
     }
   }
-
+ 
   loadAllTicketTypes() {
     this.ticketTypeSvc.getAllTicketTypes().subscribe({
       next: res => this.ticketTypes = res,
@@ -85,7 +85,7 @@ export class TicketComponent {
   showTicket(ticket:Ticket){
     this.selectedTicket=ticket;
   }
-
+ 
   selectTicket(t: Ticket) {
     this.selectedTicketId = t.ticketId;
     // this.selectedTicket=t;
@@ -94,7 +94,7 @@ export class TicketComponent {
       next: (tt) => {
         this.empSvc.getByDepartmentId(tt.departmentId).subscribe({
           next: (emps) => this.employees = emps,
-          error: err => 
+          error: err =>
             this.errMsg =err.error
         });
       },
@@ -103,8 +103,8 @@ export class TicketComponent {
       }
     });
   }
-
-
+ 
+ 
   assignTicket() {
     console.log(this.ticket);
     this.ticket.status='InProgress';
@@ -127,8 +127,8 @@ export class TicketComponent {
     this.selectedTicket = null;
     this.employees = [];
   }
-
-
+ 
+ 
   addTicket() {
     this.ticket.createdByEmpId=this.authSvc.empIdSignal() ?? '';
     this.ticket.assignedToEmpId="null";
@@ -146,8 +146,8 @@ export class TicketComponent {
       }
     });
   }
-
-
+ 
+ 
   updateTicket() {
     // if(this.ticket.)
     if(this.ticket.status=='Resolved'){
@@ -169,7 +169,7 @@ export class TicketComponent {
       }
     });
   }
-
+ 
   deleteTicket(ticketId:number) {
     this.ticketSvc.deleteTicket(ticketId).subscribe({
       next: () => {
@@ -186,8 +186,8 @@ export class TicketComponent {
       }
     });
   }
-
-
+ 
+ 
   getTicketsByEmployee() {
     this.ticketSvc.getTicketsByEmpId(this.empId).subscribe({
       next: (res) => {
@@ -201,7 +201,7 @@ export class TicketComponent {
       },
     });
   }
-
+ 
   getTicketsByStatus() {
     this.ticketSvc.getTicketsByStatus(this.ticket.status).subscribe({
       next: (res) => {
@@ -218,7 +218,7 @@ export class TicketComponent {
       },
     });
   }
-
+ 
   getTicketsByTicketType() {
     this.ticketSvc.getTicketsByTicketTypeId(this.ticket.ticketTypeId).subscribe({
       next: (res) => {
@@ -236,7 +236,7 @@ export class TicketComponent {
       },
     });
   }
-
+ 
   getOverdueTickets() {
     this.ticketSvc.getOverdueTickets().subscribe({
       next: (res) => {
@@ -254,6 +254,7 @@ export class TicketComponent {
     });
   }
 }
-
-
-
+ 
+ 
+ 
+ 
