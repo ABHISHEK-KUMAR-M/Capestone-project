@@ -46,7 +46,9 @@ export class TicketTypeComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -57,7 +59,9 @@ export class TicketTypeComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -71,7 +75,9 @@ newTicketType() {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       },
     });
   }
@@ -83,7 +89,9 @@ newTicketType() {
           this.errMsg = '';
         },
           error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       },
       });
   }
@@ -95,7 +103,9 @@ newTicketType() {
         this.newTicketType();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       },
     });
   }
@@ -106,8 +116,10 @@ newTicketType() {
         this.loadTicketTypes();
         this.newTicketType();
       },
-        error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      error: err => {
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       },
     });
   }
@@ -118,8 +130,10 @@ newTicketType() {
           this.loadTicketTypes();
           this.newTicketType();
         },
-          error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        error: err => {
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       },
       });
   }
@@ -132,7 +146,9 @@ newTicketType() {
         //this.loadTicketTypes();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -145,7 +161,9 @@ newTicketType() {
         //this.loadTicketTypes();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }

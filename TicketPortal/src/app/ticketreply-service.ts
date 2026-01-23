@@ -9,7 +9,7 @@ import { TicketReply } from '../Models/ticketreply';
 export class TicketreplyService {
   http: HttpClient = inject(HttpClient);
 
-  baseUrl = 'http://localhost:5082/api/TicketReply/';
+  baseUrl = 'https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/TicketReply/';
   token = sessionStorage.getItem('token');
 
   httpOptions = {

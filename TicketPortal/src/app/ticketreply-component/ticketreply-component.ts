@@ -7,6 +7,7 @@ import { TicketreplyService } from '../ticketreply-service';
 
 import { TicketService } from '../ticket-service';
 import { Ticket } from '../../Models/ticket';
+import { AuthService } from '../auth-service';
 
 @Component({
   selector: 'app-ticketreply-component',
@@ -18,6 +19,7 @@ import { Ticket } from '../../Models/ticket';
 export class TicketreplyComponent {
   replySvc = inject(TicketreplyService);
   ticketSvc = inject(TicketService);
+  authSvc=inject(AuthService);
 
   reply: TicketReply = new TicketReply();
   replies: TicketReply[] = [];
@@ -101,7 +103,11 @@ export class TicketreplyComponent {
         this.newReply();
         this.errMsg = '';
       },
-      error: (err) => (this.errMsg = err.error),
+      error: err => {
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
+      }
     });
   }
 
@@ -113,7 +119,9 @@ export class TicketreplyComponent {
         this.newReply();
       },
       error: err => {
-        this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -129,7 +137,9 @@ export class TicketreplyComponent {
         this.errMsg = '';
       },
       error: err => {
-        this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }

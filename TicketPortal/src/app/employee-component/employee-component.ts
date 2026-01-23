@@ -56,19 +56,23 @@ export class EmployeeComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
  
   getEmployeeById() {
-    this.empSvc.getEmployeeById(this.empId).subscribe({
+    this.empSvc.getEmployeeById(this.employee.empId).subscribe({
       next: (res) => {
         this.employee = res;
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+              this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -80,7 +84,9 @@ export class EmployeeComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -93,7 +99,9 @@ export class EmployeeComponent {
         this.newEmployee();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -106,7 +114,9 @@ export class EmployeeComponent {
         this.newEmployee();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -119,7 +129,9 @@ export class EmployeeComponent {
         this.newEmployee();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -132,7 +144,9 @@ export class EmployeeComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }

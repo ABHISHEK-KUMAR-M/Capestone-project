@@ -60,7 +60,9 @@ export class DepartmentComponent {
         this.newDepartment();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -73,34 +75,29 @@ export class DepartmentComponent {
         this.newDepartment();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
 
   deleteDepartment() {
-  // Displaying the alert before calling the API, to confirm delete operation
   alert('Attempting to delete department...');
 
-  // Call the service to delete the department
   this.deptSvc.deleteDepartment(this.department.departmentId).subscribe({
     next: () => {
-      // This alert should show after the department has been deleted
       alert('Department Deleted');
 
-      // Reload the departments
       this.loadDepartments();
       
-      // Reset the department form
       this.newDepartment();
 
-      // Optionally, you can log to the console to verify if everything worked
       console.log('Department deleted successfully');
     },
     error: err => {
-      // If there's an error, you can display a custom error message
       this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
-      alert(`Error: ${this.errMsg}`); // Show error in alert if deletion fails
+      alert(`Error: ${this.errMsg}`); 
     }
   });
 }

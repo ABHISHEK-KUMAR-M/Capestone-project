@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   http:HttpClient=inject(HttpClient);
-  baseUrl:string="http://localhost:5082/api/Auth/";
+  baseUrl:string="https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/Auth/";
   userName:string="ramesh@ey.com";
   role:string="Admin";
   empNameSignal = signal<string | null>(null);

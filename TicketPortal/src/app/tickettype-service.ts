@@ -9,7 +9,7 @@ import { TicketType } from '../Models/tickettype';
 export class TicketTypeService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5082/api/TicketType/';
+  baseUrl: string = 'https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/TicketType/';
   httpOptions;
 
   constructor() {

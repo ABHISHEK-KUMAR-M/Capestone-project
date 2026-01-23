@@ -37,7 +37,9 @@ export class SlaComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -49,7 +51,9 @@ export class SlaComponent {
         this.errMsg = '';
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -63,7 +67,9 @@ export class SlaComponent {
         this.newSla();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -76,7 +82,9 @@ export class SlaComponent {
         this.newSla();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }
@@ -89,7 +97,9 @@ export class SlaComponent {
         this.newSla();
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     });
   }

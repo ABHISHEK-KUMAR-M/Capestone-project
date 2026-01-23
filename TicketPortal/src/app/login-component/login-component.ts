@@ -34,7 +34,9 @@ export class LoginComponent {
         this.router.navigate(['']);
       },
         error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
       }
     })
   }

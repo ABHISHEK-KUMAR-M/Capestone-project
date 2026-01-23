@@ -32,9 +32,10 @@ showAllDepartments(){
       this.Departments=response;
       this.errMsg="";
     },
-      error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
-      }
+      error: err => 
+         {this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;}
   })
 }
  
@@ -45,7 +46,9 @@ register() {
             this.errMsg = "";
             this.router.navigate(['']);
         },
-        error: (err) => this.errMsg = err.message
+        error: (err) =>  {this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;}
     });
 }
  

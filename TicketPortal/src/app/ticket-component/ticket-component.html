@@ -96,12 +96,13 @@
           <option>Resolved</option>
           <option>Closed</option>
         </select>}
- 
+
         <div class="d-flex gap-2">
+        @if(this.authSvc.empRoleSignal()=='User'){
           <button class="btn btn-primary w-100"
                   (click)="addTicket()">
             Create
-          </button>
+          </button>}
  
           @if(this.authSvc.empRoleSignal()=='Admin'){<button class="btn btn-secondary w-100"
                   (click)="updateTicket()">

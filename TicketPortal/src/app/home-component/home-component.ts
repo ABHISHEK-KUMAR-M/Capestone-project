@@ -22,7 +22,6 @@ export class HomeComponent {
         },
         error: (err) => { 
           alert(err.message); console.log(err); 
-          console.log("abhishek is a fool")
         }
       });
     // }

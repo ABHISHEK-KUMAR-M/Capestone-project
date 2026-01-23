@@ -63,14 +63,14 @@
           <div class="d-flex flex-wrap gap-2">
             <button class="btn btn-soft-accent" (click)="addEmployee()">Save</button>
             <button class="btn btn-soft-secondary" (click)="updateEmployee()">Update</button>
-            <button class="btn btn-soft-danger" (click)="deleteEmployee()">Delete</button>
+            @if(this.AuthSvc.empRoleSignal()=='Admin'){<button class="btn btn-soft-danger" (click)="deleteEmployee()">Delete</button>}
             <button class="btn btn-soft-light" (click)="newEmployee()">Clear</button>
           </div>
         </div>
       </div>
     </div>
  
-    <div class="col-lg-7">
+    @if(this.AuthSvc.empRoleSignal()=='Admin'){<div class="col-lg-7">
       <div class="card table-card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <span>Employee List</span>
@@ -113,7 +113,7 @@
           </table>
         </div>
       </div>
-    </div>
+    </div>}
  
   </div>
 </div>

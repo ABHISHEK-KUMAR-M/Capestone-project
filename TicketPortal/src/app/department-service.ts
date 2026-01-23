@@ -10,7 +10,7 @@ import { Department } from '../Models/department';
 export class DepartmentService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5082/api/Department/';
+  baseUrl: string = 'https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/Department/';
   httpOptions;
 
   constructor() {

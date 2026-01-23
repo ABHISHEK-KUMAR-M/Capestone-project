@@ -10,7 +10,7 @@ import { Ticket } from '../Models/ticket';
 export class TicketService {
   private http = inject(HttpClient);
  
-  private baseUrl = 'http://localhost:5082/api/Ticket/';
+  private baseUrl = 'https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/Ticket/';
  
   private httpOptions = {
     headers: new HttpHeaders({

@@ -9,7 +9,7 @@ import { Employee } from '../Models/employee';
 export class EmployeeService {
   http: HttpClient = inject(HttpClient);
   token;
-  baseUrl: string = 'http://localhost:5082/api/Employee/';
+  baseUrl: string = 'https://team2ticketportalwebapi-h9aye2frb5fqfgfy.canadacentral-01.azurewebsites.net/api/Employee/';
   httpOptions;
  
   constructor() {
