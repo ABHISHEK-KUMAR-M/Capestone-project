@@ -139,8 +139,20 @@ namespace TicketPortalWebApi.Controllers
         {
             try
             {
-                await _ticketRepository.CreateTicketAsync(ticket);
-                return Created($"api/ticket/{ticket.TicketId}", ticket);
+                var ticket1 = new Ticket
+                {
+                    Title = ticket.Title,
+                    Description = ticket.Description,
+                    TicketTypeId = ticket.TicketTypeId,
+                    CreatedByEmpId = ticket.CreatedByEmpId,
+                    AssignedToEmpId = ticket.AssignedToEmpId,
+                    Status = ticket.Status,
+                    CreatedAt = DateTime.UtcNow,
+                    DueAt = ticket.DueAt
+                };
+                System.Console.WriteLine(ticket1);
+                await _ticketRepository.CreateTicketAsync(ticket1);
+                return Created($"api/ticket/{ticket1.TicketId}", ticket1);
             }
             catch (TicketException ex)
             {

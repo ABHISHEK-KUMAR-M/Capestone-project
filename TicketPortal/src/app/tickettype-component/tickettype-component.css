@@ -1,0 +1,64 @@
+ .employee-page {
+  animation: fadeIn 0.4s ease-in;
+}
+ 
+.page-header h2 {
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+ 
+.form-card,
+.table-card,
+.filter-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+ 
+.card-header {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+ 
+.table thead {
+  background-color: #e9ecef;
+}
+ 
+.table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+ 
+.table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+ 
+.filter-card {
+  margin-bottom: 15px;
+}
+ 
+.filter-card .card-body {
+  padding: 1rem;
+}
+ 
+.filter-card .input-group {
+  margin-bottom: 10px;
+}
+ 
+.filter-card .form-label {
+  font-weight: 600;
+}
+ 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+ 
+ 

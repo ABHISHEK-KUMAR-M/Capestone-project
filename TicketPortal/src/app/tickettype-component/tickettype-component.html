@@ -1,0 +1,131 @@
+<div class="ticket-type-page">
+ 
+  <div class="page-header mb-4">
+    <h2>Ticket Type Management</h2>
+    <p class="text-muted">Manage ticket types associated with SLAs and departments.</p>
+  </div>
+ 
+  <div class="alert alert-danger" *ngIf="errMsg">
+    {{ errMsg }}
+  </div>
+ 
+  <div class="row g-4">
+ 
+    <div class="col-lg-5">
+      <div class="card form-card h-100">
+        <div class="card-header">
+          Ticket Type Form
+        </div>
+ 
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Ticket Type ID</label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="ticketType.ticketTypeId"
+                name="ticketTypeId"
+              />
+              <button type="button" class="btn btn-soft-secondary mt-2" (click)="getTicketType()">Show</button>
+            </div>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Type Name</label>
+            <input type="text" class="form-control" [(ngModel)]="ticketType.typeName" name="typeName" />
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="ticketType.description"
+              name="description"
+            />
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Department</label>
+            <select [(ngModel)]="ticketType.departmentId" name="formDepartmentId" class="form-select">
+              <option value="">-- Select Department --</option>
+              <option *ngFor="let d of departments" [value]="d.departmentId">
+                {{ d.departmentId }}
+              </option>
+            </select>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">SLA</label>
+            <select [(ngModel)]="ticketType.slaId" name="formSlaId" class="form-select">
+              <option value="">-- Select SLA --</option>
+              <option *ngFor="let s of slas" [value]="s.slaId">
+                {{ s.slaId }}
+              </option>
+            </select>
+          </div>
+ 
+          <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-soft-accent" (click)="addTicketType()">Save</button>
+            <button type="button" class="btn btn-soft-secondary" (click)="updateTicketType()">Update</button>
+            <button type="button" class="btn btn-soft-danger" (click)="deleteTicketType()">Delete</button>
+            <button type="button" class="btn btn-soft-light" (click)="newTicketType()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="col-lg-7">
+      <div class="card table-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Ticket Type List</span>
+          <button class="btn btn-soft-secondary btn-sm" (click)="loadTicketTypes()">Show All Ticket Types</button>
+        </div>
+ 
+        <div class="card-body p-0">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>SLA</th>
+                <th>Action</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+ 
+            <tbody>
+              <tr *ngFor="let t of ticketTypes">
+                <td>{{ t.ticketTypeId }}</td>
+                <td>{{ t.typeName }}</td>
+                <td>{{ t.departmentId }}</td>
+                <td>{{ t.slaId }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-secondary" (click)="GetByDepartmentId(t.departmentId)">
+                    FilterByDepartmentId
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-outline-secondary mt-2" (click)="GetBySlaId(t.slaId)">
+                    FilterBySlaId
+                  </button>
+                </td>
+              </tr>
+ 
+              <tr *ngIf="ticketTypes.length === 0">
+                <td colspan="5" class="text-center text-muted py-4">
+                  No ticket types found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+ 
