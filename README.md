@@ -126,3 +126,180 @@ Communication between frontend and backend is achieved through **REST APIs** usi
 ---
  
 ## 🗂️ Project Structure
+
+```text
+TicketPortal/
+├── Backend/
+│   └── TicketPortalAPI/
+│       ├── Controllers/
+│       ├── Models/
+│       ├── Repositories/
+│       ├── Services/
+│       ├── Data/
+│       └── Program.cs
+│
+├── Frontend/
+│   └── src/
+│       ├── app/
+│       │   ├── components/
+│       │   │   ├── department/
+│       │   │   ├── ticket/
+│       │   │   ├── ticketreply/
+│       │   │   ├── employee/
+│       │   │   └── sla/
+│       │   ├── services/
+│       │   └── app.component.*
+│       │
+│       ├── assets/
+│       └── styles.css
+│
+└── README.md
+```
+
+## ⚙️ Installation & Setup
+
+### 🔹 Backend Setup
+1. Open the backend project in Visual Studio
+2. Configure SQL Server connection string in `appsettings.json`
+3. Navigate to the Web API project directory:
+
+```bash
+cd Backend/TicketPortalWebAPI
+dotnet run
+```
+```bash
+The backend API will start at:
+http://localhost:5082
+```
+---
+
+### 🔹 Frontend Setup (Angular Application)
+
+Follow the steps below to set up and run the Angular frontend of the **Ticket Portal** application.
+
+---
+
+#### ✅ Prerequisites
+
+Ensure the following software is installed on your system:
+
+- **Node.js** (v16 or above recommended)
+- **npm** (comes bundled with Node.js)
+- **Angular CLI**
+
+Install Angular CLI globally if it is not already installed:
+
+```bash
+npm install -g @angular/cli
+```
+Verify Angular CLI installation:
+```bash
+ng version
+```
+## 📁 Navigate to Frontend Directory
+
+From the root project folder, navigate to the frontend directory:
+```bash
+cd TicketPortal
+```
+
+## 📦 Install Dependencies
+
+Install all required npm packages listed in package.json:
+```bash
+npm install
+```
+This command will:
+- Download Angular core libraries
+- Install Bootstrap and UI-related dependencies
+- Create the node_modules folder
+### ⚙️ Configure API Base URL
+
+- Ensure the frontend services are configured to communicate with the backend Web API.
+- Open the Angular service files inside the services/ folder
+- Verify that the API base URL matches the backend URL:
+```bash
+http://localhost:5082/api
+```
+### ⚠️ Ensure the ASP.NET Core Web API is running before starting the Angular frontend.
+
+### ▶️ Run the Angular Application
+
+- Start the Angular development server:
+```bash
+ng serve
+```
+- The application will be available at:
+```bash
+http://localhost:4200
+```
+### 🔁 Live Reload Support
+
+- Any changes made to HTML, CSS, or TypeScript files will automatically reload the browser
+- No manual refresh is required
+
+### 🛑 Stop the Application
+To stop the Angular development server, press:
+```bash
+Ctrl + C
+```
+### ⚠️ Common Issues & Solutions
+
+- Backend API not reachable
+- Ensure the backend is running using:
+```bash
+dotnet run
+```
+- Port already in use
+Start Angular on a different port:
+```bash
+ng serve --port 4300
+```
+- Module not found or dependency errors
+Delete node_modules and reinstall dependencies:
+```bash
+rm -rf node_modules
+npm install
+```
+### ✅ Frontend Startup Checklist
+
+ - [ ] Node.js installed
+ - [ ] Angular CLI installed
+ - [ ] Backend Web API running
+ - [ ] npm dependencies installed
+ - [ ] Angular app running at http://localhost:4200
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/home.png)
+
+---
+
+### 🔐 Login Page
+![Login Page](screenshots/login.png)
+
+---
+
+### 🏢 Department Management
+![Department Management](screenshots/department.png)
+
+---
+
+### 🧾 Ticket Management
+![Ticket Management](screenshots/ticket.png)
+
+---
+
+### 💬 Ticket Reply Conversation
+![Ticket Reply Conversation](screenshots/ticket-reply.png)
+
+---
+
+### 👥 Employee Management
+![Employee Management](screenshots/employee.png)
+
+---
+
+### ⏱️ SLA Management
+![SLA Management](screenshots/sla.png)
