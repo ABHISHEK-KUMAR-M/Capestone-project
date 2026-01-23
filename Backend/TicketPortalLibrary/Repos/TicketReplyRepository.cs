@@ -12,7 +12,12 @@ public class TicketReplyRepository : ITicketReplyRepository
     {
         try
         {
-            reply.CreatedAt = DateTime.UtcNow;
+            var istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            reply.CreatedAt = DateTime.SpecifyKind(
+                TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, istZone),
+                DateTimeKind.Unspecified
+            );
+
             await _context.TicketReplies.AddAsync(reply);
             await _context.SaveChangesAsync();
         }

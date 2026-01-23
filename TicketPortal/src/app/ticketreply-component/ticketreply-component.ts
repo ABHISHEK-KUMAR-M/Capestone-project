@@ -1,8 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 import { TicketReply } from '../../Models/ticketreply';
 import { TicketreplyService } from '../ticketreply-service';
+
+import { TicketService } from '../ticket-service';
+import { Ticket } from '../../Models/ticket';
 
 @Component({
   selector: 'app-ticketreply-component',
@@ -12,30 +16,81 @@ import { TicketreplyService } from '../ticketreply-service';
 })
 export class TicketreplyComponent {
   replySvc = inject(TicketreplyService);
+  ticketSvc = inject(TicketService);
 
   reply: TicketReply = new TicketReply();
   replies: TicketReply[] = [];
   errMsg = '';
 
-  empId = '';
   repliedBy: 'creator' | 'assignee' = 'creator';
 
+  loggedInEmpId: string = '';
+
+  allTickets: Ticket[] = [];
+  filteredTickets: Ticket[] = [];
+
+  selectedTicket: Ticket | undefined;
+
   constructor() {
-    this.loadAllReplies();
+    this.loggedInEmpId = sessionStorage.getItem('empId') || '';
+
+    this.loadTicketsForDropdown();   
+    this.loadAllReplies();           
   }
 
   newReply() {
+    const keepTicketId = this.reply.ticketId; 
     this.reply = new TicketReply();
+    this.reply.ticketId = keepTicketId;
+    this.reply.message = '';
+  }
+
+  loadTicketsForDropdown() {
+    this.ticketSvc.getAllTickets().subscribe({
+      next: (res) => {
+        this.allTickets = res;
+
+        this.filteredTickets = this.allTickets.filter(t =>
+          t.createdByEmpId === this.loggedInEmpId ||
+          t.assignedToEmpId === this.loggedInEmpId
+        );
+
+        if (this.reply.ticketId) {
+          this.selectedTicket = this.filteredTickets.find(t => t.ticketId === this.reply.ticketId);
+        }
+      },
+      error: (err) => (this.errMsg = err.error),
+    });
+  }
+
+  onTicketChange() {
+    this.selectedTicket = this.filteredTickets.find(t => t.ticketId === this.reply.ticketId);
+    this.loadRepliesByTicket();
   }
 
   submitReply() {
-    this.reply.repliedByCreatorEmpId = undefined;
-    this.reply.repliedByAssignedEmpId = undefined;
+    if (!this.reply.ticketId) {
+      this.errMsg = "Please select Ticket";
+      return;
+    }
+
+    this.selectedTicket = this.filteredTickets.find(t => t.ticketId === this.reply.ticketId);
+
+    if (!this.selectedTicket) {
+      this.errMsg = "Selected ticket not found";
+      return;
+    }
+
+    this.reply.repliedByCreatorEmpId = null as any;
+    this.reply.repliedByAssignedEmpId = null as any;
 
     if (this.repliedBy === 'creator') {
-      this.reply.repliedByCreatorEmpId = this.empId;
-    } else {
-      this.reply.repliedByAssignedEmpId = this.empId;
+      this.reply.repliedByCreatorEmpId = this.selectedTicket.createdByEmpId;
+      this.reply.repliedByAssignedEmpId = null as any;
+    }
+    else {
+      this.reply.repliedByAssignedEmpId = this.selectedTicket.assignedToEmpId || null as any;
+      this.reply.repliedByCreatorEmpId = null as any;
     }
 
     this.replySvc.addReply(this.reply).subscribe({
@@ -43,37 +98,37 @@ export class TicketreplyComponent {
         alert('Reply Added');
         this.loadRepliesByTicket();
         this.newReply();
+        this.errMsg = '';
       },
-       error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
-      }
+      error: (err) => (this.errMsg = err.error),
     });
   }
 
   updateReply() {
-    this.replySvc
-      .updateReply(this.reply.replyId, this.reply)
-      .subscribe({
-        next: () => {
-          alert('Reply Updated');
-          this.loadRepliesByTicket();
-          this.newReply();
-        },
-        error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+    this.replySvc.updateReply(this.reply.replyId, this.reply).subscribe({
+      next: () => {
+        alert('Reply Updated');
+        this.loadAllReplies();
+        this.newReply();
+      },
+      error: err => {
+        this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
       }
-      });
+    });
   }
 
   deleteReply() {
     this.replySvc.deleteReply(this.reply.replyId).subscribe({
       next: () => {
         alert('Reply Deleted');
-        this.loadRepliesByTicket();
+
+        this.replies = this.replies.filter(r => r.replyId !== this.reply.replyId);
+
         this.newReply();
+        this.errMsg = '';
       },
-       error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
+      error: err => {
+        this.errMsg = Object.values(err.error?.errors || {}).flat().join(',');
       }
     });
   }
@@ -81,18 +136,14 @@ export class TicketreplyComponent {
   getReplyById() {
     this.replySvc.getReplyById(this.reply.replyId).subscribe({
       next: (res) => (this.reply = res),
-       error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
-      }
+      error: (err) => (this.errMsg = err.error),
     });
   }
 
   loadAllReplies() {
     this.replySvc.getAllReplies().subscribe({
       next: (res) => (this.replies = res),
-       error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
-      }
+      error: (err) => (this.errMsg = err.error),
     });
   }
 
@@ -101,29 +152,25 @@ export class TicketreplyComponent {
 
     this.replySvc.getRepliesByTicket(this.reply.ticketId).subscribe({
       next: (res) => (this.replies = res),
-       error: err => {
-       this.errMsg =Object.values(err.error?.errors || {}).flat().join(',');
-      }
+      error: (err) => (this.errMsg = err.error),
     });
   }
 
   loadRepliesByEmployee() {
-  const empId = prompt('Enter Employee ID');
-
-  if (!empId || empId.trim() === '') {
-    alert('Employee ID is required');
-    return;
-  }
-
-  this.replySvc.getRepliesByEmployee(empId).subscribe({
-    next: (res) => {
-      this.replies = res;
-      this.errMsg = '';
-    },
-    error: (err) => {
-      this.errMsg = err.error;
+    const empId = prompt('Enter Employee ID');
+    if (!empId || empId.trim() === '') {
+      alert('Employee ID is required');
+      return;
     }
-  });
-}
 
+    this.replySvc.getRepliesByEmployee(empId).subscribe({
+      next: (res) => {
+        this.replies = res;
+        this.errMsg = '';
+      },
+      error: (err) => {
+        this.errMsg = err.error;
+      }
+    });
+  }
 }
