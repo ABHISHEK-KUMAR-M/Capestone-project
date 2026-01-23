@@ -13,7 +13,8 @@ import { Ticket } from '../../Models/ticket';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './ticketreply-component.html',
-})
+  styleUrls: ['./ticketreply-component.css']
+ })
 export class TicketreplyComponent {
   replySvc = inject(TicketreplyService);
   ticketSvc = inject(TicketService);

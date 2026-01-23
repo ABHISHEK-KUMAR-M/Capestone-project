@@ -1,10 +1,10 @@
-
+ 
 <nav class="navbar navbar-expand-lg navbar-dark app-navbar shadow-sm px-4">
   <a class="navbar-brand fw-semibold d-flex align-items-center" routerLink="">
     <i class="bi bi-ticket-perforated me-2"></i>
     Ticket Portal
   </a>
-
+ 
   <button
     class="navbar-toggler"
     type="button"
@@ -16,46 +16,46 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-
+ 
   <div class="collapse navbar-collapse" id="mainNavbar">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      @if(auth.empNameSignal()){
+      @if(auth.empRoleSignal()=='Admin'){
         <li class="nav-item">
           <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="bi bi-house-door me-1"></i>Home
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/ticket" routerLinkActive="active">
             <i class="bi bi-journal-text me-1"></i>Ticket
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/department" routerLinkActive="active">
             <i class="bi bi-diagram-3 me-1"></i>Department
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/sla" routerLinkActive="active">
             <i class="bi bi-clock-history me-1"></i>SLA
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/tickettype" routerLinkActive="active">
             <i class="bi bi-tags me-1"></i>Ticket Type
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/employee" routerLinkActive="active">
             <i class="bi bi-people me-1"></i>Employee
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/ticketreply" routerLinkActive="active">
             <i class="bi bi-reply-all me-1"></i>Ticket Reply
@@ -63,14 +63,37 @@
         </li>
       }
     </ul>
-
+    <ul>
+    @if(auth.empRoleSignal()=='User'){
+          <li class="nav-item">
+          <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-house-door me-1"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/employee" routerLinkActive="active">
+            <i class="bi bi-people me-1"></i>Employee
+          </a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" routerLink="/ticket" routerLinkActive="active">
+            <i class="bi bi-journal-text me-1"></i>Ticket
+          </a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" routerLink="/ticketreply" routerLinkActive="active">
+            <i class="bi bi-reply-all me-1"></i>Ticket Reply
+          </a>
+        </li>
+    }</ul>
+ 
     <ul class="navbar-nav ms-auto align-items-lg-center">
       @if(auth.empNameSignal()){
         <li class="nav-item text-white me-3 d-flex align-items-center user-name">
           <i class="bi bi-person-circle me-1"></i>
           {{ auth.empNameSignal() }}
         </li>
-
+ 
         <li class="nav-item">
           <a class="btn btn-outline-light btn-sm" routerLink="/logout">
             <i class="bi bi-box-arrow-right me-1"></i>Logout
@@ -83,7 +106,7 @@
             <i class="bi bi-house-door me-1"></i>Home
           </a>
         </li>
-
+ 
         <li class="nav-item">
           <a class="nav-link" routerLink="/register">
             <i class="bi bi-person-plus me-1"></i>Register
@@ -99,8 +122,10 @@
     </ul>
   </div>
 </nav>
-
-
+ 
+ 
 <div class="container-fluid main-content py-4">
   <router-outlet></router-outlet>
 </div>
+ 
+ 

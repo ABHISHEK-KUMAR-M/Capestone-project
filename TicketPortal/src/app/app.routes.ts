@@ -9,15 +9,18 @@ import { SlaComponent } from './sla-component/sla-component';
 import { DepartmentComponent } from './department-component/department-component';
 import { TicketreplyComponent } from './ticketreply-component/ticketreply-component';
 import { EmployeeComponent } from './employee-component/employee-component';
+import { userAccessGuard } from './user-access-guard';
 export const routes: Routes = [
     {path:'',component:HomeComponent},
-    {path:'ticket',component:TicketComponent},
-    {path:'tickettype',component:TicketTypeComponent},
-    {path:'department',component:DepartmentComponent},
-    {path:'sla',component:SlaComponent},
+    {path:'ticket',component:TicketComponent,canActivate:[userAccessGuard]},
+    {path:'tickettype',component:TicketTypeComponent,canActivate:[userAccessGuard]},
+    {path:'department',component:DepartmentComponent,canActivate:[userAccessGuard]},
+    {path:'sla',component:SlaComponent,canActivate:[userAccessGuard]},
     {path:'register',component:RegisterComponent},
     {path:'login',component:LoginComponent},
-    {path:'logout',component:LogoutComponent},
-    {path:'ticketreply',component:TicketreplyComponent},
-    {path:'employee',component:EmployeeComponent}
+    {path:'logout',component:LogoutComponent,canActivate:[userAccessGuard]},
+    {path:'ticketreply',component:TicketreplyComponent,canActivate:[userAccessGuard]},
+    {path:'employee',component:EmployeeComponent,canActivate:[userAccessGuard]}
 ];
+ 
+ 
