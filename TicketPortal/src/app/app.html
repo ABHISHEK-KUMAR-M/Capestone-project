@@ -1,0 +1,97 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar shadow-sm px-4">
+  <a class="navbar-brand fw-semibold d-flex align-items-center" routerLink="">
+    <i class="bi bi-ticket-perforated me-2"></i>
+    Ticket Portal
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#mainNavbar"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNavbar">
+
+    <!-- LEFT MENU -->
+    <ul class="navbar-nav me-auto">
+
+      @if (auth.empNameSignal() && auth.empRoleSignal() === 'Admin') {
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-house-door me-1"></i>Home
+          </a>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" routerLink="/ticket">Ticket</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/department">Department</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/sla">SLA</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/tickettype">Ticket Type</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/employee">Employee</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/ticketreply">Ticket Reply</a></li>
+
+      }
+
+      @if (auth.empNameSignal() && auth.empRoleSignal() === 'User') {
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-house-door me-1"></i>Home
+          </a>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" routerLink="/employee">Employee</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/ticket">Ticket</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/ticketreply">Ticket Reply</a></li>
+
+      }
+
+    </ul>
+
+    <!-- RIGHT MENU -->
+    <ul class="navbar-nav ms-auto align-items-lg-center">
+
+      @if (auth.empNameSignal()) {
+
+        <li class="nav-item text-white me-3 d-flex align-items-center">
+          <i class="bi bi-person-circle me-1"></i>
+          {{ auth.empNameSignal() }}
+        </li>
+
+        <li class="nav-item">
+          <a class="btn btn-outline-light btn-sm" routerLink="/logout">
+            <i class="bi bi-box-arrow-right me-1"></i>Logout
+          </a>
+        </li>
+
+      } @else {
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="btn btn-accent btn-sm ms-lg-2" routerLink="/login">Login</a>
+        </li>
+
+      }
+
+    </ul>
+
+  </div>
+</nav>
+
+<div class="container-fluid py-4">
+  <router-outlet></router-outlet>
+</div>
+
+

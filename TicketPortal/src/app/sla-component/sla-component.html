@@ -1,0 +1,122 @@
+<div class="sla-page">
+ 
+  <div class="page-header mb-4">
+    <h2>SLA Management</h2>
+    <p class="text-muted">
+      Manage your Service Level Agreements (SLAs) for various ticket types.
+    </p>
+  </div>
+ 
+  <div class="alert alert-danger" *ngIf="errMsg">
+    {{ errMsg }}
+  </div>
+ 
+  <div class="row g-4">
+ 
+    <div class="col-lg-5">
+      <div class="card form-card h-100">
+        <div class="card-header">
+          SLA Form
+        </div>
+ 
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">SLA ID</label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="sla.slaId"
+              >
+              <button
+                class="btn btn-soft-secondary"
+                (click)="getSla()"
+              >
+                Show
+              </button>
+            </div>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Response Time (hours)</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="sla.responseTime"
+            >
+          </div>
+ 
+          <div class="mb-4">
+            <label class="form-label">Resolution Hours</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="sla.resolutionHours"
+            >
+          </div>
+ 
+          <div class="mb-4">
+            <label class="form-label">Description</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="sla.description"
+            >
+          </div>
+ 
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-soft-accent" (click)="addSla()">Save</button>
+            <button class="btn btn-soft-secondary" (click)="updateSla()">Update</button>
+            <button class="btn btn-soft-danger" (click)="deleteSla()">Delete</button>
+            <button class="btn btn-soft-light" (click)="newSla()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="col-lg-7">
+      <div class="card table-card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>List of SLAs</span>
+          <button
+            class="btn btn-soft-secondary btn-sm"
+            (click)="loadSlas()"
+          >
+            Show All
+          </button>
+        </div>
+ 
+        <div class="card-body p-0">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>SLA ID</th>
+                <th>Response Time (hours)</th>
+                <th>Resolution Hours</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+ 
+            <tbody>
+              <tr *ngFor="let s of slas">
+                <td>{{ s.slaId }}</td>
+                <td>{{ s.responseTime }}</td>
+                <td>{{ s.resolutionHours }}</td>
+                <td>{{ s.description }}</td>
+              </tr>
+ 
+              <tr *ngIf="slas.length === 0">
+                <td colspan="4" class="text-center text-muted py-4">
+                  No SLAs found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+ 

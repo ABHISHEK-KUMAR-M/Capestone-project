@@ -1,0 +1,70 @@
+.ticket-list {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+ 
+.ticket-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+ 
+.ticket-card:hover {
+  transform: translateY(-2px);
+}
+ 
+.ticket-card.active {
+  border-left: 6px solid #0d6efd;
+}
+ 
+.assign-box {
+  border-top: 1px dashed #ddd;
+  padding-top: 12px;
+}
+ 
+ 
+/* BACKDROP */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2000;
+}
+ 
+/* MODAL */
+.ticket-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 1000px;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+  z-index: 2100;
+  display: flex;
+  flex-direction: column;
+}
+ 
+/* HEADER */
+.ticket-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #ddd;
+}
+ 
+/* BODY */
+.ticket-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+}
+ 
+ 

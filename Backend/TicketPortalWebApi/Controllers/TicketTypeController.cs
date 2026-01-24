@@ -74,7 +74,7 @@ namespace TicketPortalWebApi.Controllers
             }
         }
 
-        [HttpPut("{ticketType}")]
+        [HttpPut("{ticketTypeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

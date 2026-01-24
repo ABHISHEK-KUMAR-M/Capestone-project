@@ -1,0 +1,48 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <h2>Welcome Back</h2>
+      <p>Login to access the Ticket Portal</p>
+    </div>
+
+    <form #registerForm="ngForm">
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Employee ID"
+          [(ngModel)]="EmpId"
+          name="EmpId"
+        >
+        <label>Employee ID</label>
+      </div>
+
+      <div class="form-floating mb-4">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          [(ngModel)]="EmpPassword"
+          name="EmpPassword"
+        >
+        <label>Password</label>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-soft-accent w-100 auth-btn"
+        (click)="login()"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <div class="text-center text-danger mt-3" *ngIf="errMsg">
+      {{ errMsg }}
+    </div>
+
+  </div>
+</div>

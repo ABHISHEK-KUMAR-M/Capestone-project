@@ -1,0 +1,185 @@
+/* ===============================
+
+   CHAT CONTAINER
+
+   =============================== */
+
+.chat-container {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  padding: 18px 24px;
+
+  background-color: #f0f2f5;
+
+  border-radius: 12px;
+
+  height: 420px;
+
+  overflow-y: auto;
+
+}
+ 
+/* ===============================
+
+   MESSAGE WRAPPER
+
+   =============================== */
+
+.chat-bubble-container {
+
+  display: flex;
+
+  flex-direction: column;
+
+  width: 100%;
+
+}
+ 
+/* LEFT – Creator */
+
+.chat-bubble-container.creator-reply {
+
+  align-items: flex-start;
+
+}
+ 
+/* RIGHT – Assignee */
+
+.chat-bubble-container.assignee-reply {
+
+  align-items: flex-end;
+
+}
+ 
+/* ===============================
+
+   BUBBLE COMMON
+
+   =============================== */
+
+.chat-bubble {
+
+  max-width: 68%;
+
+  padding: 10px 14px;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  line-height: 1.45;
+
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+
+}
+ 
+/* ===============================
+
+   CREATOR BUBBLE
+
+   =============================== */
+
+.chat-bubble-container.creator-reply .chat-bubble {
+
+  background-color: #ffffff;
+
+  color: #111b21;
+
+  border-radius: 8px 16px 16px 16px;
+
+}
+ 
+/* ===============================
+
+   ASSIGNEE BUBBLE
+
+   =============================== */
+
+.chat-bubble-container.assignee-reply .chat-bubble {
+
+  background-color: #d9fdd3;
+
+  color: #111b21;
+
+  border-radius: 16px 8px 16px 16px;
+
+}
+ 
+/* ===============================
+
+   LABEL AT TOP
+
+   =============================== */
+
+.reply-label {
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  color: #667781;
+
+  margin-bottom: 4px;
+
+}
+ 
+/* Align label for assignee */
+
+.chat-bubble-container.assignee-reply .reply-label {
+
+  text-align: right;
+
+}
+ 
+/* ===============================
+
+   MESSAGE TEXT
+
+   =============================== */
+
+.chat-bubble .message {
+
+  margin-bottom: 6px;
+
+}
+ 
+/* ===============================
+
+   TIMESTAMP AT BOTTOM
+
+   =============================== */
+
+.chat-bubble .timestamp {
+
+  font-size: 11px;
+
+  color: #667781;
+
+  text-align: right;
+
+}
+ 
+/* ===============================
+
+   NO REPLIES
+
+   =============================== */
+
+.no-replies-message {
+
+  text-align: center;
+
+  color: #667781;
+
+  font-size: 14px;
+
+  padding: 30px;
+
+}
+
+ 

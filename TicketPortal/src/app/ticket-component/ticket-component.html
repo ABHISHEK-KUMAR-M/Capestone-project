@@ -1,0 +1,293 @@
+<div class="container-fluid mt-4">
+ 
+  <h2>Ticket Management</h2>
+  <!-- ================= FILTER BAR ================= -->
+<div class="card p-3 mb-4 shadow-sm">
+ 
+  <div class="row align-items-center g-3">
+ 
+    <!-- STATUS FILTER -->
+    <div class="col-lg-4">
+      <div class="btn-group w-100" role="group">
+        <button class="btn btn-outline-danger"
+                (click)="ticket.status='Open'; getTicketsByStatus()">
+          Open
+        </button>
+ 
+        <button class="btn btn-outline-warning"
+                (click)="ticket.status='InProgress'; getTicketsByStatus()">
+          In Progress
+        </button>
+ 
+        <button class="btn btn-outline-success"
+                (click)="ticket.status='Resolved'; getTicketsByStatus()">
+          Resolved
+        </button>
+      </div>
+    </div>
+ 
+    <!-- TICKET TYPE FILTER -->
+    <div class="col-lg-4">
+      <select class="form-select"
+              [(ngModel)]="ticket.ticketTypeId"
+              (change)="getTicketsByTicketType()">
+        <option value="">-- Filter by Ticket Type --</option>
+ 
+        @for (tt of ticketTypes; track tt.ticketTypeId) {
+          <option [value]="tt.ticketTypeId">
+            {{ tt.ticketTypeId }} - {{ tt.description }}
+          </option>
+        }
+      </select>
+    </div>
+ 
+    <!-- OVERDUE + RESET -->
+    <div class="col-lg-4 d-flex gap-2">
+      <button class="btn btn-outline-dark w-100"
+              (click)="getOverdueTickets()">
+        ⏰ Overdue
+      </button>
+ 
+      <button class="btn btn-outline-primary w-100"
+              (click)="loadAllTickets()">
+        🔄 Show All
+      </button>
+    </div>
+ 
+  </div>
+</div>
+ 
+ 
+  @if (errMsg) {
+    <div class="alert alert-danger">{{ errMsg }}</div>
+  }
+ 
+  <div class="row g-4">
+ 
+    <!-- ================= LEFT PANEL ================= -->
+    <div class="col-lg-5">
+      <div class="card p-4 shadow-sm">
+        <h4>Create / Update Ticket</h4>
+ 
+        <input class="form-control mb-2"
+               placeholder="Title"
+               [(ngModel)]="ticket.title">
+        <select class="form-select mb-3"
+                [(ngModel)]="ticket.ticketTypeId">
+          <option value="">-- Select Ticket Type --</option>
+ 
+          @for (tt of ticketTypes; track tt.ticketTypeId) {
+            <option [value]="tt.ticketTypeId">
+              {{ tt.ticketTypeId }} - {{ tt.description }}
+            </option>
+          }
+        </select>
+ 
+ 
+        <textarea class="form-control mb-2"
+                  rows="3"
+                  placeholder="Description"
+                  [(ngModel)]="ticket.description"></textarea>
+ 
+        @if(this.authSvc.empRoleSignal()=='Admin'){<select class="form-select mb-3"
+                [(ngModel)]="ticket.status">
+          <option>Open</option>
+          <option>InProgress</option>
+          <option>Resolved</option>
+          <option>Closed</option>
+        </select>}
+
+        <div class="d-flex gap-2">
+        @if(this.authSvc.empRoleSignal()=='User'){
+          <button class="btn btn-primary w-100"
+                  (click)="addTicket()">
+            Create
+          </button>}
+ 
+          @if(this.authSvc.empRoleSignal()=='Admin'){<button class="btn btn-secondary w-100"
+                  (click)="updateTicket()">
+            Update
+          </button>
+        }
+ 
+          @if(this.authSvc.empRoleSignal()=='Admin'){<button class="btn btn-danger w-100"
+                  (click)="deleteTicket(ticket.ticketId)">
+            Delete
+          </button>
+        }
+        </div>
+      </div>
+    </div>
+ 
+    <!-- ================= RIGHT PANEL ================= -->
+    <div class="col-lg-7 ticket-list">
+ 
+      @for (t of tickets; track t.ticketId) {
+ 
+        <div class="ticket-card mb-3"
+             [ngClass]="{
+               'border-open': t.status === 'Open',
+               'border-progress': t.status === 'InProgress',
+               'border-resolved': t.status === 'Resolved',
+ 
+               'active': selectedTicketId === t.ticketId
+             }">
+ 
+          <!-- HEADER -->
+          <div class="d-flex justify-content-between align-items-center">
+            <strong>#{{ t.ticketId }}</strong>
+ 
+            <span class="badge"
+                  [ngClass]="{
+                    'bg-danger': t.status === 'Open',
+                    'bg-warning text-dark': t.status === 'InProgress',
+                    'bg-success': t.status === 'Resolved',
+                  }">
+              {{ t.status }}
+            </span>
+          </div>
+ 
+          <h5 class="mt-2">{{ t.title }}</h5>
+          <p class="text-muted">{{ t.description }}</p>
+ 
+          <small>
+            Created: {{ t.createdByEmpId }} |
+            Assigned: {{ t.assignedToEmpId || 'Unassigned' }}
+          </small>
+ 
+          <!-- ACTION BUTTONS -->
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-sm btn-outline-primary"
+                    (click)="showTicket(t)">
+              Show
+            </button>
+ 
+            <div class="d-flex gap-2">
+              @if(this.authSvc.empRoleSignal()=='Admin') {
+              <button class="btn btn-sm btn-outline-warning"
+                      (click)="selectTicket(t)">
+                Update
+              </button>
+            }
+ 
+            @if(this.authSvc.empRoleSignal()=='Admin')  {
+              <button class="btn btn-sm btn-outline-danger"
+                      (click)="deleteTicket(t.ticketId)">
+                Delete
+              </button>
+            }
+            </div>
+          </div>
+ 
+          <!-- DETAILS / ASSIGN SECTION -->
+          @if (selectedTicketId === t.ticketId) {
+ 
+            <div class="assign-box mt-3 position-relative">
+ 
+              <!-- CLOSE -->
+              <button class="btn-close position-absolute top-0 end-0"
+                      (click)="selectedTicketId = null">
+              </button>
+ 
+              <select class="form-select mb-2"
+                      [(ngModel)]="ticket.assignedToEmpId">
+                <option [ngValue]="null">-- Assign Employee --</option>
+ 
+                @for (e of employees; track e.empId) {
+                  <option [value]="e.empId">
+                    {{ e.empId }} - {{ e.name }}
+                  </option>
+                }
+              </select>
+ 
+              <button class="btn btn-success w-100"
+                      (click)="assignTicket()">
+                Assign
+              </button>
+ 
+            </div>
+          }
+ 
+        </div>
+      }
+ 
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- ===== FLOATING TICKET DETAILS MODAL ===== -->
+@if (selectedTicket) {
+ 
+  <!-- BACKDROP -->
+  <div class="modal-backdrop-custom"
+       (click)="closeTicketModal()"></div>
+ 
+  <!-- MODAL -->
+  <div class="ticket-modal">
+ 
+    <!-- HEADER -->
+    <div class="ticket-modal-header">
+      <h4>Ticket #{{ selectedTicket.ticketId }}</h4>
+      <button class="btn-close"
+              (click)="closeTicketModal()"></button>
+    </div>
+ 
+    <!-- BODY -->
+    <div class="ticket-modal-body">
+ 
+      <div class="row g-4">
+ 
+        <!-- LEFT COLUMN -->
+        <div class="col-md-7">
+          <h5>{{ selectedTicket.title }}</h5>
+ 
+          <p class="text-muted">
+            {{ selectedTicket.description }}
+          </p>
+ 
+          <hr>
+ 
+          <p><strong>Ticket Type:</strong> {{ selectedTicket.ticketTypeId }}</p>
+          <p><strong>Created By:</strong> {{ selectedTicket.createdByEmpId }}</p>
+          <p><strong>Assigned To:</strong>
+            {{ selectedTicket.assignedToEmpId || 'Unassigned' }}
+          </p>
+        </div>
+ 
+        <!-- RIGHT COLUMN -->
+        <div class="col-md-5">
+ 
+          <div class="mb-3">
+            <strong>Status</strong><br>
+            <span class="badge"
+                  [ngClass]="{
+                    'bg-danger': selectedTicket.status === 'Open',
+                    'bg-warning text-dark': selectedTicket.status === 'InProgress',
+                    'bg-success': selectedTicket.status === 'Resolved',
+                    'bg-secondary': selectedTicket.status === 'Closed'
+                  }">
+              {{ selectedTicket.status }}
+            </span>
+          </div>
+ 
+          <p><strong>Created At:</strong><br>
+            {{ selectedTicket.createdAt | date:'medium' }}</p>
+ 
+          <p><strong>Due At:</strong><br>
+            {{ selectedTicket.dueAt | date:'medium' }}</p>
+ 
+          <p><strong>Resolved At:</strong><br>
+            {{ selectedTicket.resolvedAt ? (selectedTicket.resolvedAt | date:'medium') : '-' }}
+          </p>
+ 
+          <hr>
+ 
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+}
+ 
+ 
