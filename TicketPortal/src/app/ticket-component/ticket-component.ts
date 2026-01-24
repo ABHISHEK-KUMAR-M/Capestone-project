@@ -107,7 +107,7 @@ export class TicketComponent {
  
   assignTicket() {
     console.log(this.ticket);
-    this.ticket.status='InProgress';
+    if(this.ticket.assignedToEmpId!=null) this.ticket.status='InProgress';
     this.ticketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
       next: () => {
         alert('Employee assigned successfully');
@@ -123,6 +123,8 @@ export class TicketComponent {
       }
     });
   }
+
+
   closeTicketModal() {
     this.selectedTicket = null;
     this.employees = [];

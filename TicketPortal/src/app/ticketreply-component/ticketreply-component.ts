@@ -32,6 +32,7 @@ export class TicketreplyComponent {
   allTickets: Ticket[] = [];
   filteredTickets: Ticket[] = [];
 
+
   selectedTicket: Ticket | undefined;
 
   constructor() {
@@ -68,8 +69,15 @@ export class TicketreplyComponent {
 
   onTicketChange() {
     this.selectedTicket = this.filteredTickets.find(t => t.ticketId === this.reply.ticketId);
-    this.loadRepliesByTicket();
-  }
+    if (!this.selectedTicket) return;
+
+    if (this.selectedTicket.assignedToEmpId === this.loggedInEmpId) {
+      this.repliedBy = 'assignee';
+    } else if (this.selectedTicket.createdByEmpId === this.loggedInEmpId) {
+      this.repliedBy = 'creator';
+    }
+      this.loadRepliesByTicket();
+    }
 
   submitReply() {
     if (!this.reply.ticketId) {

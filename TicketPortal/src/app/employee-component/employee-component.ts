@@ -30,25 +30,28 @@ export class EmployeeComponent {
  
   constructor() {
     this.employee = new Employee();
+    this.employee.empId=sessionStorage.getItem('empId')??'';
     this.employees = [];
     this.errMsg = '';
     this.departments=[];
     this.loadAllEmployees();
+    this.loadAllDepartments();
   }
  
   newEmployee() {
     this.employee = new Employee();
   }
+
   loadAllDepartments(){
     this.deptSvc.getAllDepartments().subscribe({
       next:(res)=>{
         this.departments=res;
         this.errMsg="";
-        this.loadAllDepartments();
       },
       error:(err)=>(this.errMsg=err.error)
     })
   }
+
   loadAllEmployees() {
     this.empSvc.getAllEmployees().subscribe({
       next: (res) => {
@@ -68,6 +71,7 @@ export class EmployeeComponent {
       next: (res) => {
         this.employee = res;
         this.errMsg = '';
+        this.loadAllDepartments();
       },
         error: err => {
               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
@@ -97,6 +101,7 @@ export class EmployeeComponent {
         alert('Employee Added Successfully');
         this.loadAllEmployees();
         this.newEmployee();
+        this.loadAllDepartments();
       },
         error: err => {
                this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
@@ -112,6 +117,7 @@ export class EmployeeComponent {
         alert('Employee Updated Successfully');
         this.loadAllEmployees();
         this.newEmployee();
+        this.loadAllDepartments();
       },
         error: err => {
                this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
@@ -127,6 +133,7 @@ export class EmployeeComponent {
         alert('Employee Deleted Successfully');
         this.loadAllEmployees();
         this.newEmployee();
+        this.loadAllDepartments();
       },
         error: err => {
                this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
@@ -136,20 +143,20 @@ export class EmployeeComponent {
     });
   }
  
-  login() {
-    this.empSvc.login(this.empId, this.employee.password).subscribe({
-      next: (res) => {
-        alert('Login Successful');
-        sessionStorage.setItem('employee', JSON.stringify(res));
-        this.errMsg = '';
-      },
-        error: err => {
-               this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
-                          .flat()
-                          .join(', '):err.error;
-      }
-    });
-  }
+  // login() {
+  //   this.empSvc.login(this.empId, this.employee.password).subscribe({
+  //     next: (res) => {
+  //       alert('Login Successful');
+  //       sessionStorage.setItem('employee', JSON.stringify(res));
+  //       this.errMsg = '';
+  //     },
+  //       error: err => {
+  //              this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+  //                         .flat()
+  //                         .join(', '):err.error;
+  //     }
+  //   });
+  // }
 }
  
  

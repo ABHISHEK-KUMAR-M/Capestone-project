@@ -11,7 +11,7 @@ export class Employee {
     name: string = '',
     email: string = '',
     password: string = '',
-    role: string = '',
+    role: string = 'User',
     departmentId: string = ''
   ) {
     this.empId = empId;
