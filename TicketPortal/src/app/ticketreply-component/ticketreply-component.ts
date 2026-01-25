@@ -54,7 +54,7 @@ export class TicketreplyComponent {
       next: (res) => {
         this.allTickets = res;
 
-        this.filteredTickets = this.allTickets.filter(t =>
+        this.filteredTickets = this.authSvc.empRoleSignal()=='Admin'?this.allTickets:this.allTickets.filter(t =>
           t.createdByEmpId === this.loggedInEmpId ||
           t.assignedToEmpId === this.loggedInEmpId
         );
