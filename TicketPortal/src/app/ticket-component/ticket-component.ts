@@ -107,21 +107,26 @@ export class TicketComponent {
  
   assignTicket() {
     console.log(this.ticket);
-    if(this.ticket.assignedToEmpId!=null) this.ticket.status='InProgress';
-    this.ticketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
-      next: () => {
-        alert('Employee assigned successfully');
-        this.selectedTicketId = null;
-        this.ticket = new Ticket();
-        this.employees = [];
-        this.loadAllTickets();
-      },
-      error: err => {
-        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
-                          .flat()
-                          .join(', '):err.error;
-      }
-    });
+    if(this.ticket.assignedToEmpId==this.ticket.createdByEmpId){
+      alert("Assigned Employee can't be the same as Creator Employee.");
+    }
+    else{
+      if(this.ticket.assignedToEmpId!=null) this.ticket.status='InProgress';
+      this.ticketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
+        next: () => {
+          alert('Employee assigned successfully');
+          this.selectedTicketId = null;
+          this.ticket = new Ticket();
+          this.employees = [];
+          this.loadAllTickets();
+        },
+        error: err => {
+          this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                            .flat()
+                            .join(', '):err.error;
+        }
+      });
+    }
   }
 
 
